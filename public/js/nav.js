@@ -25,6 +25,7 @@ gid('pagewrap').ontouch=clickshalter;
 var dlg=gid('dialogConfirm');
 if(flexsupport==false){if(dlg) dlg.style.display="none";}
 function clickshalter(e){
+	return;
 	minmen.style.display="none";
 	sumor(dsel,'active');
 gr=true;

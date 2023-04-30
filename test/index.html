@@ -1,22 +1,25 @@
-
+<html>
+	<head>
+		<style>
+			html {
+    font-size: 140%;
+}
+			* {
+    box-sizing: border-box;
+}
 
 			:root {
   --cp-height: 80px;
-  --cpm-height: 80px;
-}
-
-#out{
-width: 100%;
-	overflow:hidden;
+  --cpm-height: 200px;
 }
 			article#mediaBox{
-				ackground: brown;
+				background: brown;
 				width:100%;
 				height: 90vh;
 				position:relative;
 			}
 			section#videoBoxes{
-				background: black;
+				background: red;
 				width: 100%;
 				height: calc(90vh - var(--cp-height));
 				position:relative;
@@ -38,11 +41,11 @@ width: 100%;
 			}
 			#remoteVideoBox{
 				
-				
+				border:1px solid brown;
 				position:absolute;
 				top:0;
 				left:0;
-				ackground:pink;
+				background:pink;
 				width: 50%;
 				height:100%;
 			}
@@ -50,17 +53,14 @@ width: 100%;
 				position:absolute;
 				top:0;
 				right:0;
-				brder: 1px solid green;
-				ackground:blue;
+				border: 1px solid green;
+				background:blue;
 				width:50%;
 				height:100%;
 			}
-			#localVideo, #remoteVideo{
-				width:100%;
-				height:100%;
-				display:inline-block;
-			}
 			#remoteVideoBox.connecting::after{
+				position:absolute;
+				content:"Connecting...";
 				position:absolute;
 				color:orange;
 				top:50%;
@@ -72,7 +72,7 @@ width: 100%;
 				height:100%;
 				top:0;
 				left:0;
-				background-image: url(/images/buddy.svg);
+				background-image: url(../public/images/buddy.svg);
 				ackground-color:red;
 				background-position: center;
 			background-size: calc(90vh - 20%);
@@ -85,6 +85,8 @@ width: 100%;
 			.flex-items{
 				display:inline-block;
 				width:auto;
+				bckground: red;
+				brder: 4px solid blue;
 				align-self: center;
 				margin-right: 3em;
 				cursor:pointer;
@@ -94,30 +96,16 @@ width: 100%;
 				border:2px solid transparent;
 				padding:2px;
 				pointer-events: auto;
-				z-index:1;
 			}
-			/*
 			.flex-items.control:hover{
 			
 				border:2px solid white;
 				border-radius:10px;
-			}*/
+				ackground: orange;
+			}
 			.flex-items svg:hover{
-			background:rgba(0,0,0,0);
-				fill: red;
+				ill:black;
 			}
-		
-			#flagbox{
-				position:absolute;
-				top:80px; 
-				left:60px;
-				width:50px;
-				height:50px;
-			}
-			#flag{
-				width:100%;
-			}
-			
 	button.btn{
     padding: 10px 15px 10px 15px;
     font-weight: bold;
@@ -143,48 +131,16 @@ button:hover{
     color: white;
     border-color: silver;
 }
-section#count{
-	display: flex;
-	flex-wrap: wrap;
-    flex-direction: row;
-   bckground:red;
-    
-    justify-content: center;
-		align-items: center;
-}
-			div.count{
-				display: inline-block;
-				text-align: center;
-				self-align:center;
-			}
-			
-			@media screen and (max-width: 861px) and (orientation: landscape){
-				body{
-					bckground: red;
-				}
-				#remoteVideoBox.buddy::after, #localVideoBox.buddy::after{
-				background-size: calc(100vw - 150%);
-			}
-			#remoteVideoBox.connecting::after{
-				top:45%;
-				left:30%;
-			}
-			#flagbox{
-	left:40px;
-	top:10px;
-}
-			}
 			
 			
-			@media screen and (max-width: 695px) and (orientation: portrait){
+			
+			
+			
+			@media screen and (min-width: 390px) and (orientation: portrait){
 				html,body{
-					bckground: green;
+					background: green;
 				}
 				
-				#pagewrap{
-					padding:0;
-					margin:0;
-				}
 				article#mediaBox{
 					eight:auto;
 				}
@@ -206,24 +162,28 @@ section#count{
 				height: var(--cpm-height);
 			}
 			#remoteVideoBox.buddy::after, #localVideoBox.buddy::after{
-				background-size:35%;
-				ackground-size: calc(90vh + 60%);
-			}
-			#remoteVideoBox.connecting::after{
-				
-				top:45%;
-				left:35%;
+				background-size:50%;
 			}
 			}
+		</style>
+	</head>
+	<h2>cam to cam</h2>
+	<article id="mediaBox">
+		<section id="videoBoxes">
+		<div id="localVideoBox" class="buddy"><video id="localVideo"></video></div>
+		<div id="remoteVideoBox" class="buddy"><video id="remoteVideo"></video></div>
+		</section>
+        <footer id="controlPanel">
+			
+			<div class="flex-items"><button class="btn">start</button></div>
+			<div class="flex-items control">
+			<svg fill="#FFFFFF" fill-opacity="0.5" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
 
-
-
-@media screen and (max-width: 390px) and (orientation: portrait){
-	#remoteVideoBox.buddy::after, #localVideoBox.buddy::after{
-				background-size:60%;
-}
-#flagbox{
-	left:5px;
-	top:10px;
-}
-}
+			</div>
+			</footer>	
+	</article>
+	<img src="../public/images/buddy.svg">
+	<body></body></html>

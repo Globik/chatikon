@@ -11,11 +11,12 @@ const unlink = util.promisify(fs.unlink);
 const rmdir = util.promisify(fs.rmdir);
 const access = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
+const writeFile = util.promisify(fs.writeFile);
 const koaBody = require("koa-body");
-
+const axios = require("axios");
 const passport = require("koa-passport");
 const WebSocket = require("ws");
-
+const Datastore = require("@seald-io/nedb")
 const url = require("url");
 const Pool = require("pg-pool");
 const PgStore = require("./libs/pg-sess.js");
@@ -23,6 +24,7 @@ const shortid = require("shortid");
 const PS = require("pg-pubsub");
 const pgtypes = require("pg").types;
 const render = require("./libs/render.js");
+const { oni } = require('./libs/web_push.js');
 
 const serve = require("koa-static");
 const session = require("koa-session");
@@ -49,6 +51,7 @@ const pg_opts = {
 
 const dkey = "./data/key.pem";
 const dcert = "./data/cert.pem";
+const db = {};
 
 const app = new Koa();
 
@@ -72,12 +75,38 @@ app.use(koaBody());
 
 //app.use(passport.initialize())
 //app.use(passport.session())
+
+async function setDb(){
+	try{
+		let a = await access("db.json");
+		if(!a){console.log("db.json is there.");}
+		//await db.insertAsync({city:"Chelyabinsk", country:"Russia", date: new Date()});
+		//let c = await db.findAsync({});
+		//console.log("c: ", c);
+	}catch(err){
+		console.log("No db.json, making... ");
+		try{
+			let b = await writeFile("db.json", "");
+			if(!b) console.log("db.json are made.");
+		}catch(err){
+			console.log("err file write: ", err);
+		}
+		
+		
+	}
+}
+setDb();
+db.db = new Datastore({filename: "db.json", autoload: true})
 app.use(async (ctx, next) => {
   console.log("FROM HAUPT MIDDLEWARE =>", ctx.path, ctx.method);
   ctx.state.site = site_name;
   ctx.state.meta = meta;
   ctx.state.warnig = warnig;
+  ctx.db = db;
   console.log("Language: ", ctx.request.header["accept-language"]);
+  console.log("IP: ", ctx.request.ip);
+  var langstr = (ctx.request.header['accept-language'] ? ctx.request.header['accept-language'].includes('ru') : false);
+  ctx.state.lang = langstr;
   try {
     await next();
   } catch (e) {
@@ -123,13 +152,11 @@ const interval = setInterval(function ping() {
 function heartbeat() {
   this.isAlive = true;
 }
-//  ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6,uk;q=0.5
 
-var myArray = ["Apples", "Bananas", "Pears"];
+const abstract_key = "875ab9ef94954ddda77c3ddd4100827d";
+const re = /([0-9]{1,3}[\.]){3}[0-9]{1,3}/;
 
-var randomItem = myArray[Math.floor(Math.random() * myArray.length)];
 
-console.log(randomItem);
 
 let obid = function () {
   let tst = ((new Date().getTime() / 1000) | 0).toString(16);
@@ -142,45 +169,57 @@ let obid = function () {
       .toLowerCase()
   );
 };
-console.log("obid: ", obid());
 
 wss.on("connection", function ws_connect(ws, req) {
-  console.log("Websocked connected");
-  var suech_interval;
+	const ip = req.socket.remoteAddress;
+	
+  oni("websocket from: ", ip);
+  setFlag(ws, ip);
+// ws.flag = 'https://static.abstractapi.com/country-flags/RU_flag.svg'
   let id = obid();
   ws.clientId = id;
+  ws.target = null;
   ws.busy = true;
   wsend(ws, { type: "welcome", clientId: id });
   broadcast_all({ type: "howmuch", value: wss.clients.size });
-
+console.log("Array: ", Array.from(wss.clients)[0].busy);
   ws.isAlive = true;
   ws.on("pong", heartbeat);
   ws.on("message", async function sock_msg(msg) {
-    var send_to_clients = 0;
+    var sendToClients = 0;
     try {
       var data = JSON.parse(msg);
     } catch (e) {
       console.log(e);
       return;
     }
+    console.log(data.type);
     if (data.type == "fertig") {
       ws.busy = false;
-       suech_interval = setInterval(function suech() {
-        mach_suech(ws);
-      }, 1000);
-      send_to_clients = 1;
+      let a = Array.from(wss.clients);
+     console.log("a: ", a[0].busy, a.length);
+      let b = a[Math.floor(Math.random() * a.length)];
+      console.log("b: ", b.busy);
+      if(b.busy == false && ws.clientId !== b.clientId){
+		  ws.busy = true;
+		  make_busy(b.clientId, ws);
+	  }else{
+		  wsend(ws, {type: "info", info: "No match found. Waiting, please."});
+	  }
+      sendToClients = 1;
     } else if (data.type == "unfertig") {
       ws.busy = true;
-      clearInterval(suech_interval);
-    } else {
+      ws.target = data.target;
+      sendToClients = 1;
+    }else if(data.type == "flag"){
+		if(ws.flag) getFlag(ws, data.target);
+		sendToClients = 1;
+	}else{
      // console.log("Unknown data.type: ", data.type);
     }
-    if (send_to_clients == 0) {
+    if (sendToClients == 0){
       if (
-        data.target &&
-        data.target !== undefined &&
-        data.target.length !== 0
-      ) {
+        data.target && data.target !== undefined && data.target.length !== 0){
         send_to_one(ws, data.target, data);
       }
     }
@@ -188,8 +227,13 @@ wss.on("connection", function ws_connect(ws, req) {
 
   ws.on("close", async function ws_close() {
     console.log("Websocked closed!");
-    if (suech_interval) clearInterval(suech_interval);
+    if(ws.target){
+		send_to_one(ws, ws.target, {type: "bye"});
+	}
     broadcast_all({ type: "howmuch", value: wss.clients.size });
+  });
+  ws.on('error', function eri(err){
+	  console.log("socket error: ", err);
   });
 });
 
@@ -208,36 +252,55 @@ function send_to_one(ws, target, obj) {
   }
 }
 
-function mach_suech(ws) {
-  let arr = [];
-  for (let el of wss.clients) {
-    if (el.busy == false && el!= ws) {
-      arr.push(el.clientId);
-     // console.log("ws: ", el.clientId);
-    }
-  }
-  if(arr.length == 0) return;
-  let randomIt = arr[Math.floor(Math.random() * arr.length)];
-  ws.busy = true;
-  make_busy(randomIt, ws.clientId);
-  console.log("target: ", randomIt);
-  wsend(ws, { type: "make_offer", target: randomIt });
-}
 
-function make_busy(clientId, from_id) {
+
+function make_busy(randomId, ws) {
   for (let el of wss.clients) {
-    if (el.clientId == clientId) {
+    if (el.clientId === randomId) {
       el.busy = true;
-   //   wsend(el, { type: "warte_offer", from: from_id });
+     wsend(ws, { type: "make_offer", target: randomId });
+     wsend(el, { type: "warte_offer", from: ws.clientId});
       return;
     }
   }
 }
-
+function getFlag(ws, target){
+	for (let el of wss.clients) {
+    if (el.clientId === target) {
+	if(el.flag){
+			wsend(ws, { type: "flag", flag: el.flag });
+		}
+		return;
+	}
+	}
+}
 function wsend(ws, obj) {
   let a;
   try {
     a = JSON.stringify(obj);
+  //  console.log("type:", obj.type);
     if (ws.readyState === WebSocket.OPEN) ws.send(a);
   } catch (e) {}
+}
+function setFlag(ws, ip){
+	//let r = '77.222.112.75';
+	if(process.env.DEVELOPMENT == "yes"){return;}
+let a = ip.match(re);
+let r = a[0];
+if(r === "78.81.155.17"){return;}
+setTimeout(function(){
+	axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${abstract_key}&ip_address=${r}&fields=country,city,flag`).then(async response=>{
+	console.log('data: ', response.data, 'status', response.status);
+	if(response.status == 200){
+		//response.data.city response.data.country response.data.flag.unicode svg
+		ws.flag = response.data.flag.svg;
+		try{
+		await db.db.insertAsync({city: response.data.city, country: response.data.country, date: new Date()});
+	}catch(er){console.log(er);}
+	}
+	
+}).catch(error=>{
+	console.log(error);
+})
+}, 1000)
 }

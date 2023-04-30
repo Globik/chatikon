@@ -38,6 +38,7 @@ html {
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, section {
     display: block;
+    margin:0;padding:0;
 }
 
 body {
@@ -99,10 +100,12 @@ main {
     /*max-width:1365px;*/
     /* me 1365px*/
     ackground: rgb(237, 235, 236);
-    padding: 0.9em 3em;
-    padding: 0.6rem 2rem;
+    pdding: 0.9em 3em;
+    pdding: 0.6rem 2rem;
     min-height: 100%;
     width: 100%;
+    margin:0;
+    
 }
 
 .termins {
@@ -139,8 +142,14 @@ main {
 }
 
 
-nav {
+nav.back {
     display: block;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+		
+		justify-content: center;
+		align-items: center;
     position: relative;
     /*
 
@@ -155,6 +164,15 @@ nav {
     width: 100%;
     text-decoration: uppercase;
     border-bottom: 1px solid transparent;
+}
+
+nav .navbtc{
+	self-align:center;
+	display:inline-block;
+	text-align:center;
+	vertical-align:middle;
+	margin-left:0.5em;
+	padding-left:1px;
 }
 
 #menu {
@@ -455,7 +473,9 @@ label .spinner.active {
 #footer a {
     color: rgb(255, 230, 255);
 }
-
+#footer section{
+	padding-left:2em;
+}
 #footSec {
     ackground: red;
     text-align: center;
@@ -1168,8 +1188,8 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover {
 #aSite {
     display: inline-block;
     position: absolute;
-    left: 0;
-    top: 0.6rem;
+    left: 0.5em;
+    top: 0.75rem;
     background: rgb(6, 154, 150);
     padding: 4px;
     color: rgb(5, 12, 74);
@@ -1448,7 +1468,7 @@ input[type=submit].puls, button.puls {
     }
 
     #pagewrap {
-        padding: 0.2rem;
+        pdding: 0.2rem;
     }
 
     #miniMenu, .touch-mini-menu {
