@@ -27,7 +27,7 @@
 			}
 			footer#controlPanel{
 				width:100%;
-				background:rgb(34,3,43);
+				bckground:rgb(34,3,43);
 				height: var(--cp-height);
 				position:relative;
 				display: flex;
@@ -88,16 +88,18 @@
 				bckground: red;
 				brder: 4px solid blue;
 				align-self: center;
-				margin-right: 3em;
+				margin-right: 1em;
 				cursor:pointer;
 				z-index:1;
 			}
 			.flex-items.control{
-				border:2px solid transparent;
+				order:2px solid red;
 				padding:2px;
 				pointer-events: auto;
+				width:45px;
+				height:45px;
 			}
-			.flex-items.control:hover{
+			.flex-items.control:hoer{
 			
 				border:2px solid white;
 				border-radius:10px;
@@ -105,6 +107,57 @@
 			}
 			.flex-items svg:hover{
 				ill:black;
+			}
+			.flex-items.control img{
+				width:100%;
+			}
+			.chat-user{
+				color:lightblue;
+			}
+			.chat-msg{
+				
+			}
+			.chat-div{
+				padding:5px;
+				margin:5px;
+			}
+			#privatbtn{
+				height:80px;
+				width:95px;
+				border:none;
+				outline:none;
+			}
+			#privatcontainer{
+				position:absolute;
+				right:0;
+				bottom:80px;
+				width: 50%;
+				height:0%;
+				background:red;
+				overflow:hidden;
+				transition: height 0.2s linear;
+			}
+			#privatcontainer.out{
+				height:600%;
+			}
+			#privatchat{
+				display:block;
+				position:relative;
+				height: calc(100% - 80px);
+				background:rgba(0,0,10,0.2);
+				color:white;
+				overflow-y:scroll;
+				white-space: pre-line;
+				word-wrap: break-word;
+				overflow-wrap:break-word;
+				z-index:40;
+			}
+			#underchatbox{
+				background:yellow;
+				height:80px;
+				z-index:11;
+				display:block;
+				position:relative;
 			}
 	button.btn{
     padding: 10px 15px 10px 15px;
@@ -117,6 +170,15 @@
     letter-spacing: 1px;
     border-radius: 100%;
     background:rgba(0,0,0,0);
+}
+#privatinput{
+	width: calc(100% - 95px);
+	height: 80px;
+	border:none;
+	outline:none;
+	vertical-align:top;
+	font-size:1rem;
+	padding-left:40px;
 }
 
 button[disabled], button[disabled]:hover {
@@ -132,15 +194,73 @@ button:hover{
     border-color: silver;
 }
 			
+			@media screen and (min-width: 861px) and (orientation: landscape){
+				body{
+					background: red;
+				}
+				#privatcontainer{
+					width:100%;
+				}
+				#privatcontainer.out{
+					height: 450%;
+				
+				}
+			}
 			
 			
+			@media screen and (max-width: 390px) and (orientation: landscape){
+				body{
+					background: yellow;
+				}
+			}
 			
-			
-			@media screen and (min-width: 390px) and (orientation: portrait){
+			@media screen and (max-width: 695px) and (orientation: portrait){
 				html,body{
 					background: green;
 				}
-				
+			}
+			
+			@media screen and (min-width: 390px) and (orientation: portrait){
+				html,body{
+					background: pink;
+				}
+				#privatcontainer{
+					width:100%;
+					bottom:200px;
+					z-index:40;
+					background:rgba(0,0,10,0.2);
+					display:block;
+					psition:relative;
+					font-size:1.2rem;
+				}
+				.chat-user{
+				color:lightblue;
+				font-size:3.5rem;
+			}
+			.chat-msg{
+				font-size:3.5rem;
+			}
+				#underchatbox{
+					bottom:150px;
+					height:150px;
+					z-index:40;
+				}
+				#privatinput{
+					height:100%;
+					width:calc(100% - 150px);
+					font-size:2rem;
+				}
+				#privatbtn{
+					width:150px;
+					height:150px;
+				}
+				#privatcontainer.out{
+					bottom:200px;
+					idth:100%;
+				}
+				#privatchat{
+					height:100%;
+				}
 				article#mediaBox{
 					eight:auto;
 				}
@@ -166,7 +286,7 @@ button:hover{
 			}
 			}
 		</style>
-	</head>
+	</head><body>
 	<h2>cam to cam</h2>
 	<article id="mediaBox">
 		<section id="videoBoxes">
@@ -174,9 +294,15 @@ button:hover{
 		<div id="remoteVideoBox" class="buddy"><video id="remoteVideo"></video></div>
 		</section>
         <footer id="controlPanel">
+			<div id="privatcontainer">
+				
+				<div id="privatchat"></div>
+				<div id="underchatbox"><input type="text" id="privatinput" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="../public/images/send.svg"></button></div>
+				</div>
 			
 			<div class="flex-items"><button class="btn">start</button></div>
-			<div class="flex-items control">
+			<div class="flex-items control"><img onclick="openChat(this);" src="../public/images/chat.svg" title="chat"></div>
+			<div class="flex-items control" title="back cam">
 			<svg fill="#FFFFFF" fill-opacity="0.5" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/>
     <path d="M0 0h24v24H0z" fill="none"/>
@@ -186,4 +312,20 @@ button:hover{
 			</footer>	
 	</article>
 	<img src="../public/images/buddy.svg">
-	<body></body></html>
+	<script>
+	function openChat(el){
+		privatcontainer.classList.toggle("out");
+	}
+	function sendPrivat(el){
+		if(!privatinput.value) return;
+		insertMessage(privatinput.value)
+	}
+	function insertMessage(txt){
+		let m = document.createElement("div");
+		m.className = "chat-div";
+		m.innerHTML+='<span class="chat-user">anonym: </span><span class="chat-msg">'+txt+'</span>';
+		privatchat.appendChild(m);
+		privatchat.scrollTop=privatchat.clientHeight + privatchat.scrollHeight;
+	}
+	</script>
+	</body></html>

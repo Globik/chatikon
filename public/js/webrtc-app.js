@@ -1,5 +1,6 @@
 var sock = null;
 var pc = null;
+var dc = null;
 var videoInput;
 var videoInput2;
 var timer;
@@ -90,9 +91,9 @@ function on_msg(data) {
 	  debug("waiting offer from: " + data.from);
 	  debug("You are: " + clientId);
 	  targetId = data.from;
-	  note({content: "Connecting a human.", type: "info", time: 5});
+	//  note({content: "Connecting a human.", type: "info", time: 5});
   }else if(data.type == "make_offer"){
-	  note({content: "Connecting a human.", type: "info", time: 5});
+	  //note({content: "Connecting a human.", type: "info", time: 5});
 	  console.warn("to:", data.target, " du: ", clientId);
 	  debug("making an offer to: " + data.target);
 	  debug("You are: " + clientId);
@@ -101,6 +102,7 @@ function on_msg(data) {
   }else if(data.type == "offer"){
 	 console.warn(targetId, " == ", data.from);
  //if(data.from == targetId){
+ 
 	 handleOffer(data.offer, data.from);
  //}	  
   }else if(data.type == "answer"){
@@ -108,7 +110,7 @@ function on_msg(data) {
   }else if(data.type == "candidate"){
 	  handleCandidate(data.candidate);
   }else if(data.type == "info"){
-	  note({content: data.info, type: "info", time: 5});
+	//  note({content: data.info, type: "info", time: 5});
   }else if(data.type == "bye"){
 	  console.log("*** BYE ***");
 	  handleLeave();
@@ -333,6 +335,11 @@ function doPeer(){
     pc.onicecandidateerror = iceCandidateError;
     pc.onnegotiationneeded = onNegotiation;
     pc.onsignalingstatechange = onSignalingState;
+    pc.ondatachannel = receiveChannelCb;
+    dc = pc.createDataChannel('globi',{ negotiated: true, id: 0 });
+		dc.onopen = onChannelState;
+		dc.onclose = onChannelState;
+		dc.onmessage = onReceiveMsg;
 
 	}
 
@@ -383,38 +390,20 @@ function addStream({ track, streams }){
 	let codecList = null;
 	
 	function gatheringStateChange() {
-  console.log("gathering: ", pc.iceGatheringState);
-  //debug("gathering: " + pc.iceGatheringState);
   if(pc.iceGatheringState == "complete"){
-	  /*
-	  const senders = pc.getSenders();
-	  senders.forEach(function(sender){
-		  if(sender.track.kind === "video"){
-			  codecList = sender.getParameters().codecs;
-			  return;
-		  }
-	  });*/
+	
   }
-  //debug("<b>codecList: </b>: "+ JSON.stringify(codecList));
-  //codecList = null;
+  
 }
 function iceCandidateError(e) {
 	console.error("ice err: ", e.url, e.errorText );
 	debug("<b>ice err:</b> " + e.url + " " + e.errorText );
+	note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
 }
 function onNegotiation(e){
 	console.log("negotiation needed.");
 	debug("negotiation needed.");
 	
-	/*
-	pc.createOffer(offerOpts).then(function(offer){
-		return pc.setLocalDescription(offer);
-	}).then(function(){
-		debug("send type offer");
-		wsend({'type': 'offer', offer: pc.localDescription, target: targetId, from: clientId});
-	}).catch(handleError);
-
-	*/
 }
 function onConnectionStateChange(e){
 	console.log('connection state: ' + pc.connectionState);
@@ -441,49 +430,8 @@ function onSignalingState(e){
 				remoteVideoBox.className = "";
 				btnStart.disabled = false;
 				
-				/*
-				pc.getStats().then(function(stats){
-					stats.forEach(function(stat){
-						if(!(stat.type === 'outbound-rtp' && stat.kind === 'video')){
-							return;
-						}
-						const codec = stats.get(stat);
-						debug("<b> HOST: </b>" + codec);
-	//actualCodec.innerText = 'Using ' + codec.mimeType + ' ' + (codec.sdpFmtpLine ? codec.sdpFmtpLine + ' ' : "") + ', payloadType=' + codec.payloadType + '. Encoder: ' + stat.encoderImplementation;
-					});
-				}).catch(function(e){
-				debug("Error : " + e);
-				});
-				
-				*/
-				
 		
-  
-  /*
-  pc.getStats(null).then((stats) => {
-    let statsOutput = "";
-
-    stats.forEach((report) => {
-		if(report.type !== "local-candidate"){return;}
-      statsOutput += '<h2>Report: '+ report.type + '</h2><br>';
-      
-      // Now the statistics for this report; we intentionally drop the ones we
-      // sorted to the top above
-console.warn(report.candidateType)
-      Object.keys(report).forEach((statName) => {
-        if (
-          statName !== "id" &&
-          statName !== "timestamp" &&
-          statName !== "type"
-        ) {
-          statsOutput += '<strong>'+statName+':</strong>'+report[statName]+'<br>';
-        }
-      });
-    });
-
-    debug(statsOutput);
-  });
-*/
+ 
 			}else if(pc.iceConnectionState == "failed" || pc.iceConnectionState == "disconnected"){
 				//pc.restartIce();
 				handleLeave();
@@ -508,6 +456,8 @@ function handleLeave(e){
 			track.stop();
 		});
 		}
+		//if(dc) dc.close();
+		//dc = null;
 		pc.close();
 		
 		
@@ -535,6 +485,7 @@ function handleLeave(e){
 	wsend({type: "fertig"});
 	btnStart.disabled = true;
 	remoteVideoBox.className = "connecting";
+	//channelKrug.classList.toggle("disabled");
 	debug("*************************************");
 	
 }
@@ -563,6 +514,7 @@ localVideo.onloadedmetadata = function () {
 remoteVideo.onloadedmetadata = function () {
 	debug("Remote video enabled.");
 	remoteVideoBox.className = "";
+	
 	wsend({type: "flag", target: targetId });
 }
 
@@ -588,104 +540,60 @@ var brows = adapter.browserDetails.browser;
 console.log(brows);
 var vers = adapter.browserDetails.version;
 console.log(vers);
-debug("<b>Your browser, version:</b> " + brows + " " + vers);
-/*
-if(supportsCodecPreferences){
-	var { codecs } = RTCRtpSender.getCapabilities('video');
-	codecs.forEach(function(codec){
-		if(['video/red', 'video/ulpfec', 'video/rtx'].includes(codec.mimeType)){
-			return;
-		}
-		const option = document.createElement('option');
-		option.value = (codec.mimeType + ' ' + (codec.sdpFmtpLine || '')).trim();
-		option.innerText = option.value;
-		codecPreferences.appendChild(option);
-	});
-	codecPreferences.disabled = false;
-}
+//debug("<b>Your browser, version:</b> " + brows + " " + vers);
 
-function someCodec(){
-	if(supportsCodecPreferences){
-		const preferredCodec = codecPreferences.options[codecPreferences.selectedIndex];
-		if(prefferedCodec.value !==''){
-			const [mimeType, sdpFmtpLine] = prefferedCodec.value.split('');
-			const {codecs} = RTCRtpSender.getCapabilities('video');
-			const selectedCodecIndex = codecs.findIndex(c=> c.mimeType === mimeType && c.sdpFmtpLine);
-			const selectedCodec = codecs[selectedCodecIndex];
-			codecs.splice(selectedCodecIndex, 1);
-			codecs.unschift(selectedCodec);
-			const transceiver = pc.getTransceivers().find(t=> t.sender && t.sender.track === window.streami.getVideoTracks()[0]);
-			transceiver.setCodecPreferences(codecs);
-		}
+
+function openChat(el){
+		
+		if(!pc){return;}
+		
+		privatcontainer.classList.toggle("out");
 	}
-	codecPreferences.disabled = true;
-}
 
-function changeVideoCodec(mimeType){
-	if(supportsCodecPreferences){
-		const transceivers = pc.getTrancievers();
-		tranceivers.forEach(function(transceiver){
-			const kind = transceiver.sender.track.kind;
-			let sendCodecs = RTCRtpSender.getCapabilities(kind).codecs;
-			let recvCodecs = RTCRtpReceiver.getCapabilities(kond).codecs;
-			if(kind === 'video'){
-				sendCodecs = preferCodec(mimeType);
-				recvCodecs = preferCodec(mimeType);
-				transceiver.setCodecPreferences([...sendCodecs, ...recvCodecs]);
-			}
-		});
+function onChannelState(){
+	//alert("channel " + dc.readyState);
+	if(dc.readyState == "open"){
+		//privatcontainer.classList.toggle("out");
+		channelKrug.classList.toggle("disabled");
+	}else{
+		privatcontainer.classList.toggle("out");
+		channelKrug.classList.toggle("disabled");
+		privatchat.innerHTML = "";
 	}
-	
+}
+function onReceiveMsg(event){
+	try{
+		let a = JSON.parse(event.data);
+		insertMsg(a);
+	}catch(e){}
 }
 
-function preferCodec(codecs, mimeType){
-	let otherCodecs = [];
-	let sortedCodecs = [];
-	codecs.forEach(function(codec){
-		if(codec.mimeType === mimeType){
-			sortedCodecs.push(codec);
-		}else{
-			otherCodecs.push(codec);
-		}
-	});
-	return sortedCodecs.concat(otherCodecs);
+function insertMsg(obj){
+	if(!privatcontainer.classList.contains("out")){
+		privatcontainer.classList.add("out");
+	}
+	let m = document.createElement("div");
+		m.className = "chat-div";
+		m.innerHTML+='<span class="chat-user">' + obj.from + ': </span><span class="chat-msg">'+ obj.msg +'</span>';
+		privatchat.appendChild(m);
+		privatchat.scrollTop=privatchat.clientHeight + privatchat.scrollHeight;
 }
-*/ 
 
-/*
- * [{"clockRate":90000,"mimeType":"video/VP8","payloadType":96},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":97,"sdpFmtpLine":"apt=96"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":102,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":103,"sdpFmtpLine":"apt=102"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":104,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":105,"sdpFmtpLine":"apt=104"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":106,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":107,"sdpFmtpLine":"apt=106"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":108,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":109,"sdpFmtpLine":"apt=108"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":127,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=4d001f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":125,"sdpFmtpLine":"apt=127"},
- * {"clockRate":90000,"mimeType":"video/H264","payloadType":39,"sdpFmtpLine":"level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=4d001f"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":40,"sdpFmtpLine":"apt=39"},
- * {"clockRate":90000,"mimeType":"video/AV1","payloadType":45},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":46,"sdpFmtpLine":"apt=45"},
- * {"clockRate":90000,"mimeType":"video/VP9","payloadType":98,"sdpFmtpLine":"profile-id=0"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":99,"sdpFmtpLine":"apt=98"},
- * {"clockRate":90000,"mimeType":"video/VP9","payloadType":100,"sdpFmtpLine":"profile-id=2"},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":101,"sdpFmtpLine":"apt=100"},
- * {"clockRate":90000,"mimeType":"video/red","payloadType":112},
- * {"clockRate":90000,"mimeType":"video/rtx","payloadType":113,"sdpFmtpLine":"apt=112"},
- * {"clockRate":90000,"mimeType":"video/ulpfec","payloadType":114}] 
- * 
- * 
- * 
- * */
+function receiveChannelCb(event){
+	dc = event.channel;
+	dc.onmessage = onReceiveMsg;
+	dc.onopen = onChannelState;
+	dc.onclose = onChannelState;
+}
 
-
-
-
-
-
-
-
-
+	function sendPrivat(el){
+		if(!dc) return;
+		if(!privatinput.value) return;
+		let a;
+		try{
+			a = JSON.stringify({from: "anonym", msg: privatinput.value});
+		}catch(e){return;}
+		dc.send(a);
+		insertMsg({from: "You", msg: privatinput.value});
+		privatinput.value = "";
+	}
