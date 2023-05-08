@@ -141,7 +141,73 @@ main {
     }
 }
 
-
+#langsbox{
+	text-align:center;
+	padding-top: 3em;
+	padding-bottom:2em;
+	padding-right:0.5em;
+	padding-left:0.5em;
+	height:60vh;
+	display:block;
+	position:relative;
+	width:100%;
+}
+#langsbox h1{
+	font-size: 2em;
+}
+#langsbox h2{
+	font-size: 4em;
+}
+#startGet{
+width:auto;
+display:inline-block;
+	background: black;
+	color:white;
+	font-weight:bold;
+	font-size:1em;
+	padding:0.8em;
+	cursor:pointer;
+}
+.terms{
+margin-top:2em;
+	font-size:0.7em;
+}
+@media screen and (max-width: 861px) and (orientation: landscape){
+				body{
+					bckground: red;
+				}
+				#langsbox{
+					height:100%;
+			padding-top:1em;
+			oerflow:hidden;
+				}
+				#langsbox h1{
+					font-size:1em;
+				}
+				#langsbox h2{
+					font-size:1.5em;
+				}
+				}
+				@media screen and (max-width: 390px) and (orientation: portrait){
+					#langsbox{
+					height:auto;
+			padding-top:1em;
+			
+				}
+				#langsbox h1{
+					font-size:1em;
+				}
+				#langsbox h2{
+					font-size:1.5em;
+				}
+				}
+				#social{
+					text-align:center;
+				}
+				#footer section{
+					margin-top:1em;
+					margin-bottom:1em;
+				}
 nav.back {
     display: block;
     display:flex;

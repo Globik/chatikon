@@ -11,7 +11,7 @@ const main_page = function (n) {
 	const buser = n.user;
 
 
-	return `<!DOCTYPE html><html lang="${n.lang ? 'ru' : 'en'}"><!-- main_page.js -->
+	return `<!DOCTYPE html><html lang="${n.ln}"><!-- main_page.js -->
 <head>${html_head.html_head({
 		title: `${n.site} - chatroullete`,
 		meta:
@@ -41,7 +41,22 @@ const main_page = function (n) {
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
 
 <main id="pagewrap">
-
+<section id="langsbox">
+ <div class="langs">
+<a href="/" hreflang="en"> <img alt="English Version" src="/images/en.png" width="35" height="22"> </a>
+<a href="/de" hreflang="de"> <img alt="Deutsch Version" src="/images/de.png" width="35" height="22"> </a>
+<a href="/ru" hreflang="ru"> <img alt="Русская версия" src="/images/ru.png"  width="35" height="22"></a>
+<a href="/fr" hreflang="fr"> <img alt="Version Française" src="/images/fr.png"  width="35" height="22"></a>
+<a href="/es" hreflang="es"> <img alt="Versión en Español" src="/images/es.png"  width="35" height="22"></a>
+<a href="/zh" hreflang="zh"><img alt="中文网站" src="/images/zh.png"  width="35" height="22"></a>
+               </div>
+<h1>${n.ln=='ru'?'Анонимный видеочат':n.ln=='en'?'Free Random Video Chat':n.ln=='fr'?'Chatroulette Française':n.ln=='de'?'Deutsches ChatRoulette':n.ln=='es'?'Chatroulette español':n.ln=='zh'?'免费随机视频聊天':''}</h1>
+<h2>${n.ln=='ru'?'ЗНАКОМСТВА ОНЛАЙН':n.ln=='en'?'MEET NEW PEOPLE':n.ln=='de'?'NEUE LEUTE KENNENLERNEN':n.ln=='fr'?'Rencontrer de nouvelles personnes':n.ln=='es'?'Conoce gente nueva':n.ln=='zh'?'认识新朋友':''}</h2>
+<div id="startGet" class="langs">${n.ln=='ru'?'НАЧАТЬ ОБЩЕНИЕ':n.ln=='en'?'Start Chatting':n.ln=='fr'?'COMMENCER':n.ln=='de'?'ANFAMGEN':n.ln=='es'?'Empezar':n.ln=='zh'?'开始聊天':''}</div>
+<div class="terms">${n.ln=='ru'?'Нажимая кнопку «Начать..», я подтверждаю что мне <br>исполнилось 18 лет и я достиг совершеннолетия,<br> принимаю условия и политику конфеденциальности.':
+n.ln=='zh'?'点击开始，我声明我至少18岁，<br>已达到我所在地的法定年龄，<br>并接受我们的条款和隐私政策。':
+n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have reached the age of majority where I live, <br> and I accept our Terms and Privacy Policy.':''}</div>
+               </section>
 <article id="mediaBox">
 		<section id="videoBoxes">
 		<div id="localVideoBox" class="buddy"><video id="localVideo" autoplay muted></video></div>

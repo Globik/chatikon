@@ -5,7 +5,22 @@ const walletValidator = require('wallet-address-validator');
 const pub = new Router();
 
 pub.get('/', async ctx=>{
-	ctx.body = await ctx.render('main_page', {});
+	ctx.body = await ctx.render('main_page', {ln: "en"});
+})
+pub.get('/ru', async ctx=>{
+	ctx.body = await ctx.render('main_page', {ln: "ru"});
+})
+pub.get('/de', async ctx=>{
+	ctx.body = await ctx.render('main_page', {ln: "de"});
+})
+pub.get('/es', async ctx=>{
+	ctx.body = await ctx.render('main_page', {ln: "es"});
+})
+pub.get('/fr', async ctx=>{
+	ctx.body = await ctx.render('main_page', {ln: "fr"});
+})
+pub.get('/zh', async ctx=>{
+	ctx.body = await ctx.render('main_page', {ln: "zh"});
 })
 pub.get('/login', async ctx=>{
 	ctx.body = await ctx.render('login', {});
