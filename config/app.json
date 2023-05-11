@@ -2,11 +2,34 @@
   "meta": {
     "url": "https://chatslider.online",
     "image": "https://chatslider.online/images/home.jpg",
+    "icon":"https://chatslider.online/images/w4.png",
     "site_name": "chatslider",
-    "main_page": {
-      "title": "Чат-рулетка",
-      "description": "Видеочат рулетка"
-    }
+    "ru": {
+      "title": "Chatslider – Рандом видео чат рулетка с незнакомцами",
+      "description": "Открой мир общения и новых знакомств как для души и тела, так и для коммерческого дела. Выбери язык собеседника, страну, город и окунись в мир полного контакта с собеседником, выбранным в случайном порядке согласно вашим критериям."
+    },
+    "en":{
+		"title":"Chatslider: Free Random Video Chat with Strangers",
+		"description":"Open the world of communication and new acquaintances both for body and soul, and for commercial business. Choose the language of the interlocutor, country, city and plunge into the world of full contact with the interlocutor, selected at random according to your criteria."
+	},
+	 "de":{
+		"title":"Zufälliger Deutsche Video-Chat Chatroulette mit Fremden: Chatslider",
+		"description":"Öffnen Sie die Welt der Kommunikation und neuer Bekanntschaften sowohl für Körper und Seele als auch für das kommerzielle Geschäft. Wählen Sie die Sprache des Gesprächspartners, das Land, die Stadt und tauchen Sie ein in die Welt des vollständigen Kontakts mit dem Gesprächspartner, der nach Ihren Kriterien zufällig ausgewählt wird."
+	},
+    "es":{
+		"title":"Videochat Aleatorio con Desconocidos: Chatslider - Chatroulette",
+		"description":"Abre el mundo de la comunicación y los nuevos conocidos tanto para el cuerpo y el alma, como para los negocios comerciales. Elija el idioma del interlocutor, país, ciudad y sumérjase en el mundo del contacto total con el interlocutor, seleccionado al azar según su criterio."
+	},
+    "fr":{
+		"title":"Chatroulette Française. Chat vidéo aléatoire avec des inconnus — Chatslider",
+		"description":"Ouvrez le monde de la communication et de nouvelles connaissances à la fois pour le corps et l'esprit, et pour les affaires commerciales. Choisissez la langue de l'interlocuteur, le pays, la ville et plongez dans l'univers du plein contact avec l'interlocuteur, tiré au sort selon vos critères."
+	},
+    "zh":{
+		"title":"Chatslider - 与陌生人进行的随机视频聊天轮盘",
+		"description":"与女孩和男孩进行的随机匿名视频聊天轮盘。 在Chatslider上与来自世界各地的陌生人交友和交流！"
+	}
+
+   
   },
   "warnig": "",
   "site_name": "chatslider",

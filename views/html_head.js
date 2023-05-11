@@ -6,8 +6,17 @@ return `<!-- html_head.js --><meta charset="utf-8">
 <title>${n.title ? n.title : "Simple title"}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <link rel="canonical" href="${meta.url}" />
+      <link rel="alternate" hreflang="x-default" href="${meta.url}" />
+      <link rel="alternate" hreflang="en" href="${meta.url}" />
+      <link rel="alternate" hreflang="ru" href="${meta.url}/ru" />
+      <link rel="alternate" hreflang="de" href="${meta.url}/de" />
+      <link rel="alternate" hreflang="es" href="${meta.url}/es" />
+      <link rel="alternate" hreflang="fr" href="${meta.url}/fr" />
+      <link rel="alternate" hreflang="zh" href="${meta.url}/zh" />
 ${n.meta ? n.meta : ''}
-
+<script type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "url": "${meta.url}", "logo": "${meta.icon}" } </script>
 <link rel="shortcut icon" type="image/ico" href="${process.env.DEVELOPMENT=='yes'?'/images/w4.png':`${meta.url}/images/w4.png`}"> 
 ${n.csslink ? `<link href="${n.csslink}" rel="stylesheet">` :''}
 ${n.csslink2 ? `<link href="${n.csslink2}" rel="stylesheet">` : ''}

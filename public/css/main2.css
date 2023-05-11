@@ -188,6 +188,23 @@ margin-top:2em;
 					font-size:1.5em;
 				}
 				}
+				@media screen and (max-width: 730px) and (orientation: portrait){
+					body{
+					bacground:brown;
+					}
+					
+					#langsbox{
+					height:auto;
+			padding-top:1em;
+			
+				}
+				#langsbox h1{
+					font-size:1em;
+				}
+				#langsbox h2{
+					font-size:1.5em;
+				}
+				}
 				@media screen and (max-width: 390px) and (orientation: portrait){
 					#langsbox{
 					height:auto;

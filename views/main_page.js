@@ -13,14 +13,16 @@ const main_page = function (n) {
 
 	return `<!DOCTYPE html><html lang="${n.ln}"><!-- main_page.js -->
 <head>${html_head.html_head({
-		title: `${n.site} - chatroullete`,
+
+		title: `${n.ln=='ru'?n.meta.ru.title:n.ln=='en'?n.meta.en.title:n.ln=='de'?n.meta.de.title:n.ln=='fr'?n.meta.fr.title:n.ln=='es'?n.meta.es.title:n.ln=='zh'?n.meta.zh.title:''}`,
 		meta:
 			get_meta({
+			loc:`${n.ln=='en'?'en-US':n.ln=='ru'?'ru-RU':n.ln=='de'?'de-DE':n.ln=='fr'?'fr-FR':n.ln=='es'?'es-ES':n.ln=='zh'?'zh-ZH':''}`,
 				url: n.meta.url,
 				image: n.meta.image,
 				site_name: n.meta.site_name,
-				title: n.meta.main_page.title,
-				description: n.meta.main_page.description
+				title: `${n.ln=='ru'?n.meta.ru.title:n.ln=='en'?n.meta.en.title:n.ln=='de'?n.meta.de.title:n.ln=='fr'?n.meta.fr.title:n.ln=='es'?n.meta.es.title:n.ln=='zh'?n.meta.zh.title:''}`,
+description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.description:n.ln=='de'?n.meta.de.description:n.ln=='fr'?n.meta.fr.description:n.ln=='es'?n.meta.es.description:n.ln=='zh'?n.meta.zh.description:''}`,
 			}),
 		csslink: "/css/main2.css", luser: buser
 	})}
@@ -43,12 +45,12 @@ ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu
 <main id="pagewrap">
 <section id="langsbox">
  <div class="langs">
-<a href="/" hreflang="en"> <img alt="English Version" src="/images/en.png" width="35" height="22"> </a>
-<a href="/de" hreflang="de"> <img alt="Deutsch Version" src="/images/de.png" width="35" height="22"> </a>
-<a href="/ru" hreflang="ru"> <img alt="Русская версия" src="/images/ru.png"  width="35" height="22"></a>
-<a href="/fr" hreflang="fr"> <img alt="Version Française" src="/images/fr.png"  width="35" height="22"></a>
-<a href="/es" hreflang="es"> <img alt="Versión en Español" src="/images/es.png"  width="35" height="22"></a>
-<a href="/zh" hreflang="zh"><img alt="中文网站" src="/images/zh.png"  width="35" height="22"></a>
+${n.ln=='en'?'':'<a href="/" hreflang="en">'} <img alt="English Version" src="/images/en.png" width="35" height="22"> ${n.ln=='en'?'':'</a>'}
+${n.ln=='de'?'':'<a href="/de" hreflang="de">'} <img alt="Deutsch Version" src="/images/de.png" width="35" height="22"> ${n.ln=='de'?'':'</a>'}
+${n.ln=='ru'?'':'<a href="/ru" hreflang="ru">'} <img alt="Русская версия" src="/images/ru.png"  width="35" height="22">${n.ln=='ru'?'':'</a>'}
+${n.ln=='fr'?'':'<a href="/fr" hreflang="fr">'} <img alt="Version Française" src="/images/fr.png"  width="35" height="22">${n.ln=='fr'?'':'</a>'}
+${n.ln=='es'?'':'<a href="/es" hreflang="es">'} <img alt="Versión en Español" src="/images/es.png"  width="35" height="22">${n.ln=='es'?'':'</a>'}
+${n.ln=='zh'?'':'<a href="/zh" hreflang="zh">'}<img alt="中文网站" src="/images/zh.png"  width="35" height="22">${n.ln=='zh'?'':'</a>'}
                </div>
 <h1>${n.ln=='ru'?'Анонимный видеочат':n.ln=='en'?'Free Random Video Chat':n.ln=='fr'?'Chatroulette Française':n.ln=='de'?'Deutsches ChatRoulette':n.ln=='es'?'Chatroulette español':n.ln=='zh'?'免费随机视频聊天':''}</h1>
 <h2>${n.ln=='ru'?'ЗНАКОМСТВА ОНЛАЙН':n.ln=='en'?'MEET NEW PEOPLE':n.ln=='de'?'NEUE LEUTE KENNENLERNEN':n.ln=='fr'?'Rencontrer de nouvelles personnes':n.ln=='es'?'Conoce gente nueva':n.ln=='zh'?'认识新朋友':''}</h2>
