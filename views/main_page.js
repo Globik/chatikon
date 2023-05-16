@@ -17,6 +17,7 @@ const main_page = function (n) {
 		title: `${n.ln=='ru'?n.meta.ru.title:n.ln=='en'?n.meta.en.title:n.ln=='de'?n.meta.de.title:n.ln=='fr'?n.meta.fr.title:n.ln=='es'?n.meta.es.title:n.ln=='zh'?n.meta.zh.title:''}`,
 		meta:
 			get_meta({
+			key:`${n.ln=='en'?n.meta.en.key:n.ln=='ru'?n.meta.ru.key:n.ln=='fr'?n.meta.fr.key:n.ln=='de'?n.meta.de.key:n.ln=='es'?n.meta.es.key:n.ln=='zh'?n.meta.zh.key:''}`,
 			loc:`${n.ln=='en'?'en-US':n.ln=='ru'?'ru-RU':n.ln=='de'?'de-DE':n.ln=='fr'?'fr-FR':n.ln=='es'?'es-ES':n.ln=='zh'?'zh-ZH':''}`,
 				url: n.meta.url,
 				image: n.meta.image,
@@ -127,16 +128,24 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <hr>
 <section id="count">
 <div class="count">${n.lang? "Сейчас" : "Users"} online: <span id="spanWhosOn">0</span></div>
+</section><hr>
+<article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?n.articles.txt:''}</article>
+<button onclick="editTxt(this);">write</button>
+<section id="txtwrapper">
+<textarea id="txt" placeholder="your article"></textarea>
+${!n.articles? `<button data-ln="${n.ln}" onclick="saveTxt(this);">save</button>`: `<button data-ln="${n.ln}" data-id="${n.articles._id}" onclick="updateTxt(this);">edit</button>`}
+
 </section>
-<hr>
-
-
 </section>
 
 </main>
 <script src="/js/webrtc-app.js"></script> 
+<script src="/js/redact.js"></script>
 <footer id="footer">${html_footer.html_footer({})}</footer></body></html>`;
 }
 
 module.exports = { main_page };
+function getTxt(){
+
+}
 

@@ -10,6 +10,6 @@ const get_meta = n=>{
 <meta itemprop="name" content="${n.title}" />
 <meta itemprop="description" content="${n.description}" />;
 <meta name="description" content="${n.description}" />
-<!-- <meta name="keywords" content="" /> -->`;
+ <meta name="keywords" content="${n.key}" />`;
 }
 module.exports = { get_meta }

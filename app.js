@@ -32,7 +32,7 @@ const session = require("koa-session");
 const pubrouter = require("./routes/pubrouter.js");
 //const adminrouter = require('./routes/adminrouter.js');
 const { meta, warnig, site_name } = require("./config/app.json");
-var DB_URL = "postgress://globi:globi@127.0.0.1:5432/chatroulette";
+var DB_URL = "postgress://globi:globi@127.0.0.1:5432/globi";
 
 pgtypes.setTypeParser(1114, (str) => str);
 const pars = url.parse(DB_URL);
@@ -46,7 +46,7 @@ const pg_opts = {
   ssl: false,
 };
 
-//const pool = new Pool(pg_opts);
+const pool = new Pool(pg_opts);
 //const pg_store = new PgStore(pool);
 
 const dkey = "./data/key.pem";
@@ -79,6 +79,7 @@ app.use(koaBody());
 async function setDb(){
 	try{
 		let a = await access("db.json");
+		let d = await access('articles.json');
 		if(!a){console.log("db.json is there.");}
 		//await db.insertAsync({city:"Chelyabinsk", country:"Russia", date: new Date()});
 		//let c = await db.findAsync({});
@@ -87,6 +88,8 @@ async function setDb(){
 		console.log("No db.json, making... ");
 		try{
 			let b = await writeFile("db.json", "");
+			let e = await writeFile('articles.json', '');
+			
 			if(!b) console.log("db.json are made.");
 		}catch(err){
 			console.log("err file write: ", err);
@@ -97,11 +100,14 @@ async function setDb(){
 }
 setDb();
 db.db = new Datastore({filename: "db.json", autoload: true})
+db.articles = new Datastore({filename: "articles.json", autoload: true})
+
 app.use(async (ctx, next) => {
   console.log("FROM HAUPT MIDDLEWARE =>", ctx.path, ctx.method);
   ctx.state.site = site_name;
   ctx.state.meta = meta;
   ctx.state.warnig = warnig;
+  ctx.p = pool;
   ctx.db = db;
   console.log("Language: ", ctx.request.header["accept-language"]);
   console.log("IP: ", ctx.request.ip);
@@ -111,9 +117,10 @@ app.use(async (ctx, next) => {
     await next();
   } catch (e) {
     console.log("middleware error: ", e);
-    await next();
+    //await next();
   }
 });
+
 app.use(pubrouter.routes()).use(pubrouter.allowedMethods());
 
 //app.use(adminrouter.routes()).use(adminrouter.allowedMethods());
