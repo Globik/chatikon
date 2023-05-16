@@ -7,11 +7,12 @@ const pub = new Router();
 pub.get('/', async ctx=>{
 	let  db = ctx.p;
 	let c;
+	let a;
 	try{
 		c = await db.query(`select * from articles where lang='en'`);
-		
+		if(c.rows)a=c.rows[0]
 	}catch(e){console.log(e);}
-	ctx.body = await ctx.render('main_page', {ln: "en", articles:c.rows[0]});
+	ctx.body = await ctx.render('main_page', {ln: "en", articles:a});
 })
 pub.get('/ru', async ctx=>{
 	let db = ctx.p;
