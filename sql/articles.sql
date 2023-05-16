@@ -1,4 +1,4 @@
--- \i /home/globi/chatikon/sql/articels.sql
+-- \i /root/chatikon/sql/articles.sql
 
 drop table if exists articles;
 create table articles(

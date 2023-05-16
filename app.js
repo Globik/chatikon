@@ -32,7 +32,7 @@ const session = require("koa-session");
 const pubrouter = require("./routes/pubrouter.js");
 //const adminrouter = require('./routes/adminrouter.js');
 const { meta, warnig, site_name } = require("./config/app.json");
-var DB_URL = "postgress://globi:globi@127.0.0.1:5432/globi";
+var DB_URL = "postgress://globi:globi@127.0.0.1:5433/globi";
 
 pgtypes.setTypeParser(1114, (str) => str);
 const pars = url.parse(DB_URL);
