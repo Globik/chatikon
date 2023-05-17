@@ -233,6 +233,10 @@ margin-top:2em;
 					height: 300px;
 					
 				}
+				.feature-contents{
+					padding:20px;
+					margin:50px;
+				}
 nav.back {
     display: block;
     display:flex;

@@ -34,7 +34,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 	#remoteVideoBox.connecting::after{
 	content: "${n.lang? "Поиск..." : "Connecting..."}"
 }
-}</style>
+</style>
 
 </head>
 <body>${n.warnig ? `<div id="warnig">${n.warnig}</div>` : ''}
@@ -129,11 +129,11 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <section id="count">
 <div class="count">${n.lang? "Сейчас" : "Users"} online: <span id="spanWhosOn">0</span></div>
 </section><hr>
-<article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?n.articles.txt:''}</article>
+<article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles):''}</article>
 <button onclick="editTxt(this);">write</button>
 <section id="txtwrapper">
 <textarea id="txt" placeholder="your article"></textarea>
-${!n.articles? `<button data-ln="${n.ln}" onclick="saveTxt(this);">save</button>`: `<button data-ln="${n.ln}" data-id="${n.articles._id}" onclick="updateTxt(this);">edit</button>`}
+${n.articles.length==0 ? `<button data-ln="${n.ln}" onclick="saveTxt(this);">save</button>`: `<button data-ln="${n.ln}" data-id="${n.articles._id}" onclick="updateTxt(this);">edit</button>`}
 
 </section>
 </section>
@@ -145,7 +145,11 @@ ${!n.articles? `<button data-ln="${n.ln}" onclick="saveTxt(this);">save</button>
 }
 
 module.exports = { main_page };
-function getTxt(){
-
+function getTxt(arr){
+let s='';
+arr.forEach(function(el,i){
+	s+=el.txt;
+})
+return s;
 }
 

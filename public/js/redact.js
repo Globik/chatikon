@@ -21,8 +21,8 @@ function saveTxt(el){
 	let d = {};
 	d.lang = a;
 	d.txt = b;
-	let f = el.getAttribute("data-id");
-	d.id = f;
+	//let f = el.getAttribute("data-id");
+	//d.id = f;
 	console.log(d);
 	vax("post", "/saveEdit", d, onEdit, onErr, el, false);
 }

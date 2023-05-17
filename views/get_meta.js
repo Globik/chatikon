@@ -8,7 +8,7 @@ const get_meta = n=>{
 <meta property="og:description" content="${n.description}" />
 <meta property="og:site_name" content="${n.site_name}" />
 <meta itemprop="name" content="${n.title}" />
-<meta itemprop="description" content="${n.description}" />;
+<meta itemprop="description" content="${n.description}" />
 <meta name="description" content="${n.description}" />
  <meta name="keywords" content="${n.key}" />`;
 }

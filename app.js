@@ -24,7 +24,8 @@ const shortid = require("shortid");
 const PS = require("pg-pubsub");
 const pgtypes = require("pg").types;
 const render = require("./libs/render.js");
-const { oni } = require('./libs/web_push.js');
+const { oni } = require('./libs/web_push.js')//;
+const {MongoClient}=require('mongodb')
 
 const serve = require("koa-static");
 const session = require("koa-session");
@@ -54,7 +55,7 @@ const dcert = "./data/cert.pem";
 const db = {};
 
 const app = new Koa();
-
+//require("./mongo")(app);
 var HTTPS_PORT = 443;
 var HTTP_PORT;
 
@@ -75,6 +76,39 @@ app.use(koaBody());
 
 //app.use(passport.initialize())
 //app.use(passport.session())
+
+
+const murl='mongodb://localhost:27017';
+const client=new MongoClient(murl);
+const dbname='globi';
+const dbm=client.db(dbname);
+var articles;
+var mobi={};
+//mobi.articles=dbm.collection('articles');
+async function main(){
+	const dbm=client.db('globi');
+	
+	await client.connect();
+	//mobi.articles=dbm.collection('articles');
+	//articles=dbm.collection('articles');
+	//const ins=await articles.insertMany([{a:1},{a:2}]);
+	//console.log(ins);
+	
+	//await articles.deleteMany({});
+	//const f=await articles.find({}).toArray();
+	//console.log(f);
+	/*
+	const fi=await collection.find({a:1}).toArray();
+	console.log("fi: ", fi);
+	const upr=await collection.updateOne({a:1},{$set:{b: "dura"}});
+	console.log('upr: ',upr);
+	const fi1=await collection.find({}).toArray();
+	console.log('fi1: ',fi1);
+	*/
+	return 'done'
+}
+main().then(console.log).catch(console.error).finally(()=>{});
+
 
 async function setDb(){
 	try{
@@ -101,7 +135,8 @@ async function setDb(){
 setDb();
 db.db = new Datastore({filename: "db.json", autoload: true})
 db.articles = new Datastore({filename: "articles.json", autoload: true})
-
+//const dbm=client.db('globi');
+	//await client.connect();
 app.use(async (ctx, next) => {
   console.log("FROM HAUPT MIDDLEWARE =>", ctx.path, ctx.method);
   ctx.state.site = site_name;
@@ -109,6 +144,7 @@ app.use(async (ctx, next) => {
   ctx.state.warnig = warnig;
   ctx.p = pool;
   ctx.db = db;
+  ctx.dbm=dbm;
   console.log("Language: ", ctx.request.header["accept-language"]);
   console.log("IP: ", ctx.request.ip);
   var langstr = (ctx.request.header['accept-language'] ? ctx.request.header['accept-language'].includes('ru') : false);
