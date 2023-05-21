@@ -1,21 +1,25 @@
 const bodyParser = require('koa-body');
 const Router = require('koa-router');
 const walletValidator = require('wallet-address-validator');
-
+const { sign } = require('jsonwebtoken');
+var secret="secret";
+//const jwt = require('koa-jwt')({secret});
 const pub = new Router();
+const jwt=require('jsonwebtoken');
 
 pub.get('/', async ctx=>{
 	let  dbm = ctx.dbm;
 	let c;
 	let a;let b;
 	let articles=dbm.collection('articles');
+	//console.log("CTX", ctx.state);
 	try{
 		c=await articles.find({lang:'en'}).toArray();
 		//console.log("c :",c);
 	//let r = await articles.find({}).toArray();
 	//console.log("R: ",r);
 	}catch(e){console.log(e);}
-	ctx.body = await ctx.render('main_page', {ln: "en", articles:c});
+	ctx.body = await ctx.render('main_page', {ln: "en", articles:c, user:ctx.state.user});
 })
 pub.get('/ru', async ctx=>{
 	let dbm = ctx.dbm;
@@ -117,6 +121,30 @@ pub.post("/saveEdit", async ctx=>{
 	
 	ctx.body={lang};
 })
+
+
+pub.post('/auth', async(ctx)=>{
+	let {username, password} = ctx.request.body;
+	console.log('username:', username, "pwd: ", password);
+	if(username === "dima" && password === "1234"){
+		const token=jwt.sign({name:username, role:"admin"} ,'secret', {expiresIn:'1h'});
+		//const token = sign({username, test: "admin"}, 'secret', {expiresIn:'1h'});
+		ctx.cookies.set("alik",token, {});
+		ctx.body = {info: "ok",token}
+		//ctx.body={token:jwt.issue({user:"user", role: 'admin'})}
+		//ctx.state.user={user:"user", role:"admin"}
+		//console.log("USER: ", ctx.state.user);
+	}else{
+		
+		ctx.body= {message:'param error'}
+	}
+})
+/*
+pub.get('/fuck', jwt, async(ctx, next)=>{
+	//ctx.body = await ctx.render('userinfo', {username:ctx.state.user.username})
+	ctx.body={username:ctx.state.user.username}
+})
+*/ 
 module.exports = pub;
 
 function auth(ctx, next) {

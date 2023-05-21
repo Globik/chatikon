@@ -15,6 +15,7 @@ const writeFile = util.promisify(fs.writeFile);
 const koaBody = require("koa-body");
 const axios = require("axios");
 const passport = require("koa-passport");
+const KoaRouter=require('koa-router')
 const WebSocket = require("ws");
 const Datastore = require("@seald-io/nedb")
 const url = require("url");
@@ -26,13 +27,20 @@ const pgtypes = require("pg").types;
 const render = require("./libs/render.js");
 const { oni } = require('./libs/web_push.js')//;
 const {MongoClient}=require('mongodb')
-
+//const jwt = require('./jwt.js')
+//const jwtins = jwt({secret:"secret"})
+const jwt=require('jsonwebtoken');
 const serve = require("koa-static");
 const session = require("koa-session");
 //const nodemailer = require('nodemailer');
 const pubrouter = require("./routes/pubrouter.js");
-//const adminrouter = require('./routes/adminrouter.js');
+const adminrouter = require('./routes/admin.js');
 const { meta, warnig, site_name } = require("./config/app.json");
+//const passport=require('koa-passport');
+
+//const {sign}=rquire('jsonwebtoken');
+//const jwt=require('koa-jwt')({'secret'});
+
 var DB_URL = "postgress://globi:globi@127.0.0.1:5433/globi";
 
 pgtypes.setTypeParser(1114, (str) => str);
@@ -62,22 +70,36 @@ var HTTP_PORT;
 if (process.env.DEVELOPMENT == "yes") {
   HTTP_PORT = 3000;
 }
-
+const router = new KoaRouter()
 app.keys = ["your-secret"];
 app.use(serve(__dirname + "/public"));
 //app.use(session({store: pg_store, maxAge: 24 * 60 * 60 * 1000}, app))
-
+//app.use(jwt.errorhandler()).use(jwt.jwt());
 render(app, {
   root: "views",
   development: process.env.DEVELOPMENT == "yes" ? false : false,
 });
 app.use(koaBody());
+app.use(passport.initialize())
+app.use(passport.session())
 //require('./config/auth.js')(pool, passport)
+require('./jwt.js')(passport)
+const user=require('./routes/api');
 
 //app.use(passport.initialize())
 //app.use(passport.session())
-
-
+/*
+app.use(async(ctx, next)=>{
+	console.log("QUERY: ", ctx.request.query);
+	console.log("BODY: ", ctx.request.body);
+	console.log(ctx.request.header);
+	let params = Object.assign({}, ctx.request.query, ctx.request.body);
+	console.log("PARAMS : ", params);
+	ctx.request.header = {'authorization':'Bearer ' + (params.token || '')};
+	ctx.state.user=params.token;
+	await next();
+})
+*/
 const murl='mongodb://localhost:27017';
 const client=new MongoClient(murl);
 const dbname='globi';
@@ -133,6 +155,8 @@ async function setDb(){
 	}
 }
 setDb();
+//app.use(passport.initialize());
+//app.use(passport.session())
 db.db = new Datastore({filename: "db.json", autoload: true})
 db.articles = new Datastore({filename: "articles.json", autoload: true})
 //const dbm=client.db('globi');
@@ -149,6 +173,15 @@ app.use(async (ctx, next) => {
   console.log("IP: ", ctx.request.ip);
   var langstr = (ctx.request.header['accept-language'] ? ctx.request.header['accept-language'].includes('ru') : false);
   ctx.state.lang = langstr;
+  let m=ctx.cookies.get('alik');
+  console.log("MMMM: ", m);
+  
+  try{
+	  let d=jwt.verify(m, 'secret');
+	  console.log('DDDDDDDD', d);
+	  ctx.state.user={name:d.name,role:d.role};
+	  ctx.isAuthenticated = true;
+  }catch(err){}
   try {
     await next();
   } catch (e) {
@@ -156,11 +189,12 @@ app.use(async (ctx, next) => {
     //await next();
   }
 });
-
+router.use('/api/users', user)
 app.use(pubrouter.routes()).use(pubrouter.allowedMethods());
 
-//app.use(adminrouter.routes()).use(adminrouter.allowedMethods());
-
+app.use(adminrouter.routes()).use(adminrouter.allowedMethods());
+//app.use(jwt.errorhandler()).use(jwt.jwt());
+app.use(router.routes()).use(router.allowedMethods())
 app.on("error", function (err, ctx) {
   console.log("APP ERROR: ", err.message, "ctx.url : ", ctx.url);
 });

@@ -1,0 +1,30 @@
+#formWrapper{
+width:25%;
+	margin: 0 auto;
+	background:lightgreen;
+	position:relative;
+	height:auto;
+}
+.input{
+	margin-top:5px;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+input[type=password],input[type=text]{
+	height:40px;
+	width:100%;
+	font-size:26px;
+	padding:5px;
+}
+.input.submit {
+
+display:flex;
+align-items:flex-end;
+ flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+input[type=submit]{
+lign-self:flex-end;
+}

@@ -130,17 +130,17 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <div class="count">${n.lang? "Сейчас" : "Users"} online: <span id="spanWhosOn">0</span></div>
 </section><hr>
 <article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles):''}</article>
-<button onclick="editTxt(this);">write</button>
+${n.user && n.user.role=="admin"? `<div class="editbtn"><button onclick="editTxt(this);">edit</button></div>
 <section id="txtwrapper">
 <textarea id="txt" placeholder="your article"></textarea>
-${n.articles.length==0 ? `<button data-ln="${n.ln}" onclick="saveTxt(this);">save</button>`: `<button data-ln="${n.ln}" data-id="${n.articles._id}" onclick="updateTxt(this);">edit</button>`}
+${n.articles.length==0 ? `<div class="editbtn"><button data-ln="${n.ln}" onclick="saveTxt(this);">save</button></div>`: `<div class="editbtn"><button data-ln="${n.ln}" data-id="${n.articles._id}" onclick="updateTxt(this);">save</button></div>`}
 
-</section>
+</section>`:''}
 </section>
 
 </main>
 <script src="/js/webrtc-app.js"></script> 
-<script src="/js/redact.js"></script>
+${n.user && n.user.role=='admin'?'<script src="/js/redact.js"></script>':''}
 <footer id="footer">${html_footer.html_footer({})}</footer></body></html>`;
 }
 

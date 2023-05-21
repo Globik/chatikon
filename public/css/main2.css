@@ -471,7 +471,20 @@ label .spinner.active {
     font-weight: bold;
     color: #0c3c3ce3;
 }
-
+.editbtn{
+	 width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    
+    margin-bottom: 15px;
+    margin-right:10px;
+}
+.editbtn button{
+	margin-right:10px;
+}
 #svgIconsNav {
     background: #fff5ba9c;
     border: 1px solid transparent;
