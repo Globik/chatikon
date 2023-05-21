@@ -17,7 +17,7 @@ return `<!-- html_nav_menu.js -->
 
 <ul id="miniMenu" class="">
 ${n.user ? `<li><a href="/logout" id="login_pop"><div class="muka"><span>Выйти</span></div></a>` :
-`<li><a><div class="muka"><span>Войти</span></div></a>`}
+`<li><a href="/login"><div class="muka"><span>Войти</span></div></a>`}
 ${!n.user ? '<li><a><div class="muka"><span>Регистрация</span></div></a>' : ''}
 </ul>
 
