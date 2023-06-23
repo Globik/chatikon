@@ -58,8 +58,10 @@ const pg_opts = {
 const pool = new Pool(pg_opts);
 //const pg_store = new PgStore(pool);
 
-const dkey = "./data/key.pem";
-const dcert = "./data/cert.pem";
+//const dkey = "./data/key.pem";
+//const dcert = "./data/cert.pem";
+const dkey = "/etc/letsencrypt/live/chatslider.online/privkey.pem";
+const dcert = "/etc/letsencrypt/live/chatslider.online/fullchain.pem";
 const db = {};
 
 const app = new Koa();
@@ -198,7 +200,7 @@ app.use(router.routes()).use(router.allowedMethods())
 app.on("error", function (err, ctx) {
   console.log("APP ERROR: ", err.message, "ctx.url : ", ctx.url);
 });
-var pipa = false;
+var pipa = true;
 var servak;
 if (process.env.DEVELOPMENT !== "yes") {
   const ssl_options = {
