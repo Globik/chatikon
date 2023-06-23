@@ -32,9 +32,14 @@ cli-password=qwerty
 	echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
 	sudo apt update
 	sudo apt install mongodb-org
+	sudo systemctl enable --now mongod
 	sudo systemctl start mongod.service
 	sudo systemctl status mongod
 	sudo systemctl enable mongod
 	mongo --eval 'db.runCommand({ connectionStatus: 1 })'
 	
+```
+```
+sudo service redis-server status
+
 ```

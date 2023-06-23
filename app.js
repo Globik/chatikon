@@ -198,15 +198,20 @@ app.use(router.routes()).use(router.allowedMethods())
 app.on("error", function (err, ctx) {
   console.log("APP ERROR: ", err.message, "ctx.url : ", ctx.url);
 });
-
+var pipa = false;
 var servak;
 if (process.env.DEVELOPMENT !== "yes") {
   const ssl_options = {
     key: fs.readFileSync(dkey),
     cert: fs.readFileSync(dcert),
   };
+  if(pipa){
   servak = https.createServer(ssl_options, app.callback()).listen(HTTPS_PORT);
   console.log("Should on https://chatslider.online", HTTPS_PORT, " running");
+}else{
+	servak = app.listen(80);
+  console.log("Should start http, port: ", 80, " started.");
+}
 } else {
   servak = app.listen(process.env.PORT || HTTP_PORT);
   console.log("Should or localhost, port: ", HTTP_PORT, " started.");

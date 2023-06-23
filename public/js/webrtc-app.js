@@ -37,12 +37,15 @@ var con = {iceServers: [
 
 
 
-var coni = {iceTransportPolicy:"all","iceServers":[{urls:["stun:45.89.66.167:3478"]},
+var conis = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:45.89.66.167:3478"]},
 	{urls:["turn:45.89.66.167:3478?transport=udp","turn:45.89.66.167:5349?transport=tcp"]
+		,username:"alik",credential:"1234"}]};
+var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
+	{urls:["turn:127.0.0.1:3478?transport=udp","turn:127.0.0.1:5349?transport=tcp"]
 		,username:"alik",credential:"1234"}]};
 
 
-var config = coni;
+var config = conis;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";

@@ -119,7 +119,12 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 			</div>
 			</footer>	
 	</article>
+	<hr><button>${n.ln=='ru'?'Поиск':'Search'}</button><hr>
+<section>
+<div id="landContainer">
 
+</div>
+</section>
 
 
 
