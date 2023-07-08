@@ -27,6 +27,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 			}),
 		csslink: "/css/main2.css", luser: buser
 	})}
+	<link rel="stylesheet" href="/css/searchbox.css">
 	<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 	<style>
 	
@@ -120,10 +121,35 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 			</footer>	
 	</article>
 	<hr><button>${n.ln=='ru'?'Поиск':'Search'}</button><hr>
-<section>
+<section id="suechBox">
+<form>
+<div class="gender-box">
+<header>Search info. Choose what you wanna talk</header>
+<div id="ageBox">
+<div class="age">
+<b>How old are you?</b>&nbsp;
+<input type="number" name="myage" value="18">
+</div>
+<div class="age">
+<b>You're looking for a human of age</b>&nbsp;
+<input type="number" name="ab" value="10"> - <input type="number" name="bis" value="100">
+</div>
+</div><hr>
+<b>Your gender is</b>
+<div class="gender-wrapper">
+<div class="gender"><label class="cntlb" for="maleInput">&nbsp;male<input name="mygender" type="radio" value="male" id="maleInput" checked/><span class="mark"></span></label></div>
+<div class="gender"><label class="cntlb" for="femaleInput">&nbsp;female<input name="mygender" type="radio" value="female" id="femaleInput"/><span class="mark"></span></label></div>
+</div><hr>
+<b>You're a looking for a</b>
+<div class="gender-wrapper">
+<div class="gender"><label class="cntlb" for="suechMaleInput">&nbsp;male<input name="suechgender" type="radio" value="male" id="suechMaleInput"/><span class="mark"></span></label></div>
+<div class="gender"><label class="cntlb" for="suechFemaleInput">&nbsp;female<input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked/><span class="mark"></span></label></div>
+</div>
+</div>
 <div id="landContainer">
 
 </div>
+</form>
 </section>
 
 

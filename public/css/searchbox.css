@@ -1,0 +1,26 @@
+#suechBox{
+	padding:20px;
+	margin:50px;
+}
+.gender-box header{
+	line-height: 2;
+}
+#ageBox{
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+}
+.age{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+div.gender-wrapper{
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+	order:1px solid green;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+div.gender{
+	margin-top:10px;
+	margin-bottom:10px;
+}
