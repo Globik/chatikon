@@ -146,8 +146,11 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <div class="gender"><label class="cntlb" for="suechFemaleInput">&nbsp;female<input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked/><span class="mark"></span></label></div>
 </div>
 </div>
+<div id="landContainerBox">
+<b>Choose a land</b><br><br>
 <div id="landContainer">
 
+</div>
 </div>
 </form>
 </section>

@@ -24,3 +24,67 @@ div.gender{
 	margin-top:10px;
 	margin-bottom:10px;
 }
+#landContainerBox{
+		width:50%;
+		margin: 0 auto;
+		
+	}
+	#landContainer{
+		height:300px;
+		overflow:auto;
+	}
+	#landContainer label{
+		display:flex;
+	}
+	#landContainer label span{
+		flex: auto;
+	}
+	#landContainer label input{
+		width: 15%;
+	}
+@media screen and (max-width: 501px){}
+/* planshet 451x641      */
+	
+	@media screen and (max-width: 452px) and (orientation: portrait){
+	
+	#suechBox{
+		font-size:3vw;
+		margin:5px;
+		padding:5px;
+	}
+	.gender{
+		display:flex;
+		align-items:center;
+	}
+	.cntlb{
+	font-size:4vw;
+		
+		align-self:center;
+		justify-self:start;
+		top:-8px;
+	}
+	.cntlb input{
+		align-items:center;
+	}
+		#ageBox{
+			display:block;
+			
+		}
+			input[type=number]{
+			width: 40px;
+		}
+	}
+	
+	@media screen and (max-height: 642px) and (orientation: landscape){
+		#ageBox{
+			display:block;
+			
+		}
+		input[type=number]{
+			width: 40px;
+		}
+	}
+/* 285 x 567 */
+	@media screen and (max-height: 286px) and (orientation: landscape){}
+	/* ideal for 320x442 */
+	@media screen and (max-width: 384px) and (orientation: portrait){}

@@ -600,3 +600,55 @@ function receiveChannelCb(event){
 		insertMsg({from: "You", msg: privatinput.value});
 		privatinput.value = "";
 	}
+
+function getLands(){
+		vax("get", "/json/en/country.json", {}, ongetLands, onErrLands, null, false);
+}
+getLands();
+function ongetLands(r){
+	//alert(JSON.stringify(r));
+	let s='';
+		for(const [key, value] of Object.entries(r)){
+		s+=`<label><span>${value}</span><input type="checkbox" value="${key}"></label><br>`;
+	}
+	landContainer.innerHTML =  s;
+}
+
+function onErrLands(r){
+	alert("error " + r );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
