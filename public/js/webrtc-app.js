@@ -607,18 +607,74 @@ function getLands(){
 getLands();
 function ongetLands(r){
 	//alert(JSON.stringify(r));
+	// https://flagcdn.com/w40/${key}.webp
+	//<div class="img-halter"><img onerror="this.style.display='none'" src="https://static.abstractapi.com/country-flags/${key}_flag.svg"></div>
 	let s='';
 		for(const [key, value] of Object.entries(r)){
-		s+=`<label><span>${value}</span><input type="checkbox" value="${key}"></label><br>`;
+s+=`<section class="landsection"><div class="img-halter"><img src="https://flagcdn.com/w40/${key.toLowerCase()}.webp"/></div><label class="label-me"><span>${value}</span><input type="checkbox" value="${key}"></label></section><br>`;
 	}
 	landContainer.innerHTML =  s;
+	getSuech(r);
 }
 
 function onErrLands(r){
 	alert("error " + r );
 }
 
-
+function getSuech(r){
+	let f = document.forms.suechform;
+	if(localStorage.getItem("myage")){
+		f.myage.value = localStorage.getItem("myage");
+	}else{
+		f.myage.value = 18;
+	}
+	if(localStorage.getItem("ab")){
+		f.ab.value = localStorage.getItem("ab");
+	}else{
+		f.ab.value = 18;
+	}
+	if(localStorage.getItem("bis")){
+		f.bis.value = localStorage.getItem("bis");
+	}else{
+		f.bis.value = 100;
+	}
+	if(localStorage.getItem("mygender")){
+		let a = localStorage.getItem("mygender");
+		if(a == "male"){
+			maleInput.checked = true;
+		}else{
+			femaleInput.checked = true;
+		}
+	}else{
+	maleInput.checked = true;
+	}
+	if(localStorage.getItem("suechgender")){
+		let a = localStorage.getItem("suechgender");
+		if(a == "male"){
+		suechMaleInput.checked = true;
+	}else{
+		suechFemaleInput.checked = true;
+	}
+	}else{
+		suechFemaleInput.checked = true;
+	}
+	
+	try{
+		if(localStorage.getItem("lands")){
+			let a = JSON.parse(localStorage.getItem("lands")).lands;
+			for(const [key, value] of Object.entries(r)){
+				a.forEach(function(el, i){
+					if(value == el){
+						let b = document.querySelector("input[value="+el+"]");
+						b.checked = true;
+					}
+				});
+			}
+		}
+	}catch(e){
+		alert(e);
+	}
+}
 
 
 
