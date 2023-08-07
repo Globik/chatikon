@@ -42,13 +42,15 @@ div.gender{
 	.img-halter{
 		width:40px;
 		height:40px;
+		display:flex;
+		padding-left:5px;
 		
 	}
 	.img-halter img{
 		width:100%;
-		
-		height:100%;
-		
+		justify-self:center;
+		eight:100%;
+		object-fit:scale-down;
 	}
 	#landContainer label{
 		display:flex;

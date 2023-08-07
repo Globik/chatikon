@@ -124,26 +124,26 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <section id="suechBox">
 <form name="suechform">
 <div class="gender-box">
-<header>Search info. Choose whome you wanna talk to</header>
+<b>Search info. Choose whome you wanna talk to</b>
 <div id="ageBox">
 <div class="age">
 <b>How old are you?</b>&nbsp;
-<input type="number" name="myage" value="18">
+<input type="number" name="myage" value="18" onchange="saveMyAge(this);" />
 </div>
 <div class="age">
 <b>You're looking for a human of age</b>&nbsp;
-<input type="number" name="ab" value="10"> - <input type="number" name="bis" value="100">
+<input type="number" name="ab" value="10" onchange="saveAb(this);" /> - <input type="number" name="bis" value="100" onchange="saveBis(this);" />
 </div>
 </div><hr>
 <b>Your gender is</b>
 <div class="gender-wrapper">
-<div class="gender"><input name="mygender" type="radio" value="male" id="maleInput" checked/><label class="cntlbi" for="maleInput">&nbsp;male</label></div>
-<div class="gender"><input name="mygender" type="radio" value="female" id="femaleInput"/><label class="cntlbi" for="femaleInput">&nbsp;female</label></div>
+<div class="gender"><input name="mygender" type="radio" value="male" id="maleInput" checked onchange="saveMyGender(this);" /><label class="cntlbi" for="maleInput">&nbsp;male</label></div>
+<div class="gender"><input name="mygender" type="radio" value="female" id="femaleInput" onchange="saveMyGender(this);" /><label class="cntlbi" for="femaleInput">&nbsp;female</label></div>
 </div><hr>
 <b>You're a looking for a</b>
 <div class="gender-wrapper">
-<div class="gender"><input name="suechgender" type="radio" value="male" id="suechMaleInput"/><label class="cntlbi" for="suechMaleInput">&nbsp;male</label></div>
-<div class="gender"><input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked/><label class="cntlbi" for="suechFemaleInput">&nbsp;female</label></div>
+<div class="gender"><input name="suechgender" type="radio" value="male" id="suechMaleInput" onchange="saveSuechGender(this);" /><label class="cntlbi" for="suechMaleInput">&nbsp;male</label></div>
+<div class="gender"><input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked onchange="saveSuechGender(this);" /><label class="cntlbi" for="suechFemaleInput">&nbsp;female</label></div>
 </div>
 </div>
 <div id="landContainerBox">
@@ -152,7 +152,9 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 
 </div>
 </div>
+
 </form>
+<button onclick="closeSave(this);">close and save</button>
 </section>
 
 

@@ -17,7 +17,7 @@ var new_uri;
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
 
-
+var DATI = {};
 
 var con = {iceServers: [
 {   
@@ -616,7 +616,8 @@ function ongetLands(r){
 	//<div class="img-halter"><img onerror="this.style.display='none'" src="https://static.abstractapi.com/country-flags/${key}_flag.svg"></div>
 	let s='';
 		for(const [key, value] of Object.entries(r)){
-s+=`<section class="landsection"><div class="img-halter"><img src="https://flagcdn.com/w40/${key.toLowerCase()}.webp"/></div><label class="label-me"><span>${value}</span><input type="checkbox" value="${key}"></label></section><br>`;
+s+=`<section class="landsection"><div class="img-halter"><img src="https://flagcdn.com/w40/${key.toLowerCase()}.webp"/></div>
+<label class="label-me"><span>${value}</span><input type="checkbox" value="${key}" onchange="onLand(this);" /></label></section><br>`;
 	}
 	landContainer.innerHTML =  s;
 	getSuech(r);
@@ -625,7 +626,7 @@ s+=`<section class="landsection"><div class="img-halter"><img src="https://flagc
 function onErrLands(r){
 	alert("error " + r );
 }
-
+var landis;// = new Set();
 function getSuech(r){
 	let f = document.forms.suechform;
 	if(localStorage.getItem("myage")){
@@ -667,14 +668,26 @@ function getSuech(r){
 	try{
 		if(localStorage.getItem("lands")){
 			let a = JSON.parse(localStorage.getItem("lands")).lands;
+			//alert(a);
+			if(a.length > 0){
+				//alert(a);
+				landis = new Set(a);
 			for(const [key, value] of Object.entries(r)){
 				a.forEach(function(el, i){
-					if(value == el){
+					
+					if( el == key){
+						console.log(el, " : ", key);
 						let b = document.querySelector("input[value="+el+"]");
+						//alert(b);
 						b.checked = true;
 					}
 				});
 			}
+			}else{
+			landis = new Set(["all"]);
+			}
+		}else{
+			landis = new Set();
 		}
 	}catch(e){
 		alert(e);
@@ -683,16 +696,75 @@ function getSuech(r){
 
 
 
+function saveMyGender(el){
+	//alert(el.value);
+	if(el.value == "male"){
+		localStorage.setItem("mygender", "male");
+	}else{
+		localStorage.setItem("mygender", "female");
+	}
+	closeSave();
+}
 
+function saveSuechGender(el){
+	//alert(el.value);
+	if(el.value == "male"){
+		localStorage.setItem("suechgender", "male");
+	}else{
+		localStorage.setItem("suechgender", "female");
+	}
+	closeSave();
+}
 
+function saveMyAge(el){
+	localStorage.setItem("myage", el.value);
+	closeSave();
+}
+function saveAb(el){
+	localStorage.setItem("ab", el.value);
+	closeSave();
+}
+function saveBis(el){
+	localStorage.setItem("bis", el.value);
+	closeSave();
+}
+//var landis = new Set();
+function onLand(el){
+	if(el.checked){
+	landis.add(el.value);
+	if(landis.has("all")) landis.delete("all");
+}else{
+	landis.delete(el.value);
+	if(landis.size == 0) landis.add("all");
+}
+	try{
+		if(localStorage.getItem("lands")){
+			localStorage.removeItem("lands");
+		localStorage.setItem("lands", JSON.stringify({lands: Array.from(landis)}));
+	}else{
+		localStorage.setItem("lands", JSON.stringify({lands: Array.from(landis)}));
+	}
+	}catch(e){alert(e);}
+	//alert(Array.from(landis));
+	closeSave();
+}
 
-
-
-
-
-
-
-
+function closeSave(){
+	
+	try{
+	let f = document.forms.suechform;
+	
+	DATI.myage = f.myage.value;
+	DATI.ab = f.ab.value;
+	DATI.bis = f.bis.value;
+	DATI.mygender = f.mygender.value;
+	DATI.suechgender = f.suechgender.value;
+	DATI.countries = Array.from(landis);
+	console.log(DATI);
+}catch(e){
+	alert(e);
+}
+}
 
 
 
