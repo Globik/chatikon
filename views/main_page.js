@@ -56,7 +56,7 @@ ${n.ln=='zh'?'':'<a href="/zh" hreflang="zh">'}<img alt="中文网站" src="/ima
                </div>
 <h1>${n.ln=='ru'?'Анонимный видеочат':n.ln=='en'?'Free Random Video Chat':n.ln=='fr'?'Chatroulette Française':n.ln=='de'?'Deutsches ChatRoulette':n.ln=='es'?'Chatroulette español':n.ln=='zh'?'免费随机视频聊天':''}</h1>
 <h2>${n.ln=='ru'?'ЗНАКОМСТВА ОНЛАЙН':n.ln=='en'?'MEET NEW PEOPLE':n.ln=='de'?'NEUE LEUTE KENNENLERNEN':n.ln=='fr'?'Rencontrer de nouvelles personnes':n.ln=='es'?'Conoce gente nueva':n.ln=='zh'?'认识新朋友':''}</h2>
-<div id="startGet" class="langs">${n.ln=='ru'?'НАЧАТЬ ОБЩЕНИЕ':n.ln=='en'?'Start Chatting':n.ln=='fr'?'COMMENCER':n.ln=='de'?'ANFAMGEN':n.ln=='es'?'Empezar':n.ln=='zh'?'开始聊天':''}</div>
+<div id="startGet" class="langs" onclick="openSuechBox();">${n.ln=='ru'?'НАЧАТЬ ОБЩЕНИЕ':n.ln=='en'?'Start Chatting':n.ln=='fr'?'COMMENCER':n.ln=='de'?'ANFAMGEN':n.ln=='es'?'Empezar':n.ln=='zh'?'开始聊天':''}</div>
 <div class="terms">${n.ln=='ru'?'Нажимая кнопку «Начать..», я подтверждаю что мне <br>исполнилось 18 лет и я достиг совершеннолетия,<br> принимаю условия и политику конфеденциальности.':
 n.ln=='zh'?'点击开始，我声明我至少18岁，<br>已达到我所在地的法定年龄，<br>并接受我们的条款和隐私政策。':
 n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have reached the age of majority where I live, <br> and I accept our Terms and Privacy Policy.':''}</div>
@@ -120,51 +120,76 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 			</div>
 			</footer>	
 	</article>
-	<hr><button>${n.ln=='ru'?'Поиск':'Search'}</button><hr>
+	<hr>
+<section id="count">
+<div class="count">${n.ln=='ru'?'Сейчас онлайн':n.ln=='en'?'Users online':n.ln=='fr'?'Utilisateurs en ligne':n.ln=='de'?'Benutzer online':n.ln=='es'?'Usuarios en línea':n.ln=='zh'?'用户在线':''}: <span id="spanWhosOn">0</span></div>
+</section><hr>
+	<!-- ru, en, fr, de, es, zh -->
+<hr><button id="searchBtn" onclick="openSuechBox();">${n.ln=='ru'?'Поиск':n.ln=='en'?'Search':n.ln=='fr'?'Recherche':n.ln=='de'?'Suche':n.ln=='es'?'Buscar':n.ln=='zh'?'搜索':''}</button><hr>
 <section id="suechBox">
 <form name="suechform">
 <div class="gender-box">
-<b>Search info. Choose whome you wanna talk to</b>
+<b>${n.ln=='ru'?'Выберите с кем вы хотите поговорить':n.ln=='en'?'Choose who you want to talk to':n.ln=='fr'?'Choisissez à qui vous voulez parler':
+n.ln=='de'?'Wählen Sie aus, mit wem Sie sprechen möchten':
+n.ln=='es'?'Elige con quién quieres hablar':
+n.ln=='zh'?'选择您想与之交谈的人':''}</b>
 <div id="ageBox">
 <div class="age">
-<b>How old are you?</b>&nbsp;
-<input type="number" name="myage" value="18" onchange="saveMyAge(this);" />
+<b>${n.ln=='ru'?'Сколько вам лет?':n.ln=='en'?'How old are you?':n.ln=='fr'?'Quel âge as-tu?':
+n.ln=='de'?'Wie alt sind Sie?':
+n.ln=='es'?'¿Cuántos años tiene?':
+n.ln=='zh'?'你今年多大？':''}</b>&nbsp;
+<input type="number" name="myage" value="18" min="10" max="100" step="1" onchange="saveMyAge(this);" />
 </div>
 <div class="age">
-<b>You're looking for a human of age</b>&nbsp;
-<input type="number" name="ab" value="10" onchange="saveAb(this);" /> - <input type="number" name="bis" value="100" onchange="saveBis(this);" />
+<b>${n.ln=='ru'?'Вы ищете человека в возрасте от':n.ln=='en'?"You're looking for a human of age":n.ln=='fr'?"Vous cherchez un homme d'âge":
+n.ln=='de'?'Suechen Sie einen Mensch nach im Alter':
+n.ln=='es'?'Estas buscando una humana de edad':
+n.ln=='zh'?'您正在寻找同龄人':''}</b>&nbsp;
+<input type="number" id="minAb" name="ab" min="10" max="60" value="10"  step="1" onchange="saveAb(this);" /> - <input id="minBis" type="number" name="bis" value="100" step="1" min="20" max="100" onchange="saveBis(this);" />
 </div>
 </div><hr>
-<b>Your gender is</b>
+<b>${n.ln=='ru'?'Ваш пол':n.ln=='en'?'Your gender is':n.ln=='fr'?'Votre sexe est':
+n.ln=='de'?'Ihr Geschlecht ist':
+n.ln=='es'?'Tu genero es':
+n.ln=='zh'?'您的性别是':''}</b>
 <div class="gender-wrapper">
-<div class="gender"><input name="mygender" type="radio" value="male" id="maleInput" checked onchange="saveMyGender(this);" /><label class="cntlbi" for="maleInput">&nbsp;male</label></div>
-<div class="gender"><input name="mygender" type="radio" value="female" id="femaleInput" onchange="saveMyGender(this);" /><label class="cntlbi" for="femaleInput">&nbsp;female</label></div>
+<div class="gender"><input name="mygender" type="radio" value="male" id="maleInput" checked onchange="saveMyGender(this);" />
+<label class="cntlbi" for="maleInput">&nbsp;${n.ln=='ru'?'мужчина':n.ln=='en'?'male':n.ln=='fr'?'mâle':n.ln=='de'?'Mann':n.ln=='es'?'masculino':n.ln=='zh'?'男性':''}</label></div>
+<div class="gender"><input name="mygender" type="radio" value="female" id="femaleInput" onchange="saveMyGender(this);" />
+<label class="cntlbi" for="femaleInput">&nbsp;${n.ln=='ru'?'':n.ln=='en'?'female':n.ln=='fr'?'femelle':n.ln=='de'?'Frau':n.ln=='es'?'masculina':n.ln=='zh'?'女性':''}</label></div>
 </div><hr>
-<b>You're a looking for a</b>
+<b>${n.ln=='ru'?'Вы ищете':n.ln=='en'?"You're looking for a":n.ln=='fr'?'Vous cherchez un':n.ln=='de'?'Sie suchen nach einem':
+n.ln=='es'?'estas buscando un':
+n.ln=='zh'?'您正在寻找一个':''}</b>
 <div class="gender-wrapper">
-<div class="gender"><input name="suechgender" type="radio" value="male" id="suechMaleInput" onchange="saveSuechGender(this);" /><label class="cntlbi" for="suechMaleInput">&nbsp;male</label></div>
-<div class="gender"><input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked onchange="saveSuechGender(this);" /><label class="cntlbi" for="suechFemaleInput">&nbsp;female</label></div>
+<div class="gender"><input name="suechgender" type="radio" value="male" id="suechMaleInput" onchange="saveSuechGender(this);" />
+<label class="cntlbi" for="suechMaleInput">&nbsp;${n.ln=='ru'?'мужчину':n.ln=='en'?'male':n.ln=='fr'?'mâle':n.ln=='de'?'Mann':n.ln=='es'?'masculino':n.ln=='zh'?'男性':''}</label></div>
+<div class="gender"><input name="suechgender" type="radio" value="female" id="suechFemaleInput" checked onchange="saveSuechGender(this);" />
+<label class="cntlbi" for="suechFemaleInput">&nbsp;${n.ln=='ru'?'женщину':n.ln=='en'?'female':n.ln=='fr'?'femelle':n.ln=='de'?'Frau':n.ln=='es'?'masculina':n.ln=='zh'?'女性':''}</label></div>
 </div>
 </div>
 <div id="landContainerBox">
-<b>Choose a land</b><br><br>
+<b>${n.ln=='ru'?'Выберите страну':n.ln=='en'?'Choose a country':n.ln=='fr'?'Choisissez un pays':
+n.ln=='de'?'Wählen Sie ein Land':
+n.ln=='es'?'Elige un país':
+n.ln=='zh'?'选择一个国家':''}</b><br><br>
 <div id="landContainer">
 
 </div>
 </div>
 
 </form>
-<button onclick="closeSave(this);">close and save</button>
+<button id="btnClose" onclick="closeSave(this);">${n.ln=='ru'?'закрыть и сохранить':n.ln=='en'?'close and save':n.ln=='fr'?'fermer et enregistrer':n.ln=='de'?'schließen und speichern':
+n.ln=='es'?'cerrar y guardar':
+n.ln=='zh'?'关闭并保存':''}</button>
 </section>
 
 
 
 <section>
 
-<hr>
-<section id="count">
-<div class="count">${n.lang? "Сейчас" : "Users"} online: <span id="spanWhosOn">0</span></div>
-</section><hr>
+
 <article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles):''}</article>
 ${n.user && n.user.role=="admin"? `<div class="editbtn"><button onclick="editTxt(this);">edit</button></div>
 <section id="txtwrapper">

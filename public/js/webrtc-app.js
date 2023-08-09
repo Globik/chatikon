@@ -510,12 +510,14 @@ localVideo.onloadedmetadata = function () {
 	debug("Local video enabled.");
 	localVideoBox.className = "";
 	remoteVideoBox.className = "connecting";
-	wsend({type: "fertig"});
+	DATI.type = "fertig";
+	wsend(DATI);
 	//localVideo.unmuted = true;
 	if(timerIt){clearInterval(timerIt);}
 	 timerIt = setInterval(function(){
 		if(!targetId){
-			wsend({type: "fertig"});
+			DATI.type = "fertig";
+			wsend(DATI);
 		}
 	}, 5000);
 	}
@@ -607,7 +609,7 @@ function receiveChannelCb(event){
 	}
 
 function getLands(){
-		vax("get", "/json/en/country.json", {}, ongetLands, onErrLands, null, false);
+vax("get", `/json/${nstr=='ru'?'ru':nstr=='en'?'en':nstr=='de'?'de':nstr=='fr'?'fr':nstr=='es'?'es':nstr=='zh'?'zh':''}/country.json`, {}, ongetLands, onErrLands, null, false);
 }
 getLands();
 function ongetLands(r){
@@ -692,6 +694,7 @@ function getSuech(r){
 	}catch(e){
 		alert(e);
 	}
+	closeSave();
 }
 
 
@@ -721,10 +724,18 @@ function saveMyAge(el){
 	closeSave();
 }
 function saveAb(el){
+	if(Number(el.value) >= Number(minBis.value)){
+		el.value = el.value;
+		minBis.value = Number(minBis.value) + 10;
+	}
 	localStorage.setItem("ab", el.value);
 	closeSave();
 }
 function saveBis(el){
+	if(Number(el.value) <= Number(minAb.value)){
+		el.value = el.value;
+		minAb.value = Number(minAb.value) - 10;
+	}
 	localStorage.setItem("bis", el.value);
 	closeSave();
 }
@@ -749,7 +760,7 @@ function onLand(el){
 	closeSave();
 }
 
-function closeSave(){
+function closeSave(el){
 	
 	try{
 	let f = document.forms.suechform;
@@ -764,9 +775,16 @@ function closeSave(){
 }catch(e){
 	alert(e);
 }
+if(el){
+	suechBox.style.display = "none";
+	window.location.href = "#mediaBox";
+}
 }
 
-
+function openSuechBox(){
+	suechBox.style.display = "block";
+	window.location.href = "#suechBox";
+}
 
 
 

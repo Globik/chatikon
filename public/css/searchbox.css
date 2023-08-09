@@ -1,6 +1,7 @@
 #suechBox{
 	padding:20px;
 	margin:50px;
+	display:none;
 }
 .gender-box header{
 	line-height: 2;
@@ -63,6 +64,9 @@ div.gender{
 	}
 	#landContainer label input{
 		width: 15%;
+	}
+	#btnClose{
+		margin-top:10px;
 	}
 @media screen and (max-width: 501px){}
 /* planshet 451x641      */
