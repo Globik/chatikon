@@ -13,6 +13,7 @@ var loc1 = location.hostname + ":" + location.port;
 var loc2 = location.hostname;
 var loc3 = loc1 || loc2;
 var new_uri;
+var fasa;
 //const codecPreferences = gid("codecPreferences");
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
@@ -59,7 +60,7 @@ if (window.location.protocol === "https:") {
 }
 
 function get_socket() {
-  sock = new WebSocket(new_uri + "//" + loc3 + "/gesamt");
+ if(!sock) sock = new WebSocket(new_uri + "//" + loc3 + "/gesamt");
 
   sock.onopen = function () {
     console.log("websocket opened");
@@ -96,12 +97,16 @@ function on_msg(data) {
 	  flag.src = data.flag;
   }else if(data.type == "warte_offer"){
 	  console.warn("warte offer from: ", data.from, " du: ", clientId);
+	  if(fasa == make_offer) return;
+	  fasa = "warte_offer";
 	  debug("waiting offer from: " + data.from);
 	  debug("You are: " + clientId);
 	  targetId = data.from;
 	//  note({content: "Connecting a human.", type: "info", time: 5});
   }else if(data.type == "make_offer"){
 	  //note({content: "Connecting a human.", type: "info", time: 5});
+	  if(fasa == "warte_offer") return;
+	  fasa = "make_offer";
 	  console.warn("to:", data.target, " du: ", clientId);
 	  debug("making an offer to: " + data.target);
 	  debug("You are: " + clientId);
@@ -136,7 +141,11 @@ var ellang = document.querySelector("html");
 
 
 function letStart(el){
-	
+	if(!sock) {
+		//alert("!sock");
+		get_socket();
+		}
+		cloader.className = "";
 	if(FUCKER){
 		el.setAttribute("data-type", "weiter");
 		handleLeave();
@@ -169,6 +178,7 @@ function letStart(el){
 		stream.getTracks().forEach(function(track){
 			newStream.addTrack(track);
 		});*/
+	//	alert("go");
 	localVideo.srcObject = stream;	
 	window.streami = stream;
 
@@ -452,7 +462,22 @@ function onSignalingState(e){
 			
 		}).catch(handleError);
 	}
-	
+	function stopit(el){
+		if(localVideo.srcObject){
+		localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		});
+		}
+		if(timerIt){clearInterval(timerIt);}
+		handleLeave();
+		sock.close();
+		sock = null;
+		stopBtn.disabled = true;
+		btnStart.disabled = false;
+		btnStart.textContent = "start";
+		btnStart.setAttribute('data-type',"go" );
+		localVideo.srcObject = null;
+	}
 function handleLeave(e){
 	wsend({type: "bye", target: targetId});
 	
@@ -474,7 +499,7 @@ function handleLeave(e){
 	flag.src="";
 	remoteVideo.srcObject = null;
 		targetId = null;
-	
+	fasa = undefined;
     
     
     pc.ontrack = null;
@@ -519,7 +544,9 @@ localVideo.onloadedmetadata = function () {
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 5000);
+	}, 1000);
+	stopBtn.disabled = false;
+	cloader.className = "unspinner";
 	}
 remoteVideo.onloadedmetadata = function () {
 	debug("Remote video enabled.");

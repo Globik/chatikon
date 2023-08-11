@@ -63,7 +63,7 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
                </section>
 <article id="mediaBox">
 		<section id="videoBoxes">
-		<div id="localVideoBox" class="buddy"><video id="localVideo" autoplay muted></video></div>
+		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div><video id="localVideo" autoplay muted></video></div>
 		<div id="remoteVideoBox" class="buddy"><div id="flagbox"><img id="flag" src=""></div><video id="remoteVideo" autoplay></video></div>
 		</section>
         <footer id="controlPanel">
@@ -73,7 +73,10 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <div id="privatchat"></div>
 <div id="underchatbox"><input type="text" id="privatinput" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button></div>
 </div>
-<div class="flex-items"><button id="btnStart" class="btn" data-type="go" onclick="letStart(this);">${n.lang?"старт":"start"}</button></div>
+<div class="flex-items">
+<button id="btnStart" class="btn" data-type="go" onclick="letStart(this);">${n.lang?"старт":"start"}</button>
+<button id="stopBtn" class="btn" onclick="stopit(this);" disabled>stop</button>
+</div>
 <div class="flex-items control">
 <!-- <img onclick="openChat(this);" src="/images/chat.svg" title="chat"> -->
 
