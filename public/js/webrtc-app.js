@@ -14,6 +14,7 @@ var loc2 = location.hostname;
 var loc3 = loc1 || loc2;
 var new_uri;
 var fasa;
+var CONNECTED = false;
 //const codecPreferences = gid("codecPreferences");
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
@@ -36,14 +37,19 @@ var con = {iceServers: [
 	 ]}]
  };
 
+//45.89.66.167:5349 
 
-
-var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[{urls:["stun:45.89.66.167:3478"]},
+var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
+	{
+		urls:["stun:45.89.66.167:3478"]
+		},
 	{urls:[
 		"turn:45.89.66.167:3478?transport=udp",
-		//"turn:45.89.66.167:5349?transport=tcp"
+		"turn:45.89.66.167:3478?transport=tcp",
+		"turn:45.89.66.167:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
+		
 var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
 	{urls:["turn:127.0.0.1:3478?transport=udp",
 		"turn:127.0.0.1:5349?transport=tcp"
@@ -96,16 +102,22 @@ function on_msg(data) {
   }else if(data.type == "flag"){
 	  flag.src = data.flag;
   }else if(data.type == "warte_offer"){
-	  console.warn("warte offer from: ", data.from, " du: ", clientId);
-	  if(fasa == make_offer) return;
+	  console.warn("warte offer from: ", data.from, " du: ", clientId, " ", fasa);
+	   targetId = data.from;
+	  if(fasa && fasa === make_offer){
+		  console.warn("fasa", fasa);
+		   return;
+	   }
 	  fasa = "warte_offer";
+	  // targetId = data.from;
+	  //alert(targetId);
 	  debug("waiting offer from: " + data.from);
 	  debug("You are: " + clientId);
-	  targetId = data.from;
-	//  note({content: "Connecting a human.", type: "info", time: 5});
+	  
+	  note({content: "Connecting a human.", type: "info", time: 5});
   }else if(data.type == "make_offer"){
-	  //note({content: "Connecting a human.", type: "info", time: 5});
-	  if(fasa == "warte_offer") return;
+	  note({content: "Connecting a human.", type: "info", time: 5});
+	  if(fasa && fasa === "warte_offer") return;
 	  fasa = "make_offer";
 	  console.warn("to:", data.target, " du: ", clientId);
 	  debug("making an offer to: " + data.target);
@@ -123,7 +135,10 @@ function on_msg(data) {
   }else if(data.type == "candidate"){
 	  handleCandidate(data.candidate);
   }else if(data.type == "info"){
-	//  note({content: data.info, type: "info", time: 5});
+	  if(CONNECTED){
+		  return;
+	  }
+	  note({content: data.info, type: "info", time: 5});
   }else if(data.type == "bye"){
 	  console.log("*** BYE ***");
 	  handleLeave();
@@ -145,7 +160,7 @@ function letStart(el){
 		//alert("!sock");
 		get_socket();
 		}
-		cloader.className = "";
+	if(el.getAttribute("data-type") == "go")	cloader.className = "";
 	if(FUCKER){
 		el.setAttribute("data-type", "weiter");
 		handleLeave();
@@ -200,7 +215,8 @@ function letStart(el){
 	}else{
 		
 		if(el.getAttribute("data-type") == "weiter"){
-			
+			localVideoBox.className = "";
+			cloader.className = "unspinner";
 			handleLeave();
 		}else{}
 	}
@@ -428,6 +444,7 @@ function onConnectionStateChange(e){
 	debug('Connection state: ' + pc.connectionState);
 	if(pc.connectionState == "failed" || pc.connectionState == "closed"){
 		//pc.restartIce();
+		CONNECTED = false;
 		handleLeave();
 }
 }
@@ -447,12 +464,13 @@ function onSignalingState(e){
 				
 				remoteVideoBox.className = "";
 				btnStart.disabled = false;
-				
+				CONNECTED = true;
 		
  
 			}else if(pc.iceConnectionState == "failed" || pc.iceConnectionState == "disconnected"){
 				//pc.restartIce();
 				handleLeave();
+				CONNECTED = false;
 			}else{}
 		}
 	}
@@ -477,10 +495,12 @@ function onSignalingState(e){
 		btnStart.textContent = "start";
 		btnStart.setAttribute('data-type',"go" );
 		localVideo.srcObject = null;
+		remoteVideoBox.className = "buddy";
+		localVideoBox.className = "buddy";
 	}
 function handleLeave(e){
 	wsend({type: "bye", target: targetId});
-	
+	cloader.className = "unspinner";
 	
 	
 		if(!pc) return;
@@ -495,6 +515,7 @@ function handleLeave(e){
 		
 		
 		console.log("pc: ", pc.signalingState);
+		CONNECTED = false;
 		debug("pc: " + pc.signalingState);
 	flag.src="";
 	remoteVideo.srcObject = null;
@@ -518,6 +539,7 @@ function handleLeave(e){
 	wsend({type: "fertig"});
 	btnStart.disabled = true;
 	remoteVideoBox.className = "connecting";
+	cloader.className = "unspinner";
 	//channelKrug.classList.toggle("disabled");
 	debug("*************************************");
 	
@@ -544,14 +566,14 @@ localVideo.onloadedmetadata = function () {
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 1000);
+	}, 10000);
 	stopBtn.disabled = false;
 	cloader.className = "unspinner";
 	}
 remoteVideo.onloadedmetadata = function () {
 	debug("Remote video enabled.");
 	remoteVideoBox.className = "";
-	
+	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
 }
 
