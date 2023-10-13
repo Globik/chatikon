@@ -14,7 +14,8 @@ check if coturn running
 sudo ss -lnpt | grep turnserver
 
 in vi press i, then do change and press doubdle ctrl+C  and write and quite :wq
-
+const dkey = "/etc/letsencrypt/live/chatslider.online/privkey.pem";
+const dcert = "/etc/letsencrypt/live/chatslider.online/fullchain.pem";
 sudo vi /etc/turnserver.conf
 
 user=alik:1234
