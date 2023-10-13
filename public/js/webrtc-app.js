@@ -21,20 +21,15 @@ const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
 
 var DATI = {};
 
-var con = {iceServers: [
-{   
-	urls: [ "stun:fr-turn1.xirsys.com" ]
-	}, 
-	{   username: "sy6E_DhPdsS-mVCJVDwQfiGZzLrZ_0ldAHMSraAIu7Upm8iP8VBInygTyGwPpvLdAAAAAGQ79hJHbG9iaQ==",
-		   credential: "6eab5a34-dc59-11ed-9b35-0242ac120004",  
-		 urls: [       
-		 "turn:fr-turn1.xirsys.com:80?transport=udp",   
-		     "turn:fr-turn1.xirsys.com:3478?transport=udp",    
-		    "turn:fr-turn1.xirsys.com:80?transport=tcp",     
-		   "turn:fr-turn1.xirsys.com:3478?transport=tcp",     
-		   "turns:fr-turn1.xirsys.com:443?transport=tcp",  
-	     "turns:fr-turn1.xirsys.com:5349?transport=tcp"  
-	 ]}]
+var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
+	 {   username: "sy6E_DhPdsS-mVCJVDwQfiGZzLrZ_0ldAHMSraAIu7Upm8iP8VBInygTyGwPpvLdAAAAAGQ79hJHbG9iaQ==", 
+		   credential: "6eab5a34-dc59-11ed-9b35-0242ac120004", 
+		     urls: [       "turn:fr-turn1.xirsys.com:80?transport=udp",     
+		       "turn:fr-turn1.xirsys.com:3478?transport=udp",     
+		         "turn:fr-turn1.xirsys.com:80?transport=tcp",    
+		            "turn:fr-turn1.xirsys.com:3478?transport=tcp",   
+		                "turns:fr-turn1.xirsys.com:443?transport=tcp",  
+	     "turns:fr-turn1.xirsys.com:5349?transport=tcp"   ]}]
  };
 
 //45.89.66.167:5349 
@@ -57,7 +52,7 @@ var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478
 		,username:"alik",credential:"1234"}]};
 
 
-var config = conis;
+var config = con;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
