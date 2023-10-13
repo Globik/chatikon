@@ -36,12 +36,12 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 
 var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
-		urls:["stun:45.89.66.167:3478"]
+		urls:["stun:45.89.66.167:5349"]
 		},
 	{urls:[
 		"turn:45.89.66.167:3478?transport=udp",
-		"turn:45.89.66.167:3478?transport=tcp",
-		"turn:45.89.66.167:5349?transport=tcp"
+	//	"turn:45.89.66.167:3478?transport=udp",
+		"turn:45.89.66.167:5349?transport=udp"
 		]
 		,username:"alik",credential:"1234"}]};
 		
@@ -52,7 +52,7 @@ var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478
 		,username:"alik",credential:"1234"}]};
 
 
-var config = con;
+var config = conis;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
