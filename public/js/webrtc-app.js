@@ -33,13 +33,20 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
  };
 
 //45.89.66.167:5349 
+/*
+	
+0.060	srflx	284386497	udp	77.222.113.209	59584	100 | 32542 | 255	stun:45.89.66.167:80	
+0.131	host	1866265727	tcp	192.168.0.106	9	90 | 32542 | 255		
+0.456	Authentication failed?
+0.455	relay	3426018743	udp	45.89.66.167	56327	2 | 32543 | 255	turn:45.89.66.167:80?transport=udp	udp
 
+*/
 var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
-		urls:["stun:45.89.66.167:3478"]
+		urls:["stun:45.89.66.167:80"]
 		},
 	{urls:[
-		"turn:45.89.66.167:3478?transport=udp",
+		"turn:45.89.66.167:80?transport=udp",
 	//	"turn:45.89.66.167:3478?transport=tcp",
 		//"turn:45.89.66.167:5349?transport=udp"
 		]
