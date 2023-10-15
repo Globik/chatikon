@@ -43,12 +43,12 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 */
 var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
-		urls:["stun:45.89.66.167:80"]
+		urls:["stun:45.89.66.167:5349"]
 		},
 	{urls:[
 		"turn:45.89.66.167:80?transport=udp",
 	//	"turn:45.89.66.167:3478?transport=tcp",
-		//"turn:45.89.66.167:5349?transport=udp"
+		"turn:45.89.66.167:5349?transport=udp"
 		]
 		,username:"alik",credential:"1234"}]};
 		
