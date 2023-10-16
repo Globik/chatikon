@@ -444,6 +444,17 @@ function onNegotiation(e){
 function onConnectionStateChange(e){
 	console.log('connection state: ' + pc.connectionState);
 	debug('Connection state: ' + pc.connectionState);
+	
+	if(pc.connectionState=="connected"){
+	/*			
+ let iceTransport = pc.getSenders[0].transport.iceTransport;
+ iceTransport.addEventListener("selectedcandidatepairchange", function(ev){
+	 let pair=iceTransport.getSelectedCandidatePair();
+	 debug("local protocol " + pair.local.protocol);
+	 debug("remote protocol: " + pair.remote.protocol);
+ }, false);
+ */
+	}
 	if(pc.connectionState == "failed" || pc.connectionState == "closed"){
 		//pc.restartIce();
 		CONNECTED = false;
@@ -467,7 +478,9 @@ function onSignalingState(e){
 				remoteVideoBox.className = "";
 				btnStart.disabled = false;
 				CONNECTED = true;
-		
+
+ 
+ 
  
 			}else if(pc.iceConnectionState == "failed" || pc.iceConnectionState == "disconnected"){
 				//pc.restartIce();
@@ -577,7 +590,22 @@ remoteVideo.onloadedmetadata = function () {
 	remoteVideoBox.className = "";
 	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
+					
+ let iceTransport = pc.getSenders().map(sender=>{
+	 console.warn(sender);
+	 if(sender.transport){
+		 var iceTransport=sender.transport.iceTransport;
+ iceTransport.addEventListener("selectedcandidatepairchange", function(ev){
+	 let pair=iceTransport.getSelectedCandidatePair();
+	 debug("local protocol " + pair.local.protocol);
+	 debug("remote protocol: " + pair.remote.protocol);
+ }, false);
+ let pair=iceTransport.getSelectedCandidatePair();
+	 debug("local protocol " + pair.local.candidate);
+	 debug("remote protocol: " + pair.remote.candidate);
 }
+})} 
+
 
 
 
