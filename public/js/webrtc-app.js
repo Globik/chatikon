@@ -198,7 +198,7 @@ function letStart(el){
 		
 	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
 	if(!localVideo.srcObject){
-		
+		document.body.click();
 	if(el.getAttribute("data-type") == "go"){
 		/*let newStream = new MediaStream();
 		stream.getTracks().forEach(function(track){
