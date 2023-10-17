@@ -6,6 +6,9 @@ sudo apt install coturn
 sudo vi /etc/default/coturn
 uncomment
 TURNSERVER_ENABLED=1
+sudo mv /etc/turnserver.conf /etc/turnserver.old
+sudo touch /etc/turnserver.conf
+
 systemctl start coturn
 or
 sudo service coturn restart 
@@ -20,11 +23,29 @@ sudo vi /etc/turnserver.conf
 
 user=alik:1234
 realm=example.com
-listnening-ip=YOUR_IP
-relay-ip=YOUR_IP
+listening-ip=141.8.195.180 
+listening-ip=2a0a:2b41:b:d50c::64
+
+relay-ip=141.8.195.180
+listening-port=80
+tls-listening-port=443
 fingerprint
-It-cred-mech  
+lt-cred-mech  
 cli-password=qwerty
+
+cert=/root/fullchain.pem
+
+# Private key file.
+# Use an absolute path or path relative to the 
+# configuration file.
+# Use PEM file format.
+#
+pkey=/root/privkey.pem
+
+
+
+Ctrl+C CTRL+c
+shift :wq enter
 
 ```
 ```
