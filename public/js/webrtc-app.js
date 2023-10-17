@@ -52,22 +52,26 @@ var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 		]
 		,username:"alik",credential:"1234"}]};
 		
+		
 var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
 	{urls:["turn:127.0.0.1:3478?transport=udp",
 		"turn:127.0.0.1:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
 //141.8.195.180
-var conis2 = {/*iceTransportPolicy:"relay",*/"iceServers":[
+var conis2 = {iceServers":[
 	{
-		urls:["stun:141.8.195.180:80"]
+		urls:["stun:141.8.195.180:443"]
 		},
 	{urls:[
-		//"turn:45.89.66.167:80?transport=udp",
 	
-		"turn:141.8.195.180:443?transport=tcp"
+	
+		"turn:141.8.195.180:443?transport=udp"
 		]
 		,username:"alik",credential:"1234"}]};
+		//var pc = new RTCPeerConnection(conis2);
+		
+		
 var config = conis2;
 console.log(config);
 if (window.location.protocol === "https:") {
