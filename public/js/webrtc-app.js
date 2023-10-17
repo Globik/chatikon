@@ -59,7 +59,7 @@ var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478
 		]
 		,username:"alik",credential:"1234"}]};
 //141.8.195.180
-var conis2 = {iceServers":[
+var conis2 = {iceServers:[
 	{
 		urls:["stun:141.8.195.180:443"]
 		},
@@ -69,7 +69,7 @@ var conis2 = {iceServers":[
 		"turn:141.8.195.180:443?transport=udp"
 		]
 		,username:"alik",credential:"1234"}]};
-		//var pc = new RTCPeerConnection(conis2);
+	
 		
 		
 var config = conis2;
