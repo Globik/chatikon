@@ -196,12 +196,15 @@ function letStart(el){
       sampleSize: 16
     }, 
 	video: {deviceId: videoInput ? {exact: videoInput} : undefined,
-		width:320, height:240, frameRate:15}
+		width:320, height:240, 
+	//	frameRate:15
+		}
 		};
 		
 		let constraints = { audio: true, video: true };
-		try{
+		/*try{
 		let supportedConstraints=navigator.mediaDevices.getSupportedConstraints();
+	
 		for(const constraint in supportedConstraints){
 			if(Object.hasOwn(supportedConstraints, constraint)){
 			//	debug(constraint);
@@ -209,7 +212,7 @@ function letStart(el){
 		}
 	}catch(e){
 		console.error(e);
-	}
+	}*/
 	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
 	if(!localVideo.srcObject){
 		document.body.click();
@@ -399,7 +402,7 @@ function doPeer(){
 		dc.onopen = onChannelState;
 		dc.onclose = onChannelState;
 		dc.onmessage = onReceiveMsg;
-		try{
+		/*try{
 let vtr=pc.addTransceiver("video");
 var pv=vtr.sender.getParameters();
 pv.encodings[0].maxBitrate=1000*1000;
@@ -411,7 +414,7 @@ ap.encodings[0].maxBitrate=128*1000;
 atr.sender.setParameters(ap);
 }catch(e){
 	alert(e);
-}
+}*/
 	}
 
 
