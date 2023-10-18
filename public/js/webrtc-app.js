@@ -47,8 +47,8 @@ var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 		},
 	{urls:[
 		"turn:45.89.66.167:80?transport=udp",
-	//	"turn:45.89.66.167:3478?transport=tcp",
-		"turn:45.89.66.167:5349?transport=tcp"
+		"turn:45.89.66.167:433?transport=tcp",
+	//	"turn:45.89.66.167:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
 		
@@ -64,9 +64,7 @@ var conis2 = {iceServers:[
 		urls:["stun:141.8.195.180:443"]
 		},
 	{urls:[
-	
-	
-		"turn:141.8.195.180:443?transport=udp"
+		"turn:141.8.195.180:443?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
 	
