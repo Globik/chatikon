@@ -185,7 +185,7 @@ function letStart(el){
 	
 	let abba =  (abb ? {deviceId: abb} : true);
 	
-		
+		//\n  "width": 320,\n  "height": 240,\n  "frameRate": 30\n}
 		let constraintsi = {
 		audio:{
       echoCancellation: true,
@@ -195,11 +195,21 @@ function letStart(el){
       sampleRate:48000,
       sampleSize: 16
     }, 
-	video: {deviceId: videoInput ? {exact: videoInput} : undefined}
+	video: {deviceId: videoInput ? {exact: videoInput} : undefined,
+		width:320, height:240, frameRate:15}
 		};
 		
 		let constraints = { audio: true, video: true };
-		
+		try{
+		let supportedConstraints=navigator.mediaDevices.getSupportedConstraints();
+		for(const constraint in supportedConstraints){
+			if(Object.hasOwn(supportedConstraints, constraint)){
+			//	debug(constraint);
+			}
+		}
+	}catch(e){
+		console.error(e);
+	}
 	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
 	if(!localVideo.srcObject){
 		document.body.click();
@@ -389,7 +399,19 @@ function doPeer(){
 		dc.onopen = onChannelState;
 		dc.onclose = onChannelState;
 		dc.onmessage = onReceiveMsg;
+		try{
+let vtr=pc.addTransceiver("video");
+var pv=vtr.sender.getParameters();
+pv.encodings[0].maxBitrate=1000*1000;
+vtr.sender.setParameters(pv);
 
+let atr=pc.addTransceiver("audio");
+let ap=atr.sender.getParameters();
+ap.encodings[0].maxBitrate=128*1000;
+atr.sender.setParameters(ap);
+}catch(e){
+	alert(e);
+}
 	}
 
 
@@ -421,13 +443,13 @@ function addStream({ track, streams }){
 		if(remoteVideo.srcObject){return;}
 	remoteVideo.srcObject = streams[0];
 		//return false;
-	}
+	}/*
 	streams[0].onremovetrack = ({ track }) => {
     debug(track.kind + " track was removed.");
     if (!streams[0].getTracks().length) {
       debug("stream " + streams[0].id + " emptied (effectively removed).");
     }
-  };
+  };*/
 	}
 	
 
@@ -467,6 +489,36 @@ function onConnectionStateChange(e){
 	 debug("remote protocol: " + pair.remote.protocol);
  }, false);
  */
+ /*
+ try{
+ setInterval(function(){
+	 if(!pc){return;}
+	 
+	 try{
+		const sender=pc.getSenders()[0]; 
+		const parameters=sender.getParameters();
+		const bandwidth=calculateBandwidth();
+		parameters.encodings[0].maxBitrate=bandwidth;
+		sender.setParameters(parameters);
+	 }catch(e){
+		// alert(e);
+		console.error(e);
+	 }
+ },1000);
+ 
+ function calculateBandwidth(){
+	 const connection=navigator.connection;
+	 const bandwidth=connection.downlink*1000;
+	 return bandwidth;
+ }
+ 
+}catch(e){
+	console.error(e);
+}
+ */
+ 
+ 
+ 
 	}
 	if(pc.connectionState == "failed" || pc.connectionState == "closed"){
 		//pc.restartIce();
@@ -603,7 +655,7 @@ remoteVideo.onloadedmetadata = function () {
 	remoteVideoBox.className = "";
 	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
-					
+		/*			
  let iceTransport = pc.getSenders().map(sender=>{
 	 console.warn(sender);
 	 if(sender.transport){
@@ -616,8 +668,8 @@ remoteVideo.onloadedmetadata = function () {
  let pair=iceTransport.getSelectedCandidatePair();
 	 debug("local protocol " + pair.local.candidate);
 	 debug("remote protocol: " + pair.remote.candidate);
-}
-})} 
+}*/
+} 
 
 
 
@@ -642,7 +694,7 @@ var brows = adapter.browserDetails.browser;
 console.log(brows);
 var vers = adapter.browserDetails.version;
 console.log(vers);
-//debug("<b>Your browser, version:</b> " + brows + " " + vers);
+debug("<b>Your browser, version:</b> " + brows + " " + vers);
 
 
 function openChat(el){

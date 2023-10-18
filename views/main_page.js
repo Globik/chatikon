@@ -63,8 +63,8 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
                </section>
 <article id="mediaBox">
 		<section id="videoBoxes">
-		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div><video id="localVideo" autoplay muted></video></div>
-		<div id="remoteVideoBox" class="buddy"><div id="flagbox"><img id="flag" src=""></div><video id="remoteVideo" autoplay></video></div>
+		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div><video id="localVideo" plysinline autoplay muted></video></div>
+		<div id="remoteVideoBox" class="buddy"><div id="flagbox"><img id="flag" src=""></div><video id="remoteVideo" playsinline autoplay></video></div>
 		</section>
         <footer id="controlPanel">
         
