@@ -64,6 +64,7 @@ const dkey = "/etc/letsencrypt/live/chatslider.online/privkey.pem";
 const dcert = "/etc/letsencrypt/live/chatslider.online/fullchain.pem";
 // scp /etc/letsencrypt/live/chatslider.online/privkey.pem root@188.127.249.119:/root
 // scp /etc/letsencrypt/live/chatslider.online/fullchain.pem root@188.127.249.119:/root
+// scp /var/log/syslog 
 const db = {};
 
 const app = new Koa();
