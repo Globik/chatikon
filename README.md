@@ -45,6 +45,10 @@ sudo ss -lnpt | grep turnserver
  Должен быть выхлоп о том какие порты сервер слушает
 
 ```
+stun:stun.l.google.com:19202
+
+
+
 ```
 
 	curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -

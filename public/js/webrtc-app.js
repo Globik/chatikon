@@ -43,12 +43,12 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 */
 var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
-		urls:["stun:45.89.66.167:5349"]
+		urls:["stun:45.89.66.167:80"]
 		},
 	{urls:[
-		"turn:45.89.66.167:80?transport=udp",
+	//	"turn:45.89.66.167:80?transport=udp",
 	//	"turn:45.89.66.167:433?transport=tcp",
-	//	"turn:45.89.66.167:5349?transport=tcp"
+		"turn:45.89.66.167:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
 		
@@ -61,7 +61,7 @@ var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478
 //141.8.195.180
 var conis2 = {iceServers:[
 	{
-		urls:["stun:141.8.195.180:443"]
+		urls:["stun:141.8.195.180:80"]
 		},
 	{urls:[
 		"turn:141.8.195.180:443?transport=tcp"
@@ -656,7 +656,7 @@ remoteVideo.onloadedmetadata = function () {
 	remoteVideoBox.className = "";
 	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
-		/*			
+				
  let iceTransport = pc.getSenders().map(sender=>{
 	 console.warn(sender);
 	 if(sender.transport){
@@ -669,8 +669,8 @@ remoteVideo.onloadedmetadata = function () {
  let pair=iceTransport.getSelectedCandidatePair();
 	 debug("local protocol " + pair.local.candidate);
 	 debug("remote protocol: " + pair.remote.candidate);
-}*/
-} 
+}
+})} 
 
 
 
