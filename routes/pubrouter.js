@@ -6,8 +6,10 @@ var secret="secret";
 //const jwt = require('koa-jwt')({secret});
 const pub = new Router();
 const jwt=require('jsonwebtoken');
+const passport = require('koa-passport');
 
 pub.get('/', async ctx=>{
+	console.log("STATE USER:", ctx.state.user);
 	let  dbm = ctx.dbm;
 	let c;
 	let a;let b;
@@ -73,10 +75,7 @@ pub.get('/zh', async ctx=>{
 	}catch(e){console.log(e);}
 	ctx.body = await ctx.render('main_page', {ln: "zh",  articles: c});
 })
-pub.get('/login', async ctx=>{
-	
-	ctx.body = await ctx.render('login', {});
-})
+
 
 pub.get('/guests', async ctx=>{
 	let  { db } = ctx.db;
@@ -122,29 +121,97 @@ pub.post("/saveEdit", async ctx=>{
 	ctx.body={lang};
 })
 
+pub.get('/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'en' });
+}else{
+	 return ctx.redirect('/');
+}
+})
 
-pub.post('/auth', async(ctx)=>{
-	let {username, password} = ctx.request.body;
-	console.log('username:', username, "pwd: ", password);
-	if(username === "dima" && password === "1234"){
-		const token=jwt.sign({name:username, role:"admin"} ,'secret', {expiresIn:'1h'});
-		//const token = sign({username, test: "admin"}, 'secret', {expiresIn:'1h'});
-		ctx.cookies.set("alik",token, {});
-		ctx.body = {info: "ok",token}
-		//ctx.body={token:jwt.issue({user:"user", role: 'admin'})}
-		//ctx.state.user={user:"user", role:"admin"}
-		//console.log("USER: ", ctx.state.user);
-	}else{
-		
-		ctx.body= {message:'param error'}
-	}
+
+pub.get('/ru/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'ru' });
+}else{
+	 return ctx.redirect('/');
+}
 })
-/*
-pub.get('/fuck', jwt, async(ctx, next)=>{
-	//ctx.body = await ctx.render('userinfo', {username:ctx.state.user.username})
-	ctx.body={username:ctx.state.user.username}
+
+
+pub.get('/de/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'de' });
+}else{
+	 return ctx.redirect('/');
+}
 })
-*/ 
+
+
+
+pub.get('/fr/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'fr' });
+}else{
+	 return ctx.redirect('/');
+}
+})
+
+
+pub.get('/es/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'es' });
+}else{
+	 return ctx.redirect('/');
+}
+})
+
+pub.get('/zh/login', async ctx=>{
+	console.log("is auth? ", ctx.isAuthenticated());
+	 if (!ctx.isAuthenticated()) {
+	ctx.body = await ctx.render('login', { ln: 'zh' });
+}else{
+	 return ctx.redirect('/');
+}
+})
+
+pub.post('/login', async(ctx, next)=>{
+	 if (!ctx.isAuthenticated()) {
+		   return passport.authenticate('local', function (err, user, info) {
+			   console.log("err ", err,"user ", user, "info", info,);
+			      if (err) {
+                    ctx.body = {success: false, info: err.message};
+                    ctx.throw(500, err.message);
+                }
+                if (user === false) {
+                    ctx.body = {success: false, info: info.message}
+                   // ctx.throw(401, info.message)
+                } else {
+                    ctx.body = {
+                        success: true,
+                        info: info.message,
+                        nick: info.nick,
+                        id: info.id,
+                        redirect:/*ctx.session.dorthin ||*/ '/'
+                    }
+                    return ctx.login(user)
+                }
+		   })(ctx, next)
+	 }else{
+		 ctx.throw(409, "Already athenticated!")
+	 }
+})
+
+pub.get('/logout', ctx => {
+    ctx.logout();
+    ctx.redirect('/');
+});
+
 module.exports = pub;
 
 function auth(ctx, next) {

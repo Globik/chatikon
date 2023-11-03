@@ -5,14 +5,16 @@ const LocalStrategy = require('passport-local').Strategy;
 module.exports = (db, passport)=>{
 
 passport.serializeUser((user,done)=>{
-	//console.log('in serialize USERA: ',user);
+	console.log('in serialize USERA: ',user);
 done(null,user.id)
 })
 
 passport.deserializeUser(async (id, done)=>{
+	console.log("IN deSerialize ", id);
+	done(null,{user:"dima", id: 1, role:"admin"})
 try{
-const luser = await db.query('select id, bname, brole from buser where id=$1', [ id ])
-done(null,luser.rows[0])
+//const luser = await db.query('select id, bname, brole from buser where id=$1', [ id ])
+
 }catch(e){
 done(e)
 }
@@ -20,20 +22,25 @@ done(e)
 
 passport.use(new LocalStrategy({usernameField:'username',passwordField:'password'}, (username, password, done)=>{
 	console.log("USERNAME AND PASSWORD: ",username,password);
-process.nextTick(async()=>{ 
-	try{ 
-let user=await db.query('select id from buser where bname=$1 and pwd=$2',[username, password]) 
-if(!user.rows[0]){return done(null, false, {message:'Неправильный ник или пароль! Wrong nickname or password!'})} 
-await db.query('update buser set ll=now() where bname=$1', [username]); return done(null,user.rows[0],{message: 
-'Авторизация прошла успешно! Successful! ', nick: username, id: user.rows[0].id}) }catch(err){return done(err)} }) }))
+	/*try{ 
+     let user = await db.query('select id from buser where bname=$1 and pwd=$2',[username, password]) 
+if(!user.rows[0]){
+	return done(null, false, {message:'Неправильный ник или пароль! Wrong nickname or password!'})}
+	 
 
-const nicky=email=>{return email.substring(0,email.indexOf("@"))}
-const smsg='ОК, вы создали аккаунт успешно. Successful!'
-const get_str=n=>`insert into buser(pwd, bname, email) values(${n.password}, ${n.username}, ${n.email}) returning id`;
-//  insert into buser(pwd,bname) values(crypt('1234', gen_salt('bf',8)),'lo');
-passport.use('local-signup',new LocalStrategy({usernameField: 'username', passReqToCallback: true},(req,username, password, done)=>{
+await db.query('update buser set ll=now() where bname=$1', [username]); 
+return done(null,user.rows[0],{message: 'Авторизация прошла успешно! Successful! ', nick: username, id: user.rows[0].id}) 
+	}catch(err){
+		return done(err)
+		} 
+*/
+return done(null, {user: username, id: 1},{message:"ok", status:200})
+	}))
+
+
+passport.use('local-signup',new LocalStrategy({usernameField: 'username', passReqToCallback: true}, async(req,username, password, done)=>{
 if(!req.body.username){return done(null,false,{message: "missing username", code:'1'})}	
-process.nextTick(async()=>{
+//process.nextTick(async()=>{
 try{
 	console.log(username,password);
 	console.log('req.body: ', req.body);
@@ -63,7 +70,7 @@ return done(null,useri.rows[0],{message: smsg, username: username,user_id:useri.
 	return done(err)
 	}
 }				 
-})
+//})
 }))
 }
 /*

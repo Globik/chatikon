@@ -1,7 +1,7 @@
 var Router=require('koa-router');
 const jwt=require('jsonwebtoken');
 const  passport=require('koa-passport');
-const router=new Router()
+const user=new Router()
 
 /*
 router.post('/auth', async ctx=>{
@@ -14,9 +14,9 @@ router.post('/auth', async ctx=>{
 	ctx.body={info:"ok", token:token}
 })
 */ 
-router.get('/current',passport.authenticate('jwt', {session:false}), async ctx=>{
+user.get('/current',passport.authenticate('jwt', {session:false}), async ctx=>{
 	console.log("STATE USER: ", ctx.state.user);
 	
 	ctx.body=ctx.state.user
 })
-module.exports=router.routes()
+module.exports= user;

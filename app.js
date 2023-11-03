@@ -58,8 +58,7 @@ const pg_opts = {
 const pool = new Pool(pg_opts);
 //const pg_store = new PgStore(pool);
 
-//const dkey = "./data/key.pem";
-//const dcert = "./data/cert.pem";
+
 const dkey = "/etc/letsencrypt/live/chatslider.online/privkey.pem";
 const dcert = "/etc/letsencrypt/live/chatslider.online/fullchain.pem";
 // scp /etc/letsencrypt/live/chatslider.online/privkey.pem root@188.127.249.119:/root
@@ -75,21 +74,20 @@ var HTTP_PORT;
 if (process.env.DEVELOPMENT == "yes") {
   HTTP_PORT = 3000;
 }
-const router = new KoaRouter()
+//const router = new KoaRouter()
 app.keys = ["your-secret"];
 app.use(serve(__dirname + "/public"));
-//app.use(session({store: pg_store, maxAge: 24 * 60 * 60 * 1000}, app))
-//app.use(jwt.errorhandler()).use(jwt.jwt());
+app.use(session({ maxAge: 24 * 60 * 60 * 1000}, app))
+
 render(app, {
   root: "views",
   development: process.env.DEVELOPMENT == "yes" ? false : false,
 });
 app.use(koaBody());
+require('./config/auth.js')(db, passport)
 app.use(passport.initialize())
 app.use(passport.session())
-//require('./config/auth.js')(pool, passport)
-require('./jwt.js')(passport)
-const user=require('./routes/api');
+
 
 //app.use(passport.initialize())
 //app.use(passport.session())
@@ -160,8 +158,7 @@ async function setDb(){
 	}
 }
 setDb();
-//app.use(passport.initialize());
-//app.use(passport.session())
+
 db.db = new Datastore({filename: "db.json", autoload: true})
 db.articles = new Datastore({filename: "articles.json", autoload: true})
 //const dbm=client.db('globi');
@@ -178,28 +175,15 @@ app.use(async (ctx, next) => {
   console.log("IP: ", ctx.request.ip);
   var langstr = (ctx.request.header['accept-language'] ? ctx.request.header['accept-language'].includes('ru') : false);
   ctx.state.lang = langstr;
-  let m=ctx.cookies.get('alik');
-  console.log("MMMM: ", m);
-  
-  try{
-	  let d=jwt.verify(m, 'secret');
-	  console.log('DDDDDDDD', d);
-	  ctx.state.user={name:d.name,role:d.role};
-	  ctx.isAuthenticated = true;
-  }catch(err){}
-  try {
-    await next();
-  } catch (e) {
-    console.log("middleware error: ", e);
-    //await next();
-  }
+ try{
+	 await next();}catch(e){
+		 console.log(e);
+	 }
 });
-router.use('/api/users', user)
-app.use(pubrouter.routes()).use(pubrouter.allowedMethods());
 
+app.use(pubrouter.routes()).use(pubrouter.allowedMethods());
 app.use(adminrouter.routes()).use(adminrouter.allowedMethods());
-//app.use(jwt.errorhandler()).use(jwt.jwt());
-app.use(router.routes()).use(router.allowedMethods())
+
 app.on("error", function (err, ctx) {
   console.log("APP ERROR: ", err.message, "ctx.url : ", ctx.url);
 });

@@ -15,20 +15,20 @@ const login = function (n) {
 <head>${html_head.html_head({
 		title: `${n.site} - login`,csslink: "/css/main2.css", luser: buser})}
 		<link href="/css/login.css" rel="stylesheet">
-		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+	<!--	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
 		</head>
 		<body><nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 		<main id="pagewrap">
-		<button onclick="subscribeWebpush(this);">subscribe</button>
+		<!-- <button onclick="subscribeWebpush(this);">subscribe</button> -->
 		<hr><div id="out"></div>
 		<div id="formWrapper">
-		<div id="myform" name="mform" action="/auth" method="post">
+		<div id="myform" name="mform" action="/login" method="post">
 		<div class="input"><input type="text" id="name" name="username"></div>
 		<div class="input"><input type="password" id="password" name="password"></div>
 		<div class="input submit"><input type="submit" value="log in" name="lsubmit" onclick="go_login(this);"></div>		
 		</div>
 	</div>
-		</main><script src="/js/push.js"></script></body></html>`;
+		</main> <script src="/js/push.js"></script> </body></html>`;
 	}
 	module.exports = { login: login }
 		

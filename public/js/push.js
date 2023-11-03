@@ -1,3 +1,4 @@
+/*
 function subscribeWebpush(el) {
     el.className = "puls";
     var OneSignal = window.OneSignal || [];
@@ -41,7 +42,7 @@ function subscribeWebpush(el) {
         });
 
     });
-}
+}*/
 function logp(t) {
     let out = gid("out");
     if (out) {
@@ -56,7 +57,7 @@ function go_login(ev){
 let data = {};
 data.username = 'dima';//name.value;
 data.password = '1234';//password.value;
-vax('post', '/auth', data, on_login, on_login_error, ev, false);
+vax("post", "/login", data, on_login, on_login_error, ev, false);
 //ev.disabled = true;
 //ev.lsubmit.className = "puls";	
 }catch(e){alert(e);console.log(e);}

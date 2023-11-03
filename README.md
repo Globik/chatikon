@@ -34,6 +34,10 @@ cli-password=qwerty
   Берем откуда либо сертификаты
 cert=/root/fullchain.pem
 pkey=/root/privkey.pem
+
+sudo ufw allow 8443/tcp
+sudo ufw allow 8443/udp
+
 Выходим из редактора и сохраняем файл
 Ctrl+C CTRL+c
 shift :wq enter
@@ -43,10 +47,15 @@ turnserver
  В другом терминале роверяем работает ли сервер
 sudo ss -lnpt | grep turnserver
  Должен быть выхлоп о том какие порты сервер слушает
+ 
+ sudo systemctl start cotourn
+ sudo systemctl enable cotourn
+ systemctl status cotourn
 
 ```
-stun:stun.l.google.com:19202
 
+stun:stun.l.google.com:19202
+prflx 
 
 
 ```
