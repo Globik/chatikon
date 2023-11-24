@@ -34,7 +34,8 @@ return done(null,user.rows[0],{message: 'Авторизация прошла у�
 		return done(err)
 		} 
 */
-return done(null, {user: username, id: 1},{message:"ok", status:200})
+//return done(null, {user: username, id: 1},{message:"ok", status:200})
+return done(null, false, {message:'Wrong nickname or password!', status:401 })
 	}))
 
 

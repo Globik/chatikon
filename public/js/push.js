@@ -58,22 +58,23 @@ let data = {};
 data.username = 'dima';//name.value;
 data.password = '1234';//password.value;
 vax("post", "/login", data, on_login, on_login_error, ev, false);
-//ev.disabled = true;
-//ev.lsubmit.className = "puls";	
+ev.className = "puls";	
+ev.disabled=true;
 }catch(e){alert(e);console.log(e);}
 return false;
 }
 function on_login(l, ev){
 	token=l.token;
 	//alert(JSON.stringify(l));
-	
-//	ev.lsubmit.className = "";
-var sessRed = gid('sessRed');
+	//return;
+	ev.className = "";
+//var sessRed = gid('sessRed');
 //if_cont(sessRed,'green', 'red');
 
 //sessRed.innerHTML = l.info;
 //window.location.href = "#.";
 in_rem_hash();
+if(l.status == 200){
 setTimeout(function(){
 if(window.location.pathname == "/login"){
 window.location.href = "/";	
@@ -81,25 +82,33 @@ window.location.href = "/";
 //location.reload();
 }
 },1);
+}else if(l.status== 401){
+	put();
+	ev.disabled = false;
+}
 }
 function on_login_error(l, ev){
-	ev.lsubmit.className = "";
+	ev.className = "";
 	ev.disabled = false;
-	alert(l);
-//gid("sessRed").innerHTML =  l;
+	out.innerHTML = '<span class="error">' + l + '</span>';
+
 }
-async function fuck(){
-	//alert(token);
-	 const response = await fetch("http://localhost:3000/api/users/current", {
-		  method:'GET',
-		  headers: {
-			  'Content-Type': 'application/json',
-            "Authorization": `Bearer ${token}`
-            }
-            });
-  const jsonData = await response.json();
-  console.log(jsonData);
-  alert(jsonData);
+
+function put(){
+	var ln = lang;
+	if(ln == 'ru'){
+		out.innerHTML = '<span class="error">Неверный ник или пароль!</span>';
+	}else if(ln == 'en'){
+		out.innerHTML = '<span class="error">Wrong login or password!</span>';
+	}else if(ln == 'de'){
+		out.innerHTML = '<span class="error">Falscher Login oder Passwort!</span>';
+	}else if(ln == 'es'){
+		out.innerHTML = '<span class="error">¡Usuario o contraseña incorrectos!</span>';
+	}else if(ln == 'fr'){
+		out.innerHTML = '<span class="error">Identifiant ou mot de passe incorrect!</span>';
+	}else if(ln == 'zh'){
+		out.innerHTML = '<span class="error">登录名或密码错误！</span>';
+	}else{}
 }
 
 

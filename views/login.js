@@ -20,8 +20,9 @@ const login = function (n) {
 		<body><nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 		<main id="pagewrap">
 		<!-- <button onclick="subscribeWebpush(this);">subscribe</button> -->
-		<hr><div id="out"></div>
+		<script>const lang = "${n.ln}";</script>
 		<div id="formWrapper">
+		<output id="out"></output>
 		<div id="myform" name="mform" action="/login" method="post">
 		<div class="input"><input type="text" id="name" name="username"></div>
 		<div class="input"><input type="password" id="password" name="password"></div>

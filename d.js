@@ -16,7 +16,7 @@ const url2="https://api.bitaps.com/btc/testnet/v1/create/wallet";
 const url3="https://api.bitaps.com/eth/testnet/v1/create/wallet";
 const url4="https://api.bitaps.com/eth/v1/create/wallet";
 //data.password='1234';
-//axios.post(url1,data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
+//axios.post(url2,data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er)})
 /*
 data:  {
   wallet_id: 'BTCuVrMTsR8yzfpnc34QxMmK4BPXsMWfiqDjuf7ziK6yP3Z4SnaWA',
@@ -40,8 +40,8 @@ data:  {
 
 */
 const url5="https://api.bitaps.com/btc/v1/create/wallet/payment/address";
-data.wallet_id='BTCuVrMTsR8yzfpnc34QxMmK4BPXsMWfiqDjuf7ziK6yP3Z4SnaWA';
-//axios.post(url5,data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
+data.wallet_id='ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS';
+axios.post(url5,data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
 /*
  data:  {
   invoice: 'invQ957bZKbon1uvLbFfssKuiNLFfu9vDMFxiWtJ7bJN99us8fdG4',
@@ -66,31 +66,46 @@ console.log(sig);
 
 /*
  data:  {
-  wallet_id: 'ETHvB3XDzAJS36gSTGxi9G198AKysri9KAKDYvTJR7gWYCAuVkUHB',
+ wallet_id: 'ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS',
   currency: 'tETH',
   warning: 'Wallet without password is not secure'
+
 }
 */
 const url7="https://api.bitaps.com/eth/testnet/v1/create/wallet/payment/address";
-data.wallet_id='ETHvB3XDzAJS36gSTGxi9G198AKysri9KAKDYvTJR7gWYCAuVkUHB';
+data.wallet_id='ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS';
 
 //axios.post(url7, data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
 
 /*
  data:  {
-  invoice: 'invPLNWXuK9y3RoAPWtTD8mT4A1iPguxdUG7S4m5kvV1YY84ANGti',
-  payment_code: 'PMTuCdrZrWeKtYnQ79miNMv1z6Ek2tyG9PwRJPWEMyRnE9S52vL2T',
-  address: '0x5AE1e4b52ACc12E9dF6B236E155EE63Cdc1c5fa2',
+ invoice: 'invPTxry5YigbYmkvurXxcgU1XRJt5paRTnDEcTXGS9bvuStk5pUh',
+  payment_code: 'PMTur7Hz8Z6G5vMPHZezzGQNWiVPvhZEukbPGLvU1LoRPzmeFee1k',
+  address: '0x0C9Ea1bD4Eb304220f41d759266B5619D2e98cd7',
   confirmations: 12,
   callback_link: '',
-  wallet_id: 'ETHvB3XDzAJS36gSTGxi9G198AKysri9KAKDYvTJR7gWYCAuVkUHB',
+  wallet_id: 'ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS',
   currency: 'tETH'
+
+
+
+ invoice: 'invPyrEJR3LLtUNRXcg3DAQNgHbJTi3EQ9VVmazmiGdJPHewVMXSw',
+  payment_code: 'PMTvCiu8qjfTXafhh7jSf4sayVn3LSwhAYJ9CbMiikynSePzF9CVd',
+  address: '0xb788EC04C0BBdBB61FbCC0E418D2590A06e64c65',
+  confirmations: 12,
+  callback_link: '',
+  wallet_id: 'ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS',
+  currency: 'tETH'
+
+
+
+
 }
 */
 const url8="https://api.bitaps.com/eth/testnet/v1/create/payment/address";
 //data.callback_link=
 data.forwarding_address='0x5AE1e4b52ACc12E9dF6B236E155EE63Cdc1c5fa2'
-axios.post(url8, data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
+//axios.post(url8, data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
 
 /*
  data:  {
@@ -110,6 +125,44 @@ const url9="https://api.bitaps.com/eth/testnet/v1/wallet/send/payment/"+ data.wa
 data.message={"format":"text","payload":"some text"};
 
 //axios.post(url9, data).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er.name)})
+
+
+
+
+
+var walletid= 'ETHuwgjQXAJn9Up9zzbsJq9RGDFvAw9qKNe738ESo7G5KY77eLdRS';
+
+const url10="https://api.bitaps.com/eth/testnet/v1/wallet/state/"+walletid;
+
+axios.get(url10 /*,{headers:{'Access-Nonce':'111','Access-Signature':sig}}*/).then(d=>{console.log("data: ",d.data)}).catch(function(er){console.log('err: ',er)})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

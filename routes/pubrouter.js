@@ -185,16 +185,17 @@ pub.post('/login', async(ctx, next)=>{
 		   return passport.authenticate('local', function (err, user, info) {
 			   console.log("err ", err,"user ", user, "info", info,);
 			      if (err) {
-                    ctx.body = {success: false, info: err.message};
+                   // ctx.body = {success: false, info: err.message,status: 500};
                     ctx.throw(500, err.message);
                 }
                 if (user === false) {
-                    ctx.body = {success: false, info: info.message}
+                    ctx.body = {success: false, info: info.message, status: info.status}
                    // ctx.throw(401, info.message)
                 } else {
                     ctx.body = {
                         success: true,
                         info: info.message,
+                        status: info.status,
                         nick: info.nick,
                         id: info.id,
                         redirect:/*ctx.session.dorthin ||*/ '/'
