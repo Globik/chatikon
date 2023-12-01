@@ -22,7 +22,7 @@ ${n.csslink ? `<link href="${n.csslink}" rel="stylesheet">` :''}
 ${n.csslink2 ? `<link href="${n.csslink2}" rel="stylesheet">` : ''}
 ${n.cssl ? get_cssl(n) : ''}
 ${n.csshelper ? `<style>${ n.csshelper }</style>`:''}
-<link href="/css/mediabox.css" rel="stylesheet">
+
 <script>
 var flexsupport=false;
 var html=document.getElementsByTagName("html")[0],dtct=document.createElement('div');

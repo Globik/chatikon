@@ -28,6 +28,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 			}),
 		csslink: "/css/main2.css", luser: buser
 	})}
+	<link href="/css/mediabox.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/searchbox.css">
 	<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 	<style>

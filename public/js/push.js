@@ -50,6 +50,14 @@ function logp(t) {
     }
 }
 var token;
+function someFocus(ev){
+	out.innerHTML="";
+}
+note({
+	content:window.innerWidth + " x " + window.innerHeight,
+	type:"info",
+	time:10
+});
 function go_login(ev){
 	
 //	ev.preventDefault();

@@ -22,12 +22,18 @@ const login = function (n) {
 		<!-- <button onclick="subscribeWebpush(this);">subscribe</button> -->
 		<script>const lang = "${n.ln}";</script>
 		<div id="formWrapper">
-		<output id="out"></output>
+		<header>Log in</header>
+		<div id="out"></div>
 		<div id="myform" name="mform" action="/login" method="post">
-		<div class="input"><input type="text" id="name" name="username"></div>
-		<div class="input"><input type="password" id="password" name="password"></div>
+		<div class="input">
+		<label class="llabel" for="named">Your nick:</label>
+		<input type="text" id="named" name="username" required autocomplete="given-name" onfocus="someFocus(this);"></div>
+		<div class="input">
+		<label class="llabel" for="password">Password:</label>
+		<input type="password" id="password" name="password" required onfocus="someFocus(this);"></div>
 		<div class="input submit"><input type="submit" value="log in" name="lsubmit" onclick="go_login(this);"></div>		
 		</div>
+		<div class="vergessen"><small class="vergessen2">Forgot a password? <a href="/signup">Create a new account!</a></small></div>
 	</div>
 		</main> <script src="/js/push.js"></script> </body></html>`;
 	}
