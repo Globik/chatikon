@@ -41,7 +41,8 @@ width:25%;
 	margin-left:10px;
 	margin-right:10px;
 	padding: 5px;
-	
+	position:relative;
+	display:block;
 }
 .llabel{
 	display:block;
@@ -52,22 +53,31 @@ input[type=password],input[type=text]{
 	height:40px;
 	width:100%;
 	font-size:18px;
-	
-	padding:5px;
+		padding:5px;
 }
 .input.submit {
-
 display:flex;
 align-items:flex-end;
  flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
-    padding-bottom:1rem;12q
+    padding-bottom:1rem;
 }
-input[type=submit]{
-lign-self:flex-end;
+
+#eyesvg{
+    display: block;
+    position: absolute;
+    color: red;
+    width: 37px;
+    height: 37px;
+    background-image: url(/images/eye.svg);
+    right: 0.4rem;
+    bottom: 0.3rem;
+    cursor: pointer;
+    
 }
+
 @media screen and (max-width: 897px){
 	body{
 		background:green;
@@ -86,8 +96,8 @@ lign-self:flex-end;
 		width: 90%;
 	}
 }
-
-@media screen and (max-height: 642px) and (orientation: landscape){
+/* 723 */ 
+@media screen and (max-height: 452px) and (orientation: landscape){
 	body{
 		background:brown;
 	}

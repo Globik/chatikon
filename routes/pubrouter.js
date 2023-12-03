@@ -7,6 +7,7 @@ var secret="secret";
 const pub = new Router();
 const jwt=require('jsonwebtoken');
 const passport = require('koa-passport');
+const { oni } = require('../libs/web_push.js');
 
 pub.get('/', async ctx=>{
 	console.log("STATE USER:", ctx.state.user);
@@ -129,7 +130,9 @@ pub.get('/login', async ctx=>{
 	 return ctx.redirect('/');
 }
 })
-
+pub.get('/signup', async ctx=>{
+	ctx.body = await ctx.render('signup', { ln: 'en' });
+})
 
 pub.get('/ru/login', async ctx=>{
 	console.log("is auth? ", ctx.isAuthenticated());
@@ -212,6 +215,70 @@ pub.get('/logout', ctx => {
     ctx.logout();
     ctx.redirect('/');
 });
+
+pub.post('/signup', (ctx, next) => {
+
+    if (ctx.isAuthenticated()) {
+        
+            return ctx.redirect('/')
+        
+    }
+   // let t = ctx.transporter;
+    return passport.authenticate('local-signup', async (err, user, info) => {
+        console.log(err, user, info)
+
+        if (user) {
+            oni(info.username, "just signed up.");
+         /*   t.sendMail({
+                from: "",
+                to: info.email,
+                subject: 'Welcome to the CHELIKON!',
+                html: WELCOME({nick: info.username, id: info.user_id}).html
+            }, (err, info) => {
+                console.log('info  mail: ', info)
+                if (err) {
+                    console.log(err);
+                }
+            })*/
+        }
+
+
+       // if (ctx.state.xhr) {
+            
+            if (err) {
+                ctx.throw(409, err.message)
+            }
+
+            if (!user) {
+                ctx.body = {success: false, message: info.message, status: info.status }
+            } else {
+                ctx.body = {
+                    success: true,
+                    message: info.message,
+                    username: info.username,
+                    status: info.status,
+                    redirect:/*ctx.session.dorthin ||*/ '/'
+                }
+               // if (info.items > 0) ctx.session.bmessage = {info: "promo"};
+                return ctx.login(user)
+            }
+     /*   } else {
+            if (err) {
+                ctx.session.bmessage = {success: false, message: err.message};
+                return ctx.redirect('/signup');
+            }
+            if (!user) {
+                ctx.session.bmessage = {success: false, message: info.message, code: info.code, bcode: info.bcode}
+                ctx.redirect('/signup')
+            } else {
+                ctx.session.bmessage = {success: true, msg: info.message}
+                ctx.redirect('/')
+                return ctx.login(user)
+            }
+        }*/
+    })(ctx, next)
+})
+
 
 module.exports = pub;
 

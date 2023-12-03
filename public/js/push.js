@@ -43,6 +43,15 @@ function subscribeWebpush(el) {
 
     });
 }*/
+
+let fs = document.forms.mforms;
+let f = document.forms.mform;
+if(f){
+	f.onsubmit = go_login;
+}
+if(fs){
+	fs.onsubmit = go_signup;
+	}
 function logp(t) {
     let out = gid("out");
     if (out) {
@@ -54,40 +63,34 @@ function someFocus(ev){
 	out.innerHTML="";
 }
 note({
-	content:window.innerWidth + " x " + window.innerHeight,
+	content:rbody.clientWidth + " x " + rbody.clientHeight,
 	type:"info",
 	time:10
 });
 function go_login(ev){
 	
-//	ev.preventDefault();
+	ev.preventDefault();
 	try{
 let data = {};
-data.username = 'dima';//name.value;
-data.password = '1234';//password.value;
-vax("post", "/login", data, on_login, on_login_error, ev, false);
-ev.className = "puls";	
-ev.disabled=true;
+data.username = ev.target.username.value;
+data.password = ev.target.password.value;
+vax(ev.target.method, ev.target.action, data, on_login, on_login_error, ev.target.lsubmit, false);
+ev.target.lsubmit.className = "puls";	
+ev.target.lsubmit.disabled = true;
 }catch(e){alert(e);console.log(e);}
 return false;
 }
 function on_login(l, ev){
 	token=l.token;
-	//alert(JSON.stringify(l));
-	//return;
 	ev.className = "";
-//var sessRed = gid('sessRed');
-//if_cont(sessRed,'green', 'red');
 
-//sessRed.innerHTML = l.info;
-//window.location.href = "#.";
 in_rem_hash();
 if(l.status == 200){
 setTimeout(function(){
 if(window.location.pathname == "/login"){
 window.location.href = "/";	
 }else{
-//location.reload();
+
 }
 },1);
 }else if(l.status== 401){
@@ -102,6 +105,36 @@ function on_login_error(l, ev){
 
 }
 
+function go_signup(ev){
+	
+	ev.preventDefault();
+	try{
+let data = {};
+data.username = ev.target.username.value;
+data.password = ev.target.password.value;
+//alert(JSON.stringify(data)+ev.target.action+ev.target.method);
+vax(ev.target.method, ev.target.action, data, on_signup, on_signup_error, ev.target.lsubmit, false);
+ev.target.lsubmit.className = "puls";	
+ev.target.lsubmit.disabled=true;
+}catch(e){alert(e);console.log(e);}
+return false;
+}
+function on_signup(l, ev){
+	ev.className = "";
+	if(l.status == 200){
+		window.location.href= "/";
+	}else if(l.status== 401){
+	//put();
+	out.innerHTML = '<span class="error">' + l.message + '</span>';
+	ev.disabled = false;
+}
+	
+}
+function on_signup_error(l, ev){
+	ev.className = "";
+	ev.disabled = false;
+	out.innerHTML = '<span class="error">' + l + '</span>';
+}
 function put(){
 	var ln = lang;
 	if(ln == 'ru'){
@@ -120,7 +153,13 @@ function put(){
 }
 
 
-
+function show_pwd(el){
+if(password.value){
+if(password.type == "password"){
+password.type = "text";
+}else{password.type = "password"}
+}
+}
 
 
 

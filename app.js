@@ -75,6 +75,15 @@ if (process.env.DEVELOPMENT == "yes") {
   HTTP_PORT = 3000;
 }
 //const router = new KoaRouter()
+
+const murl = 'mongodb://localhost:27017';
+const client = new MongoClient(murl);
+const dbname = 'globi';
+var dbm = client.db(dbname);
+
+main();
+
+
 app.keys = ["your-secret"];
 app.use(serve(__dirname + "/public"));
 app.use(session({ maxAge: 24 * 60 * 60 * 1000}, app))
@@ -84,7 +93,7 @@ render(app, {
   development: process.env.DEVELOPMENT == "yes" ? false : false,
 });
 app.use(koaBody());
-require('./config/auth.js')(db, passport)
+require('./config/auth.js')(dbm, passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -103,17 +112,17 @@ app.use(async(ctx, next)=>{
 	await next();
 })
 */
-const murl='mongodb://localhost:27017';
-const client=new MongoClient(murl);
-const dbname='globi';
-const dbm=client.db(dbname);
+
 var articles;
 var mobi={};
 //mobi.articles=dbm.collection('articles');
 async function main(){
-	const dbm=client.db('globi');
-	
+	//dbm=client.db('globi');
+	try{
 	await client.connect();
+}catch(err){
+	console.log(err);
+}
 	//mobi.articles=dbm.collection('articles');
 	//articles=dbm.collection('articles');
 	//const ins=await articles.insertMany([{a:1},{a:2}]);
@@ -132,7 +141,7 @@ async function main(){
 	*/
 	return 'done'
 }
-main().then(console.log).catch(console.error).finally(()=>{});
+//main().then(console.log).catch(console.error).finally(()=>{});
 
 
 async function setDb(){

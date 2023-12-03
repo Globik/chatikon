@@ -39,39 +39,31 @@ return done(null, false, {message:'Wrong nickname or password!', status:401 })
 	}))
 
 
-passport.use('local-signup',new LocalStrategy({usernameField: 'username', passReqToCallback: true}, async(req,username, password, done)=>{
-if(!req.body.username){return done(null,false,{message: "missing username", code:'1'})}	
+passport.use('local-signup', new LocalStrategy({usernameField: 'username', passReqToCallback: true}, async(req,username, password, done)=>{
+if(!req.body.username || !password){return done(null,false,{message: "Missing credentials", status: 401 })}	
 //process.nextTick(async()=>{
 try{
 	console.log(username,password);
 	console.log('req.body: ', req.body);
-	console.log('email? :', req.body.email)
-var useri = await db.query(get_str({ password:'$1', username:'$2', email:'$3' }),
-[ password, req.body.username, req.body.email ])
-console.log('USER.rows[0]: ', useri.rows[0])
-return done(null,useri.rows[0],{message: smsg, username: username,user_id:useri.rows[0].id, email:req.body.email })
+	//console.log('email? :', req.body.email)
+var useri = await db.collection('users').findOne({'name': username });
+//await db.query(get_str({ password:'$1', username:'$2', email:'$3' }),[ password, req.body.username, req.body.email ])
+console.log('USER.rows[0]: ', useri)
+if(!useri) {
+	console.log("Not found user")
+	let qu = await db.collection('users').insertOne({name: username, pwd: password, role:'buser',ef: 0, b: 0});
+	console.log('qu: ', qu);
+}
+return done(null, false, { message: "Username already in use!", status: 401 })
+//return done(null,useri.rows[0],{message: smsg, username: username,user_id:useri.rows[0].id, email:req.body.email })
 }catch(err){
 	console.log('custom error handling in local signup auth.js: ', err.message);
-	if(err.code === '23505'){
-		let dru = '';let bcode = 0;
-		if(err.detail.includes('name')){
-			dru = 'Такой ник уже есть! This nick is already in use!';
-			bcode = 1;
-		}else if(err.detail.includes('email')){
-			dru = 'Такой адрес уже есть! The email already exists. ';
-			bcode = 2;
-		}else{
-			drue = err.message;
-		}
+
 		
-	return done(null,false, { message: dru, code: err.code, bcode: bcode})
-	}else if(err.code === '23514'){
-	return done(null,false, { message: 'Email validation failed', code: err.code, bcode: 3 })
-	}else{
-	return done(err)
-	}
+	return done(null, false, { message: err, status: 401 })
+	
 }				 
-//})
+
 }))
 }
 /*
