@@ -14,7 +14,7 @@ const icons_menu = n=>{
 </div>
 
 
-
+<!-- JSON.stringify(n.user)-->
 ${!n.user ? `<div class="flex-items-svgicons">
 	<div class="items-container"><a class="svg-nav-a" href="/login">
 <div class="icons-box">

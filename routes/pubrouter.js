@@ -256,6 +256,7 @@ pub.post('/signup', (ctx, next) => {
                     success: true,
                     message: info.message,
                     username: info.username,
+                    _id: info._id,
                     status: info.status,
                     redirect:/*ctx.session.dorthin ||*/ '/'
                 }

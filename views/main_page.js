@@ -47,7 +47,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
 
 <main id="pagewrap">
-    ${icons_menu.icons_menu({current:'main'})}
+    ${icons_menu.icons_menu({current:'main', user:buser})}
 <section id="langsbox">
  <div class="langs">
 ${n.ln=='en'?'':'<a href="/" hreflang="en">'} <img alt="English Version" src="/images/en.png" width="35" height="22"> ${n.ln=='en'?'':'</a>'}
@@ -65,6 +65,7 @@ ${n.ln=='zh'?'':'<a href="/zh" hreflang="zh">'}<img alt="中文网站" src="/ima
 n.ln=='zh'?'点击开始，我声明我至少18岁，<br>已达到我所在地的法定年龄，<br>并接受我们的条款和隐私政策。':
 n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have reached the age of majority where I live, <br> and I accept our Terms and Privacy Policy.':''}</div>
                </section>
+               <!-- JSON.stringify(n.user) -->
 <article id="mediaBox">
 		<section id="videoBoxes">
 		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div><video id="localVideo" plysinline autoplay muted></video></div>

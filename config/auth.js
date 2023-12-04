@@ -1,26 +1,27 @@
 const {promo_token} = require('./app.json');
 const LocalStrategy = require('passport-local').Strategy;
 //const FacebookStrategy=require('passport-facebook').Strategy;//zum Teufel
-
+const ObjectId = require('mongodb').ObjectId;
 module.exports = (db, passport)=>{
 
-passport.serializeUser((user,done)=>{
-	console.log('in serialize USERA: ',user);
-done(null,user.id)
+passport.serializeUser((_id,done)=>{
+	console.log('in serialize USERA: ', _id);
+done(null, _id)
 })
 
-passport.deserializeUser(async (id, done)=>{
-	console.log("IN deSerialize ", id);
-	done(null,{user:"dima", id: 1, role:"admin"})
+passport.deserializeUser(async (_id, done)=>{
+	console.log("IN deSerialize ", _id);
+	//done(null, user)
 try{
-//const luser = await db.query('select id, bname, brole from buser where id=$1', [ id ])
-
+const luser = await db.collection('users').findOne({ _id: new ObjectId(_id)})
+console.log("luser: ", luser)
+return done(null, luser)
 }catch(e){
-done(e)
+return done(e)
 }
 })
 
-passport.use(new LocalStrategy({usernameField:'username',passwordField:'password'}, (username, password, done)=>{
+passport.use(new LocalStrategy({usernameField:'username',passwordField:'password'}, async(username, password, done)=>{
 	console.log("USERNAME AND PASSWORD: ",username,password);
 	/*try{ 
      let user = await db.query('select id from buser where bname=$1 and pwd=$2',[username, password]) 
@@ -35,7 +36,19 @@ return done(null,user.rows[0],{message: 'Авторизация прошла у�
 		} 
 */
 //return done(null, {user: username, id: 1},{message:"ok", status:200})
+ try{
+	 let w=await db.collection('users').findOne({ name:username, pwd: password });
+	 console.log('w :', w);
+ 
+
+if(!w){
 return done(null, false, {message:'Wrong nickname or password!', status:401 })
+}else{
+	return done(null, w._id, { message: "ok", status:200, nick: w.name, id: w._id });
+}
+}catch(err){
+	return done(null, false, { message: err.message, status: 401 })
+}
 	}))
 
 
@@ -51,16 +64,18 @@ var useri = await db.collection('users').findOne({'name': username });
 console.log('USER.rows[0]: ', useri)
 if(!useri) {
 	console.log("Not found user")
-	let qu = await db.collection('users').insertOne({name: username, pwd: password, role:'buser',ef: 0, b: 0});
+	let qu = await db.collection('users').insertOne({name: username, pwd: password, role:'buser', ef: 0, b: 0});
 	console.log('qu: ', qu);
-}
-return done(null, false, { message: "Username already in use!", status: 401 })
+	return done(null, qu.insertedId, { username: username, _id: new ObjectId(qu.insertedId), status: 200, message: "Success!" });
+}else{
+return done(null, false, { message: "Username " + username + " already in use!", status: 401 })
 //return done(null,useri.rows[0],{message: smsg, username: username,user_id:useri.rows[0].id, email:req.body.email })
+}
 }catch(err){
 	console.log('custom error handling in local signup auth.js: ', err.message);
 
 		
-	return done(null, false, { message: err, status: 401 })
+	return done(null, false, { message: err.message, status: 401 })
 	
 }				 
 
