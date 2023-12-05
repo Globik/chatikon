@@ -1,4 +1,9 @@
-const {promo_token} = require('./app.json');
+//const {promo_token} = require('./app.json');
+const SALT = "fuck";
+const crypto = require('crypto');
+const scmp = require('scmp');
+const util = require("util");
+const  pbkdf2 = util.promisify(crypto.pbkdf2);
 const LocalStrategy = require('passport-local').Strategy;
 //const FacebookStrategy=require('passport-facebook').Strategy;//zum Teufel
 const ObjectId = require('mongodb').ObjectId;
@@ -14,8 +19,14 @@ passport.deserializeUser(async (_id, done)=>{
 	//done(null, user)
 try{
 const luser = await db.collection('users').findOne({ _id: new ObjectId(_id)})
-console.log("luser: ", luser)
-return done(null, luser)
+console.log("luser: ", luser);
+let buser = {};
+buser.name = luser.name;
+buser.role = luser.role;
+buser.ef = luser.ef;
+buser.b = luser.b;
+buser.id = luser._id;
+return done(null, buser)
 }catch(e){
 return done(e)
 }
@@ -37,14 +48,36 @@ return done(null,user.rows[0],{message: 'Авторизация прошла у�
 */
 //return done(null, {user: username, id: 1},{message:"ok", status:200})
  try{
-	 let w=await db.collection('users').findOne({ name:username, pwd: password });
+	 
+	 
+	 
+	 let a = await pbkdf2(Buffer.from(password), SALT, 10000, 64, 'sha512');	
+	let b = a.toString('base64');
+		console.log('b: ',  b);
+		let c = Buffer.from(b);
+		
+	 
+	 
+	 
+	 
+	 
+	 
+	 let w=await db.collection('users').findOne({ name:username });
 	 console.log('w :', w);
  
 
 if(!w){
 return done(null, false, {message:'Wrong nickname or password!', status:401 })
 }else{
-	return done(null, w._id, { message: "ok", status:200, nick: w.name, id: w._id });
+	if(scmp(c, Buffer.from(w.pwd))){
+			console.log('MATCH!');
+			return done(null, w._id, { message: "ok", status:200, nick: w.name, id: w._id });
+		}else{
+			console.log("NOT MATCH!");
+			return done(null, false, {message:'Wrong nickname or password!', status:401 })
+		}
+	 
+	
 }
 }catch(err){
 	return done(null, false, { message: err.message, status: 401 })
@@ -63,8 +96,10 @@ var useri = await db.collection('users').findOne({'name': username });
 //await db.query(get_str({ password:'$1', username:'$2', email:'$3' }),[ password, req.body.username, req.body.email ])
 console.log('USER.rows[0]: ', useri)
 if(!useri) {
-	console.log("Not found user")
-	let qu = await db.collection('users').insertOne({name: username, pwd: password, role:'buser', ef: 0, b: 0});
+	console.log("Not found user");
+	let a = await pbkdf2(Buffer.from(password), SALT, 10000, 64, 'sha512');	
+	let b64 = a.toString('base64');
+	let qu = await db.collection('users').insertOne({name: username, pwd: b64, role:'buser', ef: 0, b: 0});
 	console.log('qu: ', qu);
 	return done(null, qu.insertedId, { username: username, _id: new ObjectId(qu.insertedId), status: 200, message: "Success!" });
 }else{
@@ -86,3 +121,33 @@ return done(null, false, { message: "Username " + username + " already in use!",
 `You're almost finished.<br><br>
 We've sent an account activation email to you at <strong>the fuck you do</strong>.
 Head over to your inbox and click on the "Activate My Account" button to validate your email address.*/
+//console.log('pwd', Buffer.from('pwd').toString('utf-8'))
+/*
+crypto.randomBytes(16,(err, buf)=>{
+	if(err)console.log(err);
+	console.log('random: ', buf);
+crypto.pbkdf2(Buffer.from("pwd"), buf, 10000,64,'sha512',(er,res)=>{
+	if(er)console.log(err);
+	console.log('res: /', res.toString('base64'));
+	crypto.pbkdf2(Buffer.from("pwd"),buf,10000,64,'sha512',(er, resi)=>{
+		if(er)console.log(er);
+		resi.toString('base64')==res.toString('base64')?console.log('match!'):console.log('NOT MATCH!');
+	});
+})
+})*/
+
+async function mama(){
+	try{
+	let a = await pbkdf2(Buffer.from('pwd'), 'fuck',10000,64,'sha512');	
+	let b = a.toString('base64');
+		console.log('b: ',  b);
+		let c = Buffer.from(b);
+		console.log('c: ', c);
+		if(scmp(c, c)){
+			console.log('MATCH!');
+		}else{
+			console.log("NOT MATCH!");
+		}
+	}catch(e){console.log(e);}
+}
+//mama()

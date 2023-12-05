@@ -280,6 +280,17 @@ pub.post('/signup', (ctx, next) => {
     })(ctx, next)
 })
 
+pub.get('/ethereum', async ctx=>{
+	ctx.body = await ctx.render('ethereum', {});
+});
+
+pub.get('/bitcoin', async ctx=>{
+	ctx.body = await ctx.render('bitcoin', {});
+});
+
+pub.get('/purchase', async ctx=>{
+	ctx.body = await ctx.render('purchase', {});
+});
 
 module.exports = pub;
 
