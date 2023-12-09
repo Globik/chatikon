@@ -99,7 +99,7 @@ if(!useri) {
 	console.log("Not found user");
 	let a = await pbkdf2(Buffer.from(password), SALT, 10000, 64, 'sha512');	
 	let b64 = a.toString('base64');
-	let qu = await db.collection('users').insertOne({name: username, pwd: b64, role:'buser', ef: 0, b: 0});
+	let qu = await db.collection('users').insertOne({name: username, pwd: b64, role:'admin', ef: 0, b: 0});
 	console.log('qu: ', qu);
 	return done(null, qu.insertedId, { username: username, _id: new ObjectId(qu.insertedId), status: 200, message: "Success!" });
 }else{

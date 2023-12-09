@@ -59,7 +59,7 @@ ${n.ln=='zh'?'':'<a href="/zh" hreflang="zh">'}<img alt="中文网站" src="/ima
                </div>
            
 <h1>${n.ln=='ru'?'Анонимный видеочат':n.ln=='en'?'Free Random Video Chat':n.ln=='fr'?'Chatroulette Française':n.ln=='de'?'Deutsches ChatRoulette':n.ln=='es'?'Chatroulette español':n.ln=='zh'?'免费随机视频聊天':''}</h1>
-<h2>${n.ln=='ru'?'ЗНАКОМСТВА ОНЛАЙН':n.ln=='en'?'MEET NEW PEOPLE':n.ln=='de'?'NEUE LEUTE KENNENLERNEN':n.ln=='fr'?'Rencontrer de nouvelles personnes':n.ln=='es'?'Conoce gente nueva':n.ln=='zh'?'认识新朋友':''}</h2>
+<h2>${n.ln=='ru'?'ДРОЧИЛОВО ОНЛАЙН!':n.ln=='en'?'LOOKING FOR A GOOD TIME?':n.ln=='de'?'LUST JETZT?':n.ln=='fr'?'Rencontrer de nouvelles personnes':n.ln=='es'?'Conoce gente nueva':n.ln=='zh'?'认识新朋友':''}</h2>
 <div id="startGet" class="langs" onclick="openSuechBox();">${n.ln=='ru'?'НАЧАТЬ ОБЩЕНИЕ':n.ln=='en'?'Start Chatting':n.ln=='fr'?'COMMENCER':n.ln=='de'?'ANFAMGEN':n.ln=='es'?'Empezar':n.ln=='zh'?'开始聊天':''}</div>
 <div class="terms">${n.ln=='ru'?'Нажимая кнопку «Начать..», я подтверждаю что мне <br>исполнилось 18 лет и я достиг совершеннолетия,<br> принимаю условия и политику конфеденциальности.':
 n.ln=='zh'?'点击开始，我声明我至少18岁，<br>已达到我所在地的法定年龄，<br>并接受我们的条款和隐私政策。':

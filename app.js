@@ -215,9 +215,13 @@ if (process.env.DEVELOPMENT !== "yes") {
   console.log("Should or localhost, port: ", HTTP_PORT, " started.");
 }
 
-const wss = new WebSocket.Server({
-  server: servak,
-});
+
+
+
+const wss = new WebSocket.Server({ server: servak })
+
+
+
 
 function noop() {}
 
