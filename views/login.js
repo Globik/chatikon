@@ -15,11 +15,12 @@ const login = function (n) {
 <head>${html_head.html_head({
 		title: `${n.site} - login`,csslink: "/css/main2.css", luser: buser})}
 		<link href="/css/login.css" rel="stylesheet">
-	<!--	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
+		<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> 
 		</head>
 		<body id="rbody"><nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 		<main id="pagewrap">
-		<!-- <button onclick="subscribeWebpush(this);">subscribe</button> -->
+		 <button onclick="subscribeWebpush(this);">subscribe</button>
+		 <output id="out"></output>
 		<script>const lang = "${n.ln}";</script>
 		<div id="formWrapper">
 		<header>Log in</header>

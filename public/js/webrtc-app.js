@@ -432,7 +432,7 @@ function handleCandidate(candidate){
 	if(pc){
 		var cand = new RTCIceCandidate(candidate);
 		pc.addIceCandidate(candidate).then(function(){
-			//debug("Success candidate. " + JSON.stringify(candidate));
+			
 		}).catch(handleError);
 	}
 }

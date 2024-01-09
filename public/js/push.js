@@ -1,4 +1,4 @@
-/*
+
 function subscribeWebpush(el) {
     el.className = "puls";
     var OneSignal = window.OneSignal || [];
@@ -42,7 +42,7 @@ function subscribeWebpush(el) {
         });
 
     });
-}*/
+}
 
 let fs = document.forms.mforms;
 let f = document.forms.mform;
