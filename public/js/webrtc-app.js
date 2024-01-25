@@ -15,6 +15,11 @@ var loc3 = loc1 || loc2;
 var new_uri;
 var fasa;
 var CONNECTED = false;
+var btnStart = gid("btnStart");
+var localVideoBox = gid("localVideoBox");
+var cloader = gid('cloader');
+
+btnStart.addEventListener('click', letStart, false);
 //const codecPreferences = gid("codecPreferences");
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
@@ -173,9 +178,12 @@ function letStart(el){
 		//alert("!sock");
 		get_socket();
 		}
-	if(el.getAttribute("data-type") == "go")	cloader.className = "";
-	if(FUCKER){
-		el.setAttribute("data-type", "weiter");
+	if(el.target.getAttribute("data-type") == "go"){
+			cloader.className = "";
+
+}	
+if(FUCKER){
+		el.target.setAttribute("data-type", "weiter");
 		handleLeave();
 		return;
 	}
@@ -213,8 +221,8 @@ function letStart(el){
 	}*/
 	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
 	if(!localVideo.srcObject){
-		document.body.click();
-	if(el.getAttribute("data-type") == "go"){
+		//document.body.click();
+	if(el.target.getAttribute("data-type") == "go"){
 		/*let newStream = new MediaStream();
 		stream.getTracks().forEach(function(track){
 			newStream.addTrack(track);
@@ -225,11 +233,11 @@ function letStart(el){
 
 
 
-	el.setAttribute("data-type", "weiter");
-	el.disabled = true;
+	el.target.setAttribute("data-type", "weiter");
+	el.target.disabled = true;
 	
 	
-	el.textContent = nstr == "ru" ? "дальше" : "further";
+	el.target.textContent = nstr == "ru" ? "дальше" : "further";
 	
 	}else{
 		
@@ -250,6 +258,7 @@ function letStart(el){
 }
 
 function handleError(err){
+	alert(err);
 		note({"content": err, type: "error", time: 5});
 		debug("<b>Some error: </b>" + err);
 	}

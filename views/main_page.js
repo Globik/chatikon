@@ -79,7 +79,7 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <div id="underchatbox"><input type="text" id="privatinput" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button></div>
 </div>
 <div class="flex-items">
-<button id="btnStart" class="btn" data-type="go" onclick="letStart(this);">${n.lang?"старт":"start"}</button>
+<button id="btnStart" class="btn" data-type="go">${n.lang?"старт":"start"}</button>
 <button id="stopBtn" class="btn" onclick="stopit(this);" disabled>stop</button>
 </div>
 <div class="flex-items control">
