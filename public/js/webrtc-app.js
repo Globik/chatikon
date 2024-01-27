@@ -16,6 +16,10 @@ var new_uri;
 var fasa;
 var CONNECTED = false;
 var btnStart = gid("btnStart");
+var stopBtn = gid('stopBtn');
+var localVideo = gid('localVideo');
+var remoteVideo = gid("remoteVideo");
+var remoteVideoBox = gid("remoteVideoBox");
 var localVideoBox = gid("localVideoBox");
 var cloader = gid('cloader');
 
@@ -193,14 +197,14 @@ if(FUCKER){
 	
 		//\n  "width": 320,\n  "height": 240,\n  "frameRate": 30\n}
 		let constraintsi = {
-		audio:{
+		audio: false/*{
       echoCancellation: true,
       autoGainControl: true,
       noiseSuppression: true,
       channelCount: 1,
       sampleRate:48000,
       sampleSize: 16
-    }, 
+    }*/, 
 	video: {deviceId: videoInput ? {exact: videoInput} : undefined,
 		width:320, height:240, 
 	//	frameRate:15
@@ -248,7 +252,7 @@ if(FUCKER){
 	}
 	}else{
 		
-		if(el.getAttribute("data-type") == "weiter"){
+		if(el.target.getAttribute("data-type") == "weiter"){
 			localVideoBox.className = "";
 			cloader.className = "unspinner";
 			handleLeave();
