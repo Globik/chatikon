@@ -197,7 +197,7 @@ if(FUCKER){
 	
 		//\n  "width": 320,\n  "height": 240,\n  "frameRate": 30\n}
 		let constraintsi = {
-		audio: false/*{
+		audio: true/*{
       echoCancellation: true,
       autoGainControl: true,
       noiseSuppression: true,
