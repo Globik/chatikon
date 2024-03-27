@@ -58,7 +58,7 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 		urls:["stun:45.89.66.167:80"]
 		},
 	{urls:[
-	//	"turn:45.89.66.167:80?transport=udp",
+	"turn:45.89.66.167:80?transport=udp",
 	//	"turn:45.89.66.167:433?transport=tcp",
 		"turn:45.89.66.167:5349?transport=tcp"
 		]
@@ -126,7 +126,7 @@ var conis2 = {iceServers:[
 	
 		
 		
-var config = conis;
+var config = conis3;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
@@ -530,7 +530,7 @@ function addStream({ track, streams }){
 function iceCandidateError(e) {
 	console.error("ice err: ", e.url, e.errorText );
 	debug("<b>ice err:</b> " + e.url + " " + e.errorText );
-	//note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
+	note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
 }
 function onNegotiation(e){
 	console.log("negotiation needed.");
