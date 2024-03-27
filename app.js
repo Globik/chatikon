@@ -288,7 +288,7 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
 		  ws.busy = true;
 		  make_busy(b.clientId, ws);
 	  }else{
-		  wsend(ws, {type: "info", info: "No match found. Waiting, please."});
+		 // wsend(ws, {type: "info", info: "No match found. Waiting, please."});
 	  }
       sendToClients = 1;
     } else if (data.type == "unfertig") {

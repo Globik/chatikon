@@ -47,7 +47,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
 
 <main id="pagewrap">
-    ${icons_menu.icons_menu({current:'main', user:buser, ln: n.ln })}
+   
 <section id="langsbox">
  <div class="langs">
 ${n.ln=='en'?'':'<a href="/" hreflang="en">'} <img alt="English Version" src="/images/en.png" width="35" height="22"> ${n.ln=='en'?'':'</a>'}
@@ -65,6 +65,7 @@ ${n.ln=='zh'?'':'<a href="/zh" hreflang="zh">'}<img alt="中文网站" src="/ima
 n.ln=='zh'?'点击开始，我声明我至少18岁，<br>已达到我所在地的法定年龄，<br>并接受我们的条款和隐私政策。':
 n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have reached the age of majority where I live, <br> and I accept our Terms and Privacy Policy.':''}</div>
                </section>
+                ${icons_menu.icons_menu({current:'main', user:buser, ln: n.ln })}
                ${n.user?`<span class="username">${n.user.name}, welcome on board!</span>`:''}
 <article id="mediaBox">
 		<section id="videoBoxes">
@@ -79,11 +80,11 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <div id="underchatbox"><input type="text" id="privatinput" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button></div>
 </div>
 <div class="flex-items">
-<button id="btnStart" class="btn" data-type="go">${n.lang?"старт":"start"}</button>
-<button id="stopBtn" class="btn" onclick="stopit(this);" disabled>stop</button>
+<button id="btnStart" class="btn" data-type="go">${n.lang?"Старт":"Start"}</button>
+<button id="nextBtn" class="btn" disabled>${n.lang?"":"Next"}</button>
 </div>
+<!--
 <div class="flex-items control">
-<!-- <img onclick="openChat(this);" src="/images/chat.svg" title="chat"> -->
 
 <svg onclick="openChat(this);" title="chat" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
@@ -119,13 +120,15 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 
 
 </div>
-			<div class="flex-items control" id="currentCamera" onclick="changeCamera(this);" title="${n.lang?"Бак / фронтальная камера":"Back / front cam"}">
+-->
+			 <div class="flex-items control" id="currentCamera" onclick="changeCamera(this);" title="${n.lang?"Бак / фронтальная камера":"Back / front cam"}">
 			<svg fill="#FFFFFF" fill-opacity="0.5" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/>
     <path d="M0 0h24v24H0z" fill="none"/>
 </svg>
 
 			</div>
+			
 			</footer>	
 	</article>
 	<hr>

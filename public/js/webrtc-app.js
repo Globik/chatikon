@@ -16,14 +16,17 @@ var new_uri;
 var fasa;
 var CONNECTED = false;
 var btnStart = gid("btnStart");
-var stopBtn = gid('stopBtn');
+var nextBtn = gid('nextBtn');
 var localVideo = gid('localVideo');
 var remoteVideo = gid("remoteVideo");
 var remoteVideoBox = gid("remoteVideoBox");
 var localVideoBox = gid("localVideoBox");
 var cloader = gid('cloader');
+var ellang = document.querySelector("html");
+var nstr = ellang.getAttribute('lang');
 
 btnStart.addEventListener('click', letStart, false);
+nextBtn.addEventListener('click', donext, false);
 //const codecPreferences = gid("codecPreferences");
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
@@ -50,7 +53,7 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 0.455	relay	3426018743	udp	45.89.66.167	56327	2 | 32543 | 255	turn:45.89.66.167:80?transport=udp	udp
 
 */
-var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
+var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
 		urls:["stun:45.89.66.167:80"]
 		},
@@ -60,8 +63,52 @@ var conis = {/*iceTransportPolicy:"relay",*/"iceServers":[
 		"turn:45.89.66.167:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
-		
-		
+//	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
+//OAuth2 client_secret
+//630EF11C0EBD4AA7F15CC929184FA6B91D0E1FD0513CF8E2EC6F12607B904A733E5DA1685B3EA9C483B221D20D43F9CD0F9E6E1C89F2BC8B6309A90E6105CD86	
+	var conis = {
+  "iceServers": [
+    {
+      "urls": "stun:stun.l.google.com:19302"
+    },
+    {
+      "urls": "turn:relay1.expressturn.com:3478",
+      
+      "username": "efF80AKULRWCVI7JYZ",
+      "credential": "8I8md50Q5otRskFc"
+    },
+    {
+      "urls": "turn:relay1.expressturn.com:3478?transport=udp",
+      
+      "username": "efF80AKULRWCVI7JYZ",
+      "credential": "8I8md50Q5otRskFc"
+    },
+    /*
+     {
+      "urls": "stun:stun.relay.metered.ca:80"
+    },
+    
+    {
+      "urls": "turn:a.relay.metered.ca:80",
+      "username": "33c88ed716afa1a802b5116a",
+      "credential": "YlI1/qfkEWya3Q4p"
+    },
+    {
+      "urls": "turn:a.relay.metered.ca:80?transport=tcp",
+      "username": "33c88ed716afa1a802b5116a",
+      "credential": "YlI1/qfkEWya3Q4p"
+    },
+    {
+      "urls": "turn:a.relay.metered.ca:443",
+      "username": "33c88ed716afa1a802b5116a",
+      "credential": "YlI1/qfkEWya3Q4p"
+    },
+    {
+      "urls": "turn:a.relay.metered.ca:443?transport=tcp",
+      "username": "33c88ed716afa1a802b5116a",
+      "credential": "YlI1/qfkEWya3Q4p"
+    }*/
+]};	
 var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
 	{urls:["turn:127.0.0.1:3478?transport=udp",
 		"turn:127.0.0.1:5349?transport=tcp"
@@ -136,9 +183,9 @@ function on_msg(data) {
 	  debug("waiting offer from: " + data.from);
 	  debug("You are: " + clientId);
 	  
-	  note({content: "Connecting a human.", type: "info", time: 5});
+	//  note({content: "Connecting a human.", type: "info", time: 5});
   }else if(data.type == "make_offer"){
-	  note({content: "Connecting a human.", type: "info", time: 5});
+	 // note({content: "Connecting a human.", type: "info", time: 5});
 	  if(fasa && fasa === "warte_offer") return;
 	  fasa = "make_offer";
 	  console.warn("to:", data.target, " du: ", clientId);
@@ -173,8 +220,6 @@ localVideo.srcObject = null;
 //remoteVideo.srcObject = null;
 
 
-var ellang = document.querySelector("html");
-	var nstr = ellang.getAttribute('lang');
 
 
 function letStart(el){
@@ -183,7 +228,9 @@ function letStart(el){
 		get_socket();
 		}
 	if(el.target.getAttribute("data-type") == "go"){
+		localVideoBox.className = "";
 			cloader.className = "";
+			el.target.disabled = true;
 
 }	
 if(FUCKER){
@@ -236,26 +283,26 @@ if(FUCKER){
 	window.streami = stream;
 
 
-
-	el.target.setAttribute("data-type", "weiter");
-	el.target.disabled = true;
+	el.target.setAttribute("data-type", "stop");
+//	el.target.disabled = true;
 	
 	
-	el.target.textContent = nstr == "ru" ? "дальше" : "further";
+	//el.target.textContent = nstr == "ru" ? "Стоп" : "Stop";
 	
 	}else{
 		
 		if(videoInput2){
-			
-			handleLeave();
+			stopit(el.target);
+		//	handleLeave();
 		}
 	}
 	}else{
 		
-		if(el.target.getAttribute("data-type") == "weiter"){
+		if(el.target.getAttribute("data-type") == "stop"){
 			localVideoBox.className = "";
 			cloader.className = "unspinner";
-			handleLeave();
+			stopit(el.target);
+			//handleLeave();
 		}else{}
 	}
 	}).catch(handleError);
@@ -483,7 +530,7 @@ function addStream({ track, streams }){
 function iceCandidateError(e) {
 	console.error("ice err: ", e.url, e.errorText );
 	debug("<b>ice err:</b> " + e.url + " " + e.errorText );
-	note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
+	//note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
 }
 function onNegotiation(e){
 	console.log("negotiation needed.");
@@ -579,12 +626,15 @@ function onSignalingState(e){
 		localVideo.srcObject.getTracks().forEach(function(track){
 			track.stop();
 		});
+		window.streami.getTracks().forEach(function(track){
+			track.stop();
+			window.streami = null;
+		});
 		}
 		if(timerIt){clearInterval(timerIt);}
 		handleLeave();
 		sock.close();
 		sock = null;
-		stopBtn.disabled = true;
 		btnStart.disabled = false;
 		btnStart.textContent = "start";
 		btnStart.setAttribute('data-type',"go" );
@@ -631,12 +681,17 @@ function handleLeave(e){
 	pc = null;
 
 	wsend({type: "fertig"});
-	btnStart.disabled = true;
+	//btnStart.disabled = true;
+	nextBtn.disabled = true;
 	remoteVideoBox.className = "connecting";
 	cloader.className = "unspinner";
 	//channelKrug.classList.toggle("disabled");
 	debug("*************************************");
 	
+}
+function donext(ev){
+	handleLeave();
+	ev.target.disbaled = true;
 }
 function wsend(obj){
 	if(!sock) return;
@@ -650,6 +705,7 @@ function wsend(obj){
 localVideo.onloadedmetadata = function () {
 	debug("Local video enabled.");
 	localVideoBox.className = "";
+
 	remoteVideoBox.className = "connecting";
 	DATI.type = "fertig";
 	wsend(DATI);
@@ -660,8 +716,10 @@ localVideo.onloadedmetadata = function () {
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 10000);
-	stopBtn.disabled = false;
+	}, 4000);
+	btnStart.disabled = false;
+	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
+	btnStart.setAttribute("data-type", "stop");
 	cloader.className = "unspinner";
 	}
 remoteVideo.onloadedmetadata = function () {
@@ -669,7 +727,7 @@ remoteVideo.onloadedmetadata = function () {
 	remoteVideoBox.className = "";
 	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
-				
+		nextBtn.disabled = false;		
  let iceTransport = pc.getSenders().map(sender=>{
 	 console.warn(sender);
 	 if(sender.transport){
@@ -715,18 +773,18 @@ function openChat(el){
 		
 		if(!pc){return;}
 		
-		privatcontainer.classList.toggle("out");
+		//privatcontainer.classList.toggle("out");
 	}
 
 function onChannelState(){
 	//alert("channel " + dc.readyState);
 	if(dc.readyState == "open"){
 		//privatcontainer.classList.toggle("out");
-		channelKrug.classList.toggle("disabled");
+	//	channelKrug.classList.toggle("disabled");
 	}else{
-		privatcontainer.classList.toggle("out");
-		channelKrug.classList.toggle("disabled");
-		privatchat.innerHTML = "";
+	//	privatcontainer.classList.toggle("out");
+	//	channelKrug.classList.toggle("disabled");
+	//	privatchat.innerHTML = "";
 	}
 }
 function onReceiveMsg(event){

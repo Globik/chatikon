@@ -9,6 +9,9 @@
 width: 100%;
 	overflow:hidden;
 }
+#currentCamera{
+	display:none;
+}
 			article#mediaBox{
 				ackground: brown;
 				width:100%;
@@ -195,18 +198,20 @@ width: 100%;
 			#flag{
 				width:100%;
 			}
-			
+			/* https://www.eggradients.com/gradient/havana */
 	button.btn{
-    padding: 10px 15px 10px 15px;
+    padding: 20px 30px 20px 30px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 18px;
-    background: white;
+    font-size: 24px;
+    
     color: rgb(255, 254, 200);
     border: 2px solid rgb(255, 254, 200);
     letter-spacing: 1px;
-    border-radius: 100%;
-    background:rgba(0,0,0,0);
+    border-radius: 10%;
+    bckground:rgba(0,250,0,0.9);
+    background-color: #378b29;
+background-image: linear-gradient(315deg, #378b29 0%, #74d680 74%);
 }
 
 button[disabled], button[disabled]:hover {
@@ -217,7 +222,9 @@ button[disabled], button[disabled]:hover {
 
 
 button:hover{
-    background: rgb(2, 106, 203);
+    bckground: rgb(2, 106, 203);
+    background-color: #1b8b00;
+background-image: linear-gradient(314deg, #1b8b00 0%, #a2d240 74%);
     color: white;
     border-color: silver;
 }
