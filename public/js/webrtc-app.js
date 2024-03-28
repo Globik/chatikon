@@ -291,10 +291,16 @@ if(FUCKER){
 	
 	}else{
 		
-		if(videoInput2){
+		//if(videoInput2){
 			stopit(el.target);
+			localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+//alert(2)
+		//	localVideo.srcObject = null;
+		});
+		
 		//	handleLeave();
-		}
+		//}
 	}
 	}else{
 		
@@ -622,15 +628,21 @@ function onSignalingState(e){
 		}).catch(handleError);
 	}
 	function stopit(el){
-		if(localVideo.srcObject){
+		//if(localVideo.srcObject){
+		//alert(1);
+		//setTimeout(function(){
 		localVideo.srcObject.getTracks().forEach(function(track){
 			track.stop();
+//alert(2)
+		//	localVideo.srcObject = null;
 		});
+	//}, 1);
+		//localVideo.srcObject = null;
 		window.streami.getTracks().forEach(function(track){
-			track.stop();
-			window.streami = null;
+			//track.stop();
+			//window.streami = null;
 		});
-		}
+		//}
 		if(timerIt){clearInterval(timerIt);}
 		handleLeave();
 		sock.close();
