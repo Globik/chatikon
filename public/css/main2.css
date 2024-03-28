@@ -1201,7 +1201,7 @@ span.yellow {
     ackground: red;
     padding-bottom: 10px;
 }
-
+/*
 button, input[type=submit], input[type=reset], input[type=date], select {
     padding: 10px 15px 10px 15px;
     font-weight: bold;
@@ -1226,7 +1226,7 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover {
     color: white;
     border-color: silver;
 }
-
+*/
 #sectionPerson {
     display: flex;
     flex-direction: row;

@@ -201,6 +201,7 @@ width: 100%;
 			/* https://www.eggradients.com/gradient/havana */
 	button.btn{
     adding: 0.2em 0.3em 0.2em 0.3em;
+     padding: 10px 15px 10px 15px;
     font-weight: bold;
     cursor: pointer;
     font-size: 24px;
@@ -219,6 +220,7 @@ button[disabled].btn, button[disabled]:hover {
     color: rgb(148, 168, 181);
     border-color: silver;
      adding: 20px 30px 20px 30px;
+      padding: 10px 15px 10px 15px;
 }
 
 
