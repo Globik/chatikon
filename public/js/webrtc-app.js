@@ -270,7 +270,7 @@ if(FUCKER){
 	}catch(e){
 		console.error(e);
 	}*/
-	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
+	navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
 	if(!localVideo.srcObject){
 		//document.body.click();
 	if(el.target.getAttribute("data-type") == "go"){
@@ -289,7 +289,8 @@ if(FUCKER){
 	
 	//el.target.textContent = nstr == "ru" ? "Стоп" : "Stop";
 	
-	}else{
+	}
+	/*else{
 		
 		//if(videoInput2){
 			stopit(el.target);
@@ -301,14 +302,26 @@ if(FUCKER){
 		
 		//	handleLeave();
 		//}
-	}
+	}*/
 	}else{
 		
 		if(el.target.getAttribute("data-type") == "stop"){
 			localVideoBox.className = "";
 			cloader.className = "unspinner";
-			stopit(el.target);
+			
 			//handleLeave();
+			if(window.streami){
+				//alert(1);
+		localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		console.log('track.enabled=false');
+		});
+	}
+
+stopit(el.target);
+
+		localVideo.srcObject=null;
+		window.streami = null;
 		}else{}
 	}
 	}).catch(handleError);
@@ -628,21 +641,14 @@ function onSignalingState(e){
 		}).catch(handleError);
 	}
 	function stopit(el){
-		//if(localVideo.srcObject){
-		//alert(1);
-		//setTimeout(function(){
+		if(window.streami){
 		localVideo.srcObject.getTracks().forEach(function(track){
 			track.stop();
-//alert(2)
-		//	localVideo.srcObject = null;
+		//	track.enabled=false;
 		});
-	//}, 1);
-		//localVideo.srcObject = null;
-		window.streami.getTracks().forEach(function(track){
-			//track.stop();
-			//window.streami = null;
-		});
-		//}
+}
+		
+		
 		if(timerIt){clearInterval(timerIt);}
 		handleLeave();
 		sock.close();
@@ -650,10 +656,15 @@ function onSignalingState(e){
 		btnStart.disabled = false;
 		btnStart.textContent = "start";
 		btnStart.setAttribute('data-type',"go" );
+		window.streami = null;
 		localVideo.srcObject = null;
+		
+		//window.streami = undefined;
 		remoteVideoBox.className = "buddy";
 		localVideoBox.className = "buddy";
+		console.log("stoping");
 	}
+	
 function handleLeave(e){
 	wsend({type: "bye", target: targetId});
 	cloader.className = "unspinner";
@@ -703,7 +714,7 @@ function handleLeave(e){
 }
 function donext(ev){
 	handleLeave();
-	ev.target.disbaled = true;
+	ev.target.disabled = true;
 }
 function wsend(obj){
 	if(!sock) return;
@@ -723,12 +734,12 @@ localVideo.onloadedmetadata = function () {
 	wsend(DATI);
 	//localVideo.unmuted = true;
 	if(timerIt){clearInterval(timerIt);}
-	 timerIt = setInterval(function(){
+	timerIt = setInterval(function(){
 		if(!targetId){
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 4000);
+	}, 0);
 	btnStart.disabled = false;
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
 	btnStart.setAttribute("data-type", "stop");
@@ -739,7 +750,8 @@ remoteVideo.onloadedmetadata = function () {
 	remoteVideoBox.className = "";
 	//localVideoBox.className = "";
 	wsend({type: "flag", target: targetId });
-		nextBtn.disabled = false;		
+		nextBtn.disabled = false;	
+		/*	
  let iceTransport = pc.getSenders().map(sender=>{
 	 console.warn(sender);
 	 if(sender.transport){
@@ -753,7 +765,9 @@ remoteVideo.onloadedmetadata = function () {
 	 debug("local protocol " + pair.local.candidate);
 	 debug("remote protocol: " + pair.remote.candidate);
 }
-})} 
+})
+*/
+} 
 
 
 
