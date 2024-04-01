@@ -219,7 +219,8 @@ function on_msg(data) {
 localVideo.srcObject = null;
 //remoteVideo.srcObject = null;
 
-
+let constraints = { audio: true, video: true };
+var constraints2 = { audio: false, video: true };
 
 
 function letStart(el){
@@ -258,7 +259,7 @@ if(FUCKER){
 		}
 		};
 		
-		let constraints = { audio: true, video: true };
+		
 		/*try{
 		let supportedConstraints=navigator.mediaDevices.getSupportedConstraints();
 	
@@ -284,25 +285,10 @@ if(FUCKER){
 
 
 	el.target.setAttribute("data-type", "stop");
-//	el.target.disabled = true;
-	
-	
-	//el.target.textContent = nstr == "ru" ? "Стоп" : "Stop";
+
 	
 	}
-	/*else{
-		
-		//if(videoInput2){
-			stopit(el.target);
-			localVideo.srcObject.getTracks().forEach(function(track){
-			track.stop();
-//alert(2)
-		//	localVideo.srcObject = null;
-		});
-		
-		//	handleLeave();
-		//}
-	}*/
+	
 	}else{
 		
 		if(el.target.getAttribute("data-type") == "stop"){
@@ -324,7 +310,37 @@ stopit(el.target);
 		window.streami = null;
 		}else{}
 	}
-	}).catch(handleError);
+	}).catch(function someError(e){
+		console.error(e);
+		// NotReadableError: Could not start audio source
+		if(e.name =='NotReadableError' || e.name == 'TrackStartError'){
+			navigator.mediaDevices.getUserMedia(constraints2).then(function(stream){
+	if(!localVideo.srcObject){
+		//document.body.click();
+	if(el.target.getAttribute("data-type") == "go"){
+		/*let newStream = new MediaStream();
+		stream.getTracks().forEach(function(track){
+			newStream.addTrack(track);
+		});*/
+	//	alert("go");
+	localVideo.srcObject = stream;	
+	window.streami = stream;
+
+
+	el.target.setAttribute("data-type", "stop");
+
+	
+	}}}).catch(function eri(e){
+		alert(e);
+	})
+		}else if(e.name ==  'NotFoundError' || e.name == 'DeviceNotFoundError'){
+			//required track is missing
+		}else if(e.name == 'OverconstrainedError' || e.name == 'ConstraintNotSatisfiedError'){
+			
+		}else if(e.name == 'NotAllowedError' || e.name == 'PermissionDeniedError'){
+			
+		}else if(e.name == 'TypeError'){}else{}
+	});
 }
 
 function handleError(err){
@@ -734,12 +750,12 @@ localVideo.onloadedmetadata = function () {
 	wsend(DATI);
 	//localVideo.unmuted = true;
 	if(timerIt){clearInterval(timerIt);}
-	timerIt = setInterval(function(){
+	//timerIt = setInterval(function(){
 		if(!targetId){
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 0);
+	//}, 0);
 	btnStart.disabled = false;
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
 	btnStart.setAttribute("data-type", "stop");
