@@ -750,12 +750,12 @@ localVideo.onloadedmetadata = function () {
 	wsend(DATI);
 	//localVideo.unmuted = true;
 	if(timerIt){clearInterval(timerIt);}
-	//timerIt = setInterval(function(){
+	timerIt = setInterval(function(){
 		if(!targetId){
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	//}, 0);
+	}, 5000);
 	btnStart.disabled = false;
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
 	btnStart.setAttribute("data-type", "stop");
