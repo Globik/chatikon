@@ -222,7 +222,45 @@ localVideo.srcObject = null;
 let constraints = { audio: true, video: true };
 var constraints2 = { audio: false, video: true };
 
+localVideo.srcObject = null;
+function starti(el){
+	navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
+	if(localVideo.srcObject==null){
+	localVideo.srcObject = stream;	
+	window.streami = stream;
 
+	}
+	
+}).catch(function err(e){
+	alert(e);
+})}
+function stopi(el){
+	localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		});
+		localVideo.srcObject=null;
+		window.streami = null;
+		localVideoBox.className = "";
+			cloader.className = "unspinner";
+		
+			
+	if(timerIt){clearInterval(timerIt);}
+		
+	handleLeave();
+		sock.close();
+		
+		sock = null;
+		btnStart.disabled = false;
+		btnStart.className = 'btn';
+		btnStart.textContent = "start";
+		btnStart.setAttribute('data-type',"go" );
+
+		remoteVideoBox.className = "buddy";
+		localVideoBox.className = "buddy";
+		el.setAttribute("data-type", "go");
+		console.log("stoping");
+		
+}
 function letStart(el){
 	if(!sock) {
 		//alert("!sock");
@@ -271,78 +309,89 @@ if(FUCKER){
 	}catch(e){
 		console.error(e);
 	}*/
-	navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
-	if(!localVideo.srcObject){
-		//document.body.click();
 	if(el.target.getAttribute("data-type") == "go"){
-		/*let newStream = new MediaStream();
-		stream.getTracks().forEach(function(track){
-			newStream.addTrack(track);
-		});*/
-	//	alert("go");
+	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
+	
+		//document.body.click();
+	
 	localVideo.srcObject = stream;	
 	window.streami = stream;
 
 
 	el.target.setAttribute("data-type", "stop");
-
 	
-	}
-	
-	}else{
-		
-		if(el.target.getAttribute("data-type") == "stop"){
-			localVideoBox.className = "";
-			cloader.className = "unspinner";
-			
-			//handleLeave();
-			if(window.streami){
-				//alert(1);
-		localVideo.srcObject.getTracks().forEach(function(track){
-			track.stop();
-		console.log('track.enabled=false');
-		});
-	}
-
-stopit(el.target);
-
-		localVideo.srcObject=null;
-		window.streami = null;
-		}else{}
-	}
-	}).catch(function someError(e){
+	}).catch(function(err){
 		console.error(e);
 		// NotReadableError: Could not start audio source
 		if(e.name =='NotReadableError' || e.name == 'TrackStartError'){
 			navigator.mediaDevices.getUserMedia(constraints2).then(function(stream){
-	if(!localVideo.srcObject){
+	//if(!localVideo.srcObject){
 		//document.body.click();
 	if(el.target.getAttribute("data-type") == "go"){
-		/*let newStream = new MediaStream();
-		stream.getTracks().forEach(function(track){
-			newStream.addTrack(track);
-		});*/
-	//	alert("go");
+		
 	localVideo.srcObject = stream;	
 	window.streami = stream;
 
 
 	el.target.setAttribute("data-type", "stop");
-
+	}
+	}).catch(function(er){alert(er)})
 	
-	}}}).catch(function eri(e){
-		alert(e);
-	})
-		}else if(e.name ==  'NotFoundError' || e.name == 'DeviceNotFoundError'){
-			//required track is missing
-		}else if(e.name == 'OverconstrainedError' || e.name == 'ConstraintNotSatisfiedError'){
-			
-		}else if(e.name == 'NotAllowedError' || e.name == 'PermissionDeniedError'){
-			
-		}else if(e.name == 'TypeError'){}else{}
-	});
-}
+		}})
+		}else{
+		stopi(el.target);
+		/*
+		//if(el.target.getAttribute("data-type") == "stop"){
+		localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		});
+		localVideo.srcObject=null;
+		window.streami = null;
+			localVideoBox.className = "";
+			cloader.className = "unspinner";
+			//stopi(el);
+			if(timerIt){clearInterval(timerIt);}
+		
+	handleLeave();
+		sock.close();
+		
+		sock = null;
+		btnStart.disabled = false;
+		btnStart.className = 'btn';
+		btnStart.textContent = "start";
+		btnStart.setAttribute('data-type',"go" );
 
+		remoteVideoBox.className = "buddy";
+		localVideoBox.className = "buddy";
+		console.log("stoping");
+		*/ 
+
+}
+}
+function stopit(el){
+		
+		localVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		});
+		localVideo.srcObject=null;
+		window.streami = null;
+	/*
+	if(timerIt){clearInterval(timerIt);}
+		
+		handleLeave();
+		sock.close();
+		sock = null;
+		btnStart.disabled = false;
+		btnStart.className = 'btn';
+		btnStart.textContent = "start";
+		btnStart.setAttribute('data-type',"go" );
+
+		remoteVideoBox.className = "buddy";
+		localVideoBox.className = "buddy";
+		console.log("stoping");
+		*/ 
+	}
+	
 function handleError(err){
 	alert(err);
 		note({"content": err, type: "error", time: 5});
@@ -656,30 +705,7 @@ function onSignalingState(e){
 			
 		}).catch(handleError);
 	}
-	function stopit(el){
-		if(window.streami){
-		localVideo.srcObject.getTracks().forEach(function(track){
-			track.stop();
-		//	track.enabled=false;
-		});
-}
-		
-		
-		if(timerIt){clearInterval(timerIt);}
-		handleLeave();
-		sock.close();
-		sock = null;
-		btnStart.disabled = false;
-		btnStart.textContent = "start";
-		btnStart.setAttribute('data-type',"go" );
-		window.streami = null;
-		localVideo.srcObject = null;
-		
-		//window.streami = undefined;
-		remoteVideoBox.className = "buddy";
-		localVideoBox.className = "buddy";
-		console.log("stoping");
-	}
+	
 	
 function handleLeave(e){
 	wsend({type: "bye", target: targetId});
@@ -742,6 +768,7 @@ function wsend(obj){
 }
 
 localVideo.onloadedmetadata = function () {
+	
 	debug("Local video enabled.");
 	localVideoBox.className = "";
 
@@ -750,6 +777,7 @@ localVideo.onloadedmetadata = function () {
 	wsend(DATI);
 	//localVideo.unmuted = true;
 	if(timerIt){clearInterval(timerIt);}
+	
 	timerIt = setInterval(function(){
 		if(!targetId){
 			DATI.type = "fertig";
@@ -757,6 +785,7 @@ localVideo.onloadedmetadata = function () {
 		}
 	}, 5000);
 	btnStart.disabled = false;
+	btnStart.className = "start";
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
 	btnStart.setAttribute("data-type", "stop");
 	cloader.className = "unspinner";

@@ -135,6 +135,8 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 	<h2>Debug Info:</h2>
 	<output id="out"></output>
 	<hr>
+	<!--<button onclick="starti(this);">start</button>
+	<button onclick="stopi(this);">stop</button>-->
 <section id="count">
 <div class="count">${n.ln=='ru'?'Сейчас онлайн':n.ln=='en'?'Users online':n.ln=='fr'?'Utilisateurs en ligne':n.ln=='de'?'Benutzer online':n.ln=='es'?'Usuarios en línea':n.ln=='zh'?'用户在线':''}: <span id="spanWhosOn">0</span></div>
 </section><hr>

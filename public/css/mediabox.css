@@ -223,7 +223,16 @@ button[disabled], button:disabled {
       padding: 10px 15px 10px 15px;
 }
 
-
+#btnStart.start{
+	background: red;
+	 padding: 10px 15px 10px 15px;
+	 font-weight: bold;
+    cursor: pointer;
+    font-size: 24px;
+     border: 2px solid rgb(255, 254, 200);
+    letter-spacing: 1px;
+    border-radius: 10%;
+}
 button:hover{
     bckground: rgb(2, 106, 203);
     background-color: #1b8b00;
