@@ -58,9 +58,9 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 		urls:["stun:45.89.66.167:80"]
 		},
 	{urls:[
-	"turn:45.89.66.167:80?transport=udp",
+	"turn:45.89.66.167:5349",
 	//	"turn:45.89.66.167:433?transport=tcp",
-		"turn:45.89.66.167:5349?transport=tcp"
+		//"turn:45.89.66.167:5349"
 		]
 		,username:"alik",credential:"1234"}]};
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
@@ -565,7 +565,7 @@ function addStream({ track, streams }){
 function iceCandidateError(e) {
 	console.error("ice err: ", e.url, e.errorText );
 	debug("<b>ice err:</b> " + e.url + " " + e.errorText );
-	note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
+	//note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
 }
 function onNegotiation(e){
 	console.log("negotiation needed.");
