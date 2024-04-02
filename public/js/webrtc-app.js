@@ -232,7 +232,7 @@ function starti(el){
 	}
 	
 }).catch(function err(e){
-	alert(e);
+	alert(e);//o
 })}
 function stopi(el){
 	localVideo.srcObject.getTracks().forEach(function(track){
