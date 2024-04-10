@@ -12,7 +12,7 @@ const icons_menu = n=>{
 </div>
 </a>
 </div>
-
+<!--
 
 <div class="flex-items-svgicons${n.current == 'btc' ? ' active' : ''}"><a class="svg-nav-a" href="/bitcoin">
 <div class="items-container">
@@ -71,7 +71,7 @@ fil="#393939" d="m124 259l132-60v138"/></svg>
 </a>
 </div>
 
-
+-->
 
 
 

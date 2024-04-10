@@ -900,6 +900,7 @@ vax("get", `/json/${nstr=='ru'?'ru':nstr=='en'?'en':nstr=='de'?'de':nstr=='fr'?'
 }
 getLands();
 function ongetLands(r){
+	
 	//alert(JSON.stringify(r));
 	// https://flagcdn.com/w40/${key}.webp
 	//<div class="img-halter"><img onerror="this.style.display='none'" src="https://static.abstractapi.com/country-flags/${key}_flag.svg"></div>

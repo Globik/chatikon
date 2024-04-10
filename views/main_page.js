@@ -45,7 +45,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 <nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
-
+<nav id="adminNav"><a href="/dashboard" target="_blank">${n.ln=='ru'?'<span>В админку</span>':'<span>Dashboard</span>'}</a></nav>
 <main id="pagewrap">
    
 <section id="langsbox">

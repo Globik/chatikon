@@ -78,6 +78,17 @@ input[type=number] {
     height: 40px;
 }
 
+#adminNav{
+	background: pink;
+	height:50px;
+	width:100%;
+}
+#adminNav span{
+	vertical-align: middle;
+	line-height:2.1;
+	padding-left:10px;
+	text-decoration:underline;
+}
 /*
 a:hover {text-decoration: underline;}
 .p {margin: 0 0 1.2rem; padding: 0;}
@@ -1201,7 +1212,7 @@ span.yellow {
     ackground: red;
     padding-bottom: 10px;
 }
-/*
+
 button, input[type=submit], input[type=reset], input[type=date], select {
     padding: 10px 15px 10px 15px;
     font-weight: bold;
@@ -1226,7 +1237,7 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover {
     color: white;
     border-color: silver;
 }
-*/
+
 #sectionPerson {
     display: flex;
     flex-direction: row;

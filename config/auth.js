@@ -89,7 +89,7 @@ passport.use('local-signup', new LocalStrategy({usernameField: 'username', passR
 if(!req.body.username || !password){return done(null,false,{message: "Missing credentials", status: 401 })}	
 //process.nextTick(async()=>{
 try{
-	console.log(username,password);
+	console.log('USERNAME***', username,password);
 	console.log('req.body: ', req.body);
 	//console.log('email? :', req.body.email)
 var useri = await db.collection('users').findOne({'name': username });
