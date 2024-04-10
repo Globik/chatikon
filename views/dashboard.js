@@ -10,7 +10,7 @@ const dashboard = function(n){
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
    <!-- <meta name="viewport" content="width=device-width,user-scalable=no" /> -->
     
-    <link rel="shortcut icon" type="image/ico" href="${process.env.DEVELOPMENT=='yes'?'/images/w4.png':`${meta.url}/images/w4.png`}"> 
+    <link rel="shortcut icon" type="image/ico" href="${process.env.DEVELOPMENT=='yes'?'/images/w4.png':`https://chatslider.online/images/w4.png`}"> 
     <link href="/css/main2.css" rel="stylesheet">
     <link href="/css/adminka.css" rel="stylesheet">
     <link href="/css/hearts.css" rel="stylesheet">
