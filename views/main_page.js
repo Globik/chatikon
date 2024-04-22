@@ -30,7 +30,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 	})}
 	<link href="/css/mediabox.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/searchbox.css">
-	<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+	<script src="/js/adapter-latest.js"></script>
 	<style>
 	
 	
@@ -131,6 +131,11 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 			
 			</footer>	
 	</article>
+	<div class="typing">
+    <div class="typing__dot"></div>
+    <div class="typing__dot"></div>
+    <div class="typing__dot"></div>
+  </div>
 	<hr>
 	<h2>Debug Info:</h2>
 	<output id="out"></output>

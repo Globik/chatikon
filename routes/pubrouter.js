@@ -18,9 +18,9 @@ pub.get('/', async ctx=>{
 	//console.log("CTX", ctx.state);
 	try{
 		c=await articles.find({lang:'en'}).toArray();
-		//console.log("c :",c);
+	
 	//let r = await articles.find({}).toArray();
-	//console.log("R: ",r);
+	console.log("R: ", c);
 	}catch(e){console.log(e);}
 	ctx.body = await ctx.render('main_page', {ln: "en", articles:c, user:ctx.state.user});
 })
