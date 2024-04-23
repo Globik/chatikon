@@ -13,11 +13,13 @@ width: 100%;
 	display:none;
 }
 
-
+.typing.hidden{
+	display:none;
+}
 
 .typing {
   width: 70px;
-  height: 40px;
+  height: 30px;
   position: relative;
   padding: 10px;
   margin-left: 5px;
@@ -29,7 +31,10 @@ width: 100%;
   background: #e6e6e6;
   border-radius: 20px;
 }
-
+.typing span{
+	background:rgba(0,0,0,0.4);
+	transform: translate(70px, -16px);
+}
 .typing__dot {
   
   width: 8px;
@@ -197,23 +202,43 @@ width: 100%;
 				outline:none;
 			}
 		
-		#privatcontainer{
+		#privatcontainer.hidden{
+			display:none;
+		}
+		#privatcontainer.show{
+		display: block;
 				position:absolute;
 				right:0;
-				bottom:80px;
-				width: 50%;
-				height:0%;
-				ackground:red;
+				bottom:0px;
+				width: 100%;
+				height:40px;
+				background:red;
 				overflow:hidden;
 				transition: height 0.2s linear;
 			}
-			#privatcontainer.out{
-				height:600%;
+			#znakChat{
+				background:yellow;
+				height:40px;
+				display:flex;
+					flex-wrap: wrap;
+    flex-direction: row;
+   justify-content: space-around;
+		align-items: center;
+			}
+			
+	#chatimg{
+		width:38px;
+	}
+	#chatimg img{
+		width:38px;
+	}
+			#privatcontainer.show.out{
+				height:100%;
 			}
 			#privatchat{
 				display:block;
 				position:relative;
-				height: calc(100% - 80px);
+				height: calc(100% - 120px);
 				background:rgba(0,0,10,0.2);
 				color:white;
 				overflow-y:auto;
@@ -325,7 +350,7 @@ section#count{
 	top:10px;
 }
 			}
-			
+			/*451x642*/
 			@media screen and (max-width: 861px) and (orientation: landscape){
 				body{
 					ackground: red;
@@ -385,7 +410,7 @@ section#count{
 			
 			@media screen and (max-width: 695px) and (orientation: portrait){
 				html,body{
-					bckground: green;
+					background: green;
 				}
 				
 				#pagewrap{
@@ -403,10 +428,11 @@ section#count{
 					width:100%;
 					height: 50%;
 					top:50%;
+					ackground: brown;
 				}
 				section#videoBoxes{
 			
-				height: calc(90vh - var(--cpm-height));
+				hight: calc(90vh - var(--cpm-height));
 			}
 				footer#controlPanel{
 		
@@ -426,6 +452,9 @@ section#count{
 
 
 @media screen and (max-width: 390px) and (orientation: portrait){
+body{
+	background:pink;
+}
 	#remoteVideoBox.buddy::after, #localVideoBox.buddy::after{
 				background-size:60%;
 }
@@ -434,17 +463,17 @@ section#count{
 	top:10px;
 }
 .flex-items{margin-right:0.2em;}
-footer#controlPanel{
-					height:55px;
-				}
+/*
+				
 #privatcontainer{
 					width:100%;
-					bottom:55px;
-					height:0px;
+					bottom:155px;
+					eight:0px;
 				}
 		#privatcontainer.out{
-				height:300px;
+				hight:300px;
 				}
+				
 				.chat-user{
 				
 			}
@@ -453,7 +482,7 @@ footer#controlPanel{
 			}
 				#underchatbox{
 		
-					height:45px;
+					height:50px;
 
 					background:rgba(0,0,0,0.1);
 					position:relative;
@@ -461,10 +490,11 @@ footer#controlPanel{
 					width:100%;
 				}
 				#privatinput{
-					height:100%;
+					height:46px;
 					width:calc(100% - 45px);
 				padding-left:6px;
-				background:rgba(225,255,254,0.8);
+				bakground:rgba(225,255,254,0.8);
+				background: pink;
 				}
 				#privatbtn{
 					width:45px;
@@ -481,5 +511,34 @@ footer#controlPanel{
 					height:calc(100% - 45px);
 					background:rgba(0,0,0,0.1);
 				}
-				
+				*/
+				#privatcontainer{
+					
+				}
+		#privatcontainer.out{
+				hight:300px;
+				}
+				#underchatbox{
+					position:relative;
+				}
+				#privatbtn{
+					position:absolute;
+					right:0;
+					top:0;
+					width:80px;
+					height:80px;
+					
+				}
+				#privatbtn img{
+					transform:scale(1,1);
+				}
+				#underchatbox{
+		hight:80px;
+		background:pink;
+					}
+				#privatinput{
+				position:relative;
+					height:80px;
+					width:100%;
+					}
 }

@@ -24,6 +24,8 @@ var localVideoBox = gid("localVideoBox");
 var cloader = gid('cloader');
 var ellang = document.querySelector("html");
 var nstr = ellang.getAttribute('lang');
+var znakPrint = gid("znakPrint");
+var privatcontainer = gid("privatcontainer");
 
 btnStart.addEventListener('click', letStart, false);
 nextBtn.addEventListener('click', donext, false);
@@ -467,7 +469,7 @@ function gotDevices(deviceInfos){
 		if(deviceInfo.kind === 'videoinput'){
 			if(kK == 0){
 				videoInput = deviceInfo.deviceId;
-				currentCamera.setAttribute("data-current" , deviceInfo.deviceId);
+			//	currentCamera.setAttribute("data-current" , deviceInfo.deviceId);
 				debug("<b>label:</b> " + deviceInfo.label);
 			}else if(kK == 1){
 				videoInput2 = deviceInfo.deviceId;
@@ -841,19 +843,23 @@ debug("<b>Your browser, version:</b> " + brows + " " + vers);
 
 
 function openChat(el){
-		
+		//alert(1);
 		if(!pc){return;}
-		
-		//privatcontainer.classList.toggle("out");
+		alert(1);
+	if(privatcontainer.className == "show"){
+		privatcontainer.classList.add("out");
+	}else{
+		privatcontainer.className = "show";
+	}
 	}
 
 function onChannelState(){
 	//alert("channel " + dc.readyState);
 	if(dc.readyState == "open"){
-		//privatcontainer.classList.toggle("out");
+		privatcontainer.className = "show";
 	//	channelKrug.classList.toggle("disabled");
 	}else{
-	//	privatcontainer.classList.toggle("out");
+	privatcontainer.className = "hidden";
 	//	channelKrug.classList.toggle("disabled");
 	//	privatchat.innerHTML = "";
 	}
