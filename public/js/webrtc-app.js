@@ -170,12 +170,13 @@ function on_msg(data) {
 	  clientId = data.clientId;
   }else if(data.type == "howmuch"){
     if(spanWhosOn) spanWhosOn.textContent = data.value;
+    webcams.textContent = data.online;
   }else if(data.type == "flag"){
 	  flag.src = data.flag;
   }else if(data.type == "warte_offer"){
 	  console.warn("warte offer from: ", data.from, " du: ", clientId, " ", fasa);
 	   targetId = data.from;
-	  if(fasa && fasa === make_offer){
+	  if(fasa && fasa === 'make_offer'){
 		  console.warn("fasa", fasa);
 		   return;
 	   }
@@ -213,6 +214,10 @@ function on_msg(data) {
   }else if(data.type == "bye"){
 	  console.log("*** BYE ***");
 	  handleLeave();
+  }else if(data.type == "dynamic"){
+if(data.online)webcams.textContent = data.online;	
+if(data.connects)Connects.textContent =  data.connects;  
+if(data.conn2) conn2.textContent = data.conn2;
   }else{
     note({ content: "No type " + data.type, type: "error", time: 5 });
   }
@@ -247,7 +252,7 @@ function stopi(el){
 		
 			
 	if(timerIt){clearInterval(timerIt);}
-		
+		if(pc)wsend({ type: "bye", target: targetId });
 	handleLeave();
 		sock.close();
 		
@@ -370,6 +375,63 @@ if(FUCKER){
 
 }
 }
+
+function handleLeave(e){
+	
+	cloader.className = "unspinner";
+	
+	
+		if(!pc) return;
+		if(remoteVideo.srcObject){
+		remoteVideo.srcObject.getTracks().forEach(function(track){
+			track.stop();
+		});
+		}
+		//if(dc) dc.close();
+		//dc = null;
+		pc.close();
+		
+		
+		console.log("pc: ", pc.signalingState);
+		CONNECTED = false;
+		debug("pc: " + pc.signalingState);
+	flag.src="";
+	remoteVideo.srcObject = null;
+		targetId = null;
+	fasa = undefined;
+    
+    
+    pc.ontrack = null;
+	//pc.onremovestream = null;
+	pc.onicecandidate = null;
+	pc.oniceconnectionstatechange = null;
+	pc.onconnectionstatechange = null;
+	
+    pc.onicegatheringstatechange = null;
+    pc.onicecandidateerror = null;
+    pc.onnegotiationneeded = null;
+    pc.onsignalingstatechange = null;
+	
+	pc = null;
+
+	wsend({ type: "fertig" });
+	//btnStart.disabled = true;
+	nextBtn.disabled = true;
+	remoteVideoBox.className = "connecting";
+	cloader.className = "unspinner";
+	//channelKrug.classList.toggle("disabled");
+	debug("*************************************");
+	
+}
+function donext(ev){
+	wsend({ type: "bye", target: targetId });
+	handleLeave();
+	ev.target.disabled = true;
+}
+
+
+
+
 function stopit(el){
 		
 		localVideo.srcObject.getTracks().forEach(function(track){
@@ -707,10 +769,10 @@ function onSignalingState(e){
 			
 		}).catch(handleError);
 	}
-	
+	/*
 	
 function handleLeave(e){
-	wsend({type: "bye", target: targetId});
+	wsend({ type: "bye", target: targetId });
 	cloader.className = "unspinner";
 	
 	
@@ -747,7 +809,7 @@ function handleLeave(e){
 	
 	pc = null;
 
-	wsend({type: "fertig"});
+	wsend({ type: "fertig" });
 	//btnStart.disabled = true;
 	nextBtn.disabled = true;
 	remoteVideoBox.className = "connecting";
@@ -760,6 +822,9 @@ function donext(ev){
 	handleLeave();
 	ev.target.disabled = true;
 }
+
+
+*/ 
 function wsend(obj){
 	if(!sock) return;
 	let d;
@@ -843,9 +908,9 @@ debug("<b>Your browser, version:</b> " + brows + " " + vers);
 
 
 function openChat(el){
-		//alert(1);
+		
 		if(!pc){return;}
-		alert(1);
+	
 	if(privatcontainer.className == "show"){
 		privatcontainer.classList.add("out");
 	}else{
@@ -861,15 +926,43 @@ function onChannelState(){
 	}else{
 	privatcontainer.className = "hidden";
 	//	channelKrug.classList.toggle("disabled");
-	//	privatchat.innerHTML = "";
+		privatchat.innerHTML = "";
 	}
 }
+var tr = undefined;
+
 function onReceiveMsg(event){
+//znakPrint.classList.remove("hidden");
 	try{
 		let a = JSON.parse(event.data);
-		insertMsg(a);
+		if(a.type == 'message'){
+			insertMsg(a);
+		}else if(a.type == "write"){
+		//	alert(1);
+		console.warn("tipe write");
+			znakPrint.classList.remove("hidden");
+			//znakPrint.className="typing";
+		tr=setTimeout(function(){
+			znakPrint.classList.add("hidden");
+			clearTimeout(tr);
+			tr = undefined;
+		}, 1000);
+		}else if(a.type == "unwrite"){
+			console.log("unwrite");
+			znakPrint.classList.add("hidden");
+		}else{}
 	}catch(e){}
 }
+
+function txtInput(el){
+if(!dc) return;
+		dc.send(JSON.stringify({ type:"write"}));
+	
+	}
+	function someChange(){
+		if(!dc)return;
+		dc.send(JSON.stringify({ type:"unwrite" }));
+	}
 
 function insertMsg(obj){
 	if(!privatcontainer.classList.contains("out")){
@@ -894,7 +987,7 @@ function receiveChannelCb(event){
 		if(!privatinput.value) return;
 		let a;
 		try{
-			a = JSON.stringify({from: "anonym", msg: privatinput.value});
+			a = JSON.stringify({type: "message", from: "anonym", msg: privatinput.value});
 		}catch(e){return;}
 		dc.send(a);
 		insertMsg({from: "You", msg: privatinput.value});

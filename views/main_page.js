@@ -30,6 +30,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 	})}
 	<link href="/css/mediabox.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/searchbox.css">
+	<link rel="stylesheet" href="/css/login2.css">
 	<script src="/js/adapter-latest.js"></script>
 	<style>
 	
@@ -78,13 +79,13 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
     <div class="typing__dot"></div>
     <div class="typing__dot"></div>
     <div class="typing__dot"></div>
-    <span class="staben"><small>prints</small></span>
+    <span class="staben"><small id="printsi">prints</small></span>
   </div>
   <div id="chatimg" onclick="openChat(this);"><img src="/images/chat.svg"/></div>
   </div>
 <div id="privatchat"></div>
 <div id="underchatbox">
-<input type="text" id="privatinput" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button>
+<input type="text" id="privatinput" oninput="txtInput(this);" onchange="someChange(this);" placeholder="Your message"><button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button>
 </div>
  </div> 
 </div>
@@ -101,18 +102,21 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 			</div> 
 </footer>	
 </article>
-
+<!--
 	<hr>
 	<h2>Debug Info:</h2>
 	<output id="out"></output>
 	<hr>
+	-->
 	<!--<button onclick="starti(this);">start</button>
 	<button onclick="stopi(this);">stop</button>-->
 <section id="count">
 <div class="count">${n.ln=='ru'?'Сейчас онлайн':n.ln=='en'?'Users online':n.ln=='fr'?'Utilisateurs en ligne':n.ln=='de'?'Benutzer online':n.ln=='es'?'Usuarios en línea':n.ln=='zh'?'用户在线':''}: <span id="spanWhosOn">0</span></div>
+&nbsp;&nbsp;<div>&nbsp;&nbsp;Webcams:&nbsp;<span id="webcams">0</span></div>
+&nbsp;&nbsp;<div>&nbsp;&nbsp;Connections:&nbsp;<span id="Connects">0</span>&nbsp;&nbsp;conn2<span id="conn2">0</span></div>
 </section><hr>
 	<!-- ru, en, fr, de, es, zh -->
-<hr><button id="searchBtn" onclick="openSuechBox();">${n.ln=='ru'?'Поиск':n.ln=='en'?'Search':n.ln=='fr'?'Recherche':n.ln=='de'?'Suche':n.ln=='es'?'Buscar':n.ln=='zh'?'搜索':''}</button><hr>
+<button id="searchBtn" onclick="openSuechBox();">${n.ln=='ru'?'Поиск':n.ln=='en'?'Search':n.ln=='fr'?'Recherche':n.ln=='de'?'Suche':n.ln=='es'?'Buscar':n.ln=='zh'?'搜索':''}</button><hr>
 <section id="suechBox">
 <form name="suechform">
 <div class="gender-box">
@@ -185,9 +189,31 @@ ${n.articles.length==0 ? `<div class="editbtn"><button data-ln="${n.ln}" onclick
 
 </section>`:''}
 </section>
+ <a href="#."  class="overlay" id="login2"></a>
+    <output id="loginoutput" class="popi">
+        <div class="modal-header">
+          ${n.lang=='ru'?'Авторизация / Регистрация':'Login / Signup'}
+         <!-- <span class="model-header-label" onclick="isOpenModal();">
+            Правила чата
+          </span> -->
+        </div>
+        <div class="modal-body">
+          <div class="error-message" id="errormsg"></div>
+          <form name="formlogin" id="myform">
+            <label for="name" style="margin-top: 5px;">${n.lang=='ru'?'Имя':'Nickname'}</label>
+            <input  name="username" type="text" placeholder="${n.lang=='ru'?'Введите Имя/Логин':'Enter nickname'}" id="name" required minlength="2" maxlength="20">
 
+            <label for="name">${n.lang=='ru'?'Пароль':'Password'}</label>
+            <input  name="userpassword" type="password" autocomplete="on" placeholder="Введите пароль" id="password" required minlength="2" maxlength="20">
+			 <button  class="login-button" id="btnlogin">${n.lang=='ru'?'Войти':'Log in'}</button>
+            <button class="register-button" id="btnregister">${n.lang=='ru'?'Зарегистрироваться':'Sign up'}</button>
+           
+          </form>
+        </div>
+    </output>
 </main>
-<script src="/js/webrtc-app.js"></script> 
+<script src="/js/webrtc-app.js"></script>
+<script src="/js/login.js"></script> 
 ${n.user && n.user.role=='admin'?'<script src="/js/redact.js"></script>':''}
 <footer id="footer">${html_footer.html_footer({})}</footer></body></html>`;
 }

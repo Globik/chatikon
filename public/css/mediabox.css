@@ -28,12 +28,12 @@ width: 100%;
     flex-direction: row;
      justify-content: space-between;
 		align-items: center;
-  background: #e6e6e6;
+  background: rgba(0,0,0,0.1);
   border-radius: 20px;
 }
 .typing span{
-	background:rgba(0,0,0,0.4);
-	transform: translate(70px, -16px);
+	background:rgba(0,0,0,0.0);
+	transform: translate(70px, -20px);
 }
 .typing__dot {
   
@@ -41,7 +41,7 @@ width: 100%;
   height: 8px;
   margin: 0 4px;
  
-  background: #8d8c91;
+  background:/* #8d8c91*/ orange;
   border-radius: 50%;
   opacity: 0;
   animation: loadingFade 1s infinite;
@@ -70,6 +70,9 @@ width: 100%;
   100% {
     opacity: 0;
   }
+}
+#printsi{
+	color: orange;
 }
 			article#mediaBox{
 				ackground: brown;
@@ -120,7 +123,8 @@ width: 100%;
 			#localVideo, #remoteVideo{
 				width:100%;
 				height:100%;
-				display:inline-block;
+				diplay:inline-block;
+				object-fit:fill;
 			}
 			#remoteVideoBox.connecting::after{
 				position:absolute;
@@ -212,12 +216,12 @@ width: 100%;
 				bottom:0px;
 				width: 100%;
 				height:40px;
-				background:red;
+				background:rgba(0,0,0,0.2);
 				overflow:hidden;
 				transition: height 0.2s linear;
 			}
 			#znakChat{
-				background:yellow;
+				background:rgba(0,0,0,0.5);
 				height:40px;
 				display:flex;
 					flex-wrap: wrap;
@@ -232,7 +236,7 @@ width: 100%;
 	#chatimg img{
 		width:38px;
 	}
-			#privatcontainer.show.out{
+			#privatcontainer.out{
 				height:100%;
 			}
 			#privatchat{

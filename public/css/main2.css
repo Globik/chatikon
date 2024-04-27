@@ -1281,8 +1281,8 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 #rArticle {
-    margin: 30px 20px 10px 20px;
-    padding: 20px 0 20px 0;
+    magin: 30px 20px 10px 20px;
+    pdding: 20px 0 20px 0;
 }
 
 #webPush {
@@ -1547,6 +1547,26 @@ display:inline-block;
 }
 
 @media screen and (max-width: 750px) {
+/*section,p{
+	background:yellow;
+	padding:0px;
+	margin:0px;
+	color:red;
+	width:100%;
+}
+article#art{
+	width:100%;
+	padding:0;
+	margin:0;
+}
+main{
+	padding:0;
+	margin:0;
+} */
+	.feature-contents{
+					padding:5px;
+					margin:5px;
+				}
     html {
         ackground: red;
     }

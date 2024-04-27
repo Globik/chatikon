@@ -216,12 +216,12 @@ if (process.env.DEVELOPMENT !== "yes") {
 }
 
 
-
+const onLine = new Map();
 
 const wss = new WebSocket.Server({ server: servak })
 
 
-
+//console.log("0/2 ", 0/2)
 
 function noop() {}
 
@@ -231,7 +231,7 @@ const interval = setInterval(function ping() {
     ws.isAlive = false;
     ws.ping(noop);
   });
-}, 3000000);
+}, 360000);
 
 function heartbeat() {
   this.isAlive = true;
@@ -240,8 +240,10 @@ function heartbeat() {
 const abstract_key = "0091fa26a1aa4857907464f57a2a5015";
 const re = /([0-9]{1,3}[\.]){3}[0-9]{1,3}/;
 
-
-
+function isEven(n) {
+   return n % 2 == 0;
+}
+var someConnects = 0;
 let obid = function () {
   let tst = ((new Date().getTime() / 1000) | 0).toString(16);
   return (
@@ -253,7 +255,7 @@ let obid = function () {
       .toLowerCase()
   );
 };
-
+var SOME=new Map();
 wss.on("connection", function ws_connect(ws, req) {
 	const ip = req.socket.remoteAddress;
 	
@@ -262,10 +264,10 @@ wss.on("connection", function ws_connect(ws, req) {
 // ws.flag = 'https://static.abstractapi.com/country-flags/RU_flag.svg'
   let id = obid();
   ws.clientId = id;
-  ws.target = null;
+  ws.target = undefined;
   ws.busy = true;
   wsend(ws, { type: "welcome", clientId: id });
-  broadcast_all({ type: "howmuch", value: wss.clients.size });
+  broadcast_all({ type: "howmuch", value: wss.clients.size, online: onLine.size });
 console.log("Array: ", Array.from(wss.clients)[0].busy);
   ws.isAlive = true;
   ws.on("pong", heartbeat);
@@ -279,6 +281,8 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
     }
     console.log(data.type);
     if (data.type == "fertig") {
+		onLine.set(ws.clientId, { })
+		broadcast_all({ type: "dynamic", online: onLine.size});
       ws.busy = false;
       let a = Array.from(wss.clients);
      console.log("a: ", a[0].busy, a.length);
@@ -294,10 +298,26 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
     } else if (data.type == "unfertig") {
       ws.busy = true;
       ws.target = data.target;
+      SOME.set(ws.target,{});
+      let k = getPairsCount();
+      if(isEven(k)){
+		   broadcast_all({type: "dynamic", connects: k/2, conn2: SOME.size/2 });
+	  }
+      
+      
       sendToClients = 1;
+      
     }else if(data.type == "flag"){
 		if(ws.flag) getFlag(ws, data.target);
 		sendToClients = 1;
+	}else if(data.type == "bye"){
+		setNull(ws.target);
+		ws.target = undefined;
+		SOME.delete(ws.target);
+		  broadcast_all({type: "dynamic", conn2: SOME.size/2 });
+		broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
+		//someConnects--;
+		//send_to_one(ws, ws.target, {type: "bye"});
 	}else{
      // console.log("Unknown data.type: ", data.type);
     }
@@ -305,6 +325,19 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
       if (
         data.target && data.target !== undefined && data.target.length !== 0){
         send_to_one(ws, data.target, data);
+        if(data.type == "bye"){
+			console.log("**** DATA TYPE **** ", data.type);
+        setNull(ws.target);
+        ws.target = undefined;
+             let k = getPairsCount();
+             console.log("**** KKKKK **** ", k);
+      if(!isEven(k)) {
+		  broadcast_all({type: "dynamic", connects: k/2  - 1});
+	  }else{
+		//  broadcast_all({type: "dynamic", connects: 0 });
+	  }
+	  	broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
+	}
       }
     }
   });
@@ -313,8 +346,13 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
     console.log("Websocked closed!");
     if(ws.target){
 		send_to_one(ws, ws.target, {type: "bye"});
+		ws.target = undefined;
+		      let k = getPairsCount();
+      if(isEven(k))broadcast_all({type: "dynamic", connects: k/2 });
 	}
-    broadcast_all({ type: "howmuch", value: wss.clients.size });
+	
+	if(onLine.has(ws.clientId))onLine.delete(ws.clientId);
+    broadcast_all({ type: "howmuch", value: wss.clients.size , online: onLine.size });
   });
   ws.on('error', function eri(err){
 	  console.log("socket error: ", err);
@@ -326,7 +364,23 @@ function broadcast_all(obj) {
     wsend(client, obj);
   });
 }
-
+function setNull(id){
+	for (let el of wss.clients) {
+    if (el.target==id) {
+		el.target = undefined;
+		return;
+	}
+}
+}
+function getPairsCount(){
+	var kk=0;
+	for (let el of wss.clients) {
+    if (el.target) {
+		console.log("el.target **** ", el.target);
+		kk++;
+	}}
+	return kk;
+}
 function send_to_one(ws, target, obj) {
   for (let el of wss.clients) {
     if (el.clientId == target) {
@@ -342,8 +396,15 @@ function make_busy(randomId, ws) {
   for (let el of wss.clients) {
     if (el.clientId === randomId) {
       el.busy = true;
+      someConnects ++;
      wsend(ws, { type: "make_offer", target: randomId });
      wsend(el, { type: "warte_offer", from: ws.clientId});
+     let k = getPairsCount();
+      if(isEven(k)){
+		  broadcast_all({type: "dynamic", connects: k/2 });
+		  }else{
+			  broadcast_all({type: "dynamic", connects: 0 });
+		  }
       return;
     }
   }

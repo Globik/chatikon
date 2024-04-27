@@ -84,7 +84,7 @@ fil="#393939" d="m124 259l132-60v138"/></svg>
 
 <!-- JSON.stringify(n.user)-->
 ${!n.user ? `<div class="flex-items-svgicons">
-	<div class="items-container"><a class="svg-nav-a" href="/login">
+	<div class="items-container"><a class="svg-nav-a" href="#login2">
 <div class="icons-box">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
 
@@ -101,7 +101,7 @@ ${!n.user ? `<div class="flex-items-svgicons">
 <div class="svg-icons-nav-divspan"><span>${n.lang ? 'Выйти':'Log out'}</span></div>
 </div></a>
 </div>`}
-
+<!--
 ${n.user ? '' : `<div class="flex-items-svgicons">
 	<div class="items-container"><a class="svg-nav-a" href="/signup">
 <div class="icons-box">
@@ -109,7 +109,7 @@ ${n.user ? '' : `<div class="flex-items-svgicons">
 <g><path d="M499.2,45.9l-83.7-30.5c-9.8-3.6-20-5.3-30.1-5.3c-36.5,0-71.3,22.9-84.6,59.9L57.3,738.5c-2.9,7.8-3.6,16-2,24.1l39,209.1c2,11.4,11.8,18.3,21.8,18.3c4.9,0,9.8-1.6,14-5.1l164.4-135.2c6.2-5.1,11.1-12,14-19.6L552,161.5C568.9,114.5,545.3,62.8,499.2,45.9z M510.1,146.1L266.7,814.7c0,0.2-0.2,0.4-0.4,0.4l-135,111.1L99.2,754.4c0-0.2,0-0.4,0-0.7L342.6,85.3c6.7-18.3,23.8-30.5,42.8-30.5c5.1,0,10,0.9,14.9,2.7L484,88c11.1,4,19.8,12.2,24.9,23.2C513.9,122,514.3,134.5,510.1,146.1z"/><path d="M633.7,344.1h289.5c12.2,0,22.3-10,22.3-22.3s-10-22.3-22.3-22.3H633.7c-12.3,0-22.3,10-22.3,22.3S621.5,344.1,633.7,344.1z"/><path d="M923.3,477.7H544.6c-12.3,0-22.3,10-22.3,22.3s10,22.3,22.3,22.3h378.6c12.2,0,22.3-10,22.3-22.3S935.5,477.7,923.3,477.7z"/><path d="M923.3,655.9H455.5c-12.3,0-22.3,10-22.3,22.3s10,22.3,22.3,22.3h467.7c12.2,0,22.3-10,22.3-22.3S935.5,655.9,923.3,655.9z"/></g>
 </svg>
 </div><div class="svg-icons-nav-divspan"><span>${n.lang ? 'Регистрация':'Sign up'}</span></div></div></a>
-</div>`}
+</div>`} -->
 </nav>`;
 	}
 	module.exports = { icons_menu }
