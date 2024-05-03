@@ -16,11 +16,7 @@ return `<!-- html_nav_menu.js -->
 </label>
 
 <ul id="miniMenu" class="">
-${n.user ? `<li><a href="/logout" id="login_pop"><div class="muka"><span>Выйти</span></div></a>` :
-`<li><a href="${n.ln=='en'?'#login2':n.ln=='ru'?'/ru/login':n.ln=='de'?'/de/login':n.ln=='fr'?'/fr/login':n.ln=='es'?'/es/login':n.ln=='zh'?'/zh/login':''}">
-<div class="muka"><span>${n.ln=='ru'?'Войти':n.ln=='en'?'Log in':n.ln=='de'?'Eintreten':n.ln=='fr'?'Se connecter':n.ln=='es'?'Acceso':n.ln=='zh'?'登录':''}</span></div></a>`}
-<!-- ${!n.user ? `<li><a href=${n.ln=='ru'?'/ru/signup':n.ln=='en'?'/signup':n.ln=='de'?'/de/signup':n.ln=='fr'?'/fr/signup':n.ln=='es'?'/es/signup':n.ln=='zh'?'/zh/signup':''}>
-<div class="muka"><span>${n.ln=='ru'?'Регистрация':n.ln=='en'?'Sign up':n.ln=='de'?'Registration':n.ln=='fr'?'S\'inscrire':n.ln=='es'?'Inscribirse':n.ln=='zh'?'报名':''}</span></div></a>` : ''} -->
+${n.user ? `<li><a href="/logout" id="login_pop"><div class="muka"><span>Выйти</span></div></a>` :`<li><a href="${n.ln=='en'?'#login2':n.ln=='ru'?'/ru/login':n.ln=='de'?'/de/login':n.ln=='fr'?'/fr/login':n.ln=='es'?'/es/login':n.ln=='zh'?'/zh/login':''}"><div class="muka"><span>${n.ln=='ru'?'Войти':n.ln=='en'?'Log in':n.ln=='de'?'Eintreten':n.ln=='fr'?'Se connecter':n.ln=='es'?'Acceso':n.ln=='zh'?'登录':''}</span></div></a>`}
 </ul>
 
 <a href="#." class="overlay" id="message_box"></a>
@@ -42,3 +38,7 @@ ${n.user ? `<li><a href="/logout" id="login_pop"><div class="muka"><span>Вый�
 </output>
 <script src="/js/nav.js"></script><!-- end of html_nav_menu.js -->`;}
 module.exports = { html_nav_menu };
+/*
+<!--  ${!n.user ? `<li><a href=${n.ln=='ru'?'/ru/signup':n.ln=='en'?'/signup':n.ln=='de'?'/de/signup':n.ln=='fr'?'/fr/signup':n.ln=='es'?'/es/signup':n.ln=='zh'?'/zh/signup':''}>
+<div class="muka"><span>${n.ln=='ru'?'Регистрация':n.ln=='en'?'Sign up':n.ln=='de'?'Registration':n.ln=='fr'?'S\'inscrire':n.ln=='es'?'Inscribirse':n.ln=='zh'?'报名':''}</span></div></a>` : ''}  -->
+*/ 

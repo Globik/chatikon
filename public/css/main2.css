@@ -372,6 +372,7 @@ nav ul li a:hover {
     width: var(--mht);
     height: 100%;
     right: 0px;
+    bottom:0;
     z-index: 99;
 }
 
@@ -1618,6 +1619,7 @@ main{
 
     #miniMenu, .touch-mini-menu {
         z-index: 1000;
+        top:2.7rem;
     }
 
     #admin_main_menu {
@@ -1717,6 +1719,7 @@ main{
 @media screen and (max-width: 321px) {
     html {
         font-size: 100%;
+       
     }
 
     #vorlogincontainer section.tabactive {
