@@ -283,6 +283,12 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
     if (data.type == "fertig") {
 		onLine.set(ws.clientId, { })
 		broadcast_all({ type: "dynamic", online: onLine.size});
+		let k = getPairsCount();
+      if(isEven(k)){
+		  console.log("IS EVEN *** ", isEven(k));
+		   broadcast_all({type: "dynamic", connects: k/2 });
+	  }
+      
       ws.busy = false;
       let a = Array.from(wss.clients);
      console.log("a: ", a[0].busy, a.length);
@@ -301,7 +307,8 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
       SOME.set(ws.target,{});
       let k = getPairsCount();
       if(isEven(k)){
-		   broadcast_all({type: "dynamic", connects: k/2, conn2: SOME.size/2 });
+		  console.log("IS EVEN *** ", isEven(k));
+		   broadcast_all({type: "dynamic", connects: k/2 });
 	  }
       
       
@@ -311,11 +318,11 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
 		if(ws.flag) getFlag(ws, data.target);
 		sendToClients = 1;
 	}else if(data.type == "bye"){
-		setNull(ws.target);
-		ws.target = undefined;
-		SOME.delete(ws.target);
-		  broadcast_all({type: "dynamic", conn2: SOME.size/2 });
-		broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
+		//setNull(ws.target);
+		//ws.target = undefined;
+		//SOME.delete(ws.target);
+		//  broadcast_all({type: "dynamic", conn2: SOME.size/2 });
+		//broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
 		//someConnects--;
 		//send_to_one(ws, ws.target, {type: "bye"});
 	}else{
@@ -327,16 +334,21 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
         send_to_one(ws, data.target, data);
         if(data.type == "bye"){
 			console.log("**** DATA TYPE **** ", data.type);
-        setNull(ws.target);
+      //  setNull(ws.target);
         ws.target = undefined;
              let k = getPairsCount();
-             console.log("**** KKKKK **** ", k);
+             console.log("**** KKKKK **** ", k, (ws.target?true:undefined));
       if(!isEven(k)) {
-		  broadcast_all({type: "dynamic", connects: k/2  - 1});
+		  console.log('*** is even? ***', !isEven(k));
+		  let s = { }
+		  s.type = "dynamic";
+		  s.connects = k - 1;
+		  console.log("*** S>CONNECTS *** ", s.connects);
+		  broadcast_all(s);
 	  }else{
 		//  broadcast_all({type: "dynamic", connects: 0 });
 	  }
-	  	broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
+	  //	broadcast_all({type: "dynamic", connects: getPairsCount()/2 });
 	}
       }
     }
@@ -344,12 +356,15 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
 
   ws.on("close", async function ws_close() {
     console.log("Websocked closed!");
-    if(ws.target){
+   // if(ws.target){
 		send_to_one(ws, ws.target, {type: "bye"});
 		ws.target = undefined;
 		      let k = getPairsCount();
-      if(isEven(k))broadcast_all({type: "dynamic", connects: k/2 });
-	}
+      if(!isEven(k)){
+		  
+	  broadcast_all({type: "dynamic", connects: k - 1 });
+  }
+	//}
 	
 	if(onLine.has(ws.clientId))onLine.delete(ws.clientId);
     broadcast_all({ type: "howmuch", value: wss.clients.size , online: onLine.size });
@@ -401,9 +416,9 @@ function make_busy(randomId, ws) {
      wsend(el, { type: "warte_offer", from: ws.clientId});
      let k = getPairsCount();
       if(isEven(k)){
-		  broadcast_all({type: "dynamic", connects: k/2 });
+		 // broadcast_all({type: "dynamic", connects: k/2 });
 		  }else{
-			  broadcast_all({type: "dynamic", connects: 0 });
+			//  broadcast_all({type: "dynamic", connects: 0 });
 		  }
       return;
     }

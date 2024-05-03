@@ -46,7 +46,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 <nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
-<nav id="adminNav"><a href="/dashboard" target="_blank">${n.ln=='ru'?'<span>В админку</span>':'<span>Dashboard</span>'}</a></nav>
+<!-- <nav id="adminNav"><a href="/dashboard" target="_blank">${n.ln=='ru'?'<span>В админку</span>':'<span>Dashboard</span>'}</a></nav> -->
 <main id="pagewrap">
    
 <section id="langsbox">
@@ -113,7 +113,7 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <section id="count">
 <div class="count">${n.ln=='ru'?'Сейчас онлайн':n.ln=='en'?'Users online':n.ln=='fr'?'Utilisateurs en ligne':n.ln=='de'?'Benutzer online':n.ln=='es'?'Usuarios en línea':n.ln=='zh'?'用户在线':''}: <span id="spanWhosOn">0</span></div>
 &nbsp;&nbsp;<div>&nbsp;&nbsp;Webcams:&nbsp;<span id="webcams">0</span></div>
-&nbsp;&nbsp;<div>&nbsp;&nbsp;Connections:&nbsp;<span id="Connects">0</span>&nbsp;&nbsp;conn2<span id="conn2">0</span></div>
+&nbsp;&nbsp;<div>&nbsp;&nbsp;Connections:&nbsp;<span id="Connects">0</span></div>
 </section><hr>
 	<!-- ru, en, fr, de, es, zh -->
 <button id="searchBtn" onclick="openSuechBox();">${n.ln=='ru'?'Поиск':n.ln=='en'?'Search':n.ln=='fr'?'Recherche':n.ln=='de'?'Suche':n.ln=='es'?'Buscar':n.ln=='zh'?'搜索':''}</button><hr>

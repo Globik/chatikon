@@ -216,8 +216,11 @@ function on_msg(data) {
 	  handleLeave();
   }else if(data.type == "dynamic"){
 if(data.online)webcams.textContent = data.online;	
-if(data.connects)Connects.textContent =  data.connects;  
-if(data.conn2) conn2.textContent = data.conn2;
+if(data.connects !=undefined){
+//alert("data.connects " + data.connects)
+Connects.textContent =  data.connects;  
+}
+
   }else{
     note({ content: "No type " + data.type, type: "error", time: 5 });
   }

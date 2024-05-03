@@ -414,7 +414,7 @@ section#count{
 			
 			@media screen and (max-width: 695px) and (orientation: portrait){
 				html,body{
-					background: green;
+					ackground: green;
 				}
 				
 				#pagewrap{
@@ -457,7 +457,7 @@ section#count{
 
 @media screen and (max-width: 390px) and (orientation: portrait){
 body{
-	background:pink;
+	ackground:pink;
 }
 	#remoteVideoBox.buddy::after, #localVideoBox.buddy::after{
 				background-size:60%;
