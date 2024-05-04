@@ -68,6 +68,16 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
 //OAuth2 client_secret
 //630EF11C0EBD4AA7F15CC929184FA6B91D0E1FD0513CF8E2EC6F12607B904A733E5DA1685B3EA9C483B221D20D43F9CD0F9E6E1C89F2BC8B6309A90E6105CD86	
+ var conis4 ={
+  "iceServers": [
+    {
+      "urls": "stun:stun.l.google.com:19302"
+    },
+    {
+      "urls": "turn:relay1.expressturn.com:3478",
+      "username": "efZIKNPZ0Y17GFG3WZ",
+      "credential": "HIYNupkIAHFXSgW8"
+    }]}
 	var conis = {
   "iceServers": [
     {
@@ -128,7 +138,7 @@ var conis2 = {iceServers:[
 	
 		
 		
-var config = conis3;
+var config = conis4;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
