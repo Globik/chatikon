@@ -48,6 +48,7 @@ description: `${n.ln=='ru'?n.meta.ru.description:n.ln=='en'?n.meta.en.descriptio
 ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu(n) : ''}
 <!-- <nav id="adminNav"><a href="/dashboard" target="_blank">${n.ln=='ru'?'<span>В админку</span>':'<span>Dashboard</span>'}</a></nav> -->
 <main id="pagewrap">
+
    <section id="helloContainer"><h1>Hello world, I am looking for a rich investor for 1000 000 000 USD</h1>
    <img src="/images/mich.jpeg"/>
    <p>
@@ -55,6 +56,7 @@ ${buser && buser.brole == 'superadmin' ? html_admin_nav_menu.html_admin_nav_menu
    There will be paid virtual gifts here. Your profit - 90%. Mine is 10%. If you are intrested in please drop me a line to <a href="mailto:globichatikon@gmail.com">globichatikon@gmail.com</a>
    </p>
    </section>
+   
 <section id="langsbox">
  <div class="langs">
 ${n.ln=='en'?'':'<a href="/" hreflang="en">'} <img alt="English Version" src="/images/en.png" width="35" height="22"> ${n.ln=='en'?'':'</a>'}

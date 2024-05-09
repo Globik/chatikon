@@ -6,6 +6,8 @@
 	padding:20px;
 	border-style: dashed;
 	border: 7px dashed green;
+	display:block;
+	width:100%;
 }
 #helloContainer h1{
 	color:rgba(40,3, 22, 0.9);
@@ -19,7 +21,25 @@
 	#helloContainer p a{
 	color:rgba(40,3, 252, 0.8);
 	font-weight:bold;
+	border:none;
 	
+	}
+	@media screen and (max-width: 452px) and (orientation: portrait){
+		#helloContainer{
+			margin:0px;
+			padding:10px;
+			border:none;
+		}
+		#helloContainer h1{
+			font-size:1rem;
+		}
+		#helloContainer img{
+			width:90%;
+			margin:0 auto;
+		}
+		#helloContainer p{
+			font-size:0.9rem;
+		}
 	}
 /*
 a:focus,a:active,button::-moz-focus-inner,
