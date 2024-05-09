@@ -1,7 +1,26 @@
 * {
     box-sizing: border-box;
 }
-
+#helloContainer{
+	margin:100px;
+	padding:20px;
+	border-style: dashed;
+	border: 7px dashed green;
+}
+#helloContainer h1{
+	color:rgba(40,3, 22, 0.9);
+	font-size:2rem;
+	line-height:1.5;
+}
+#helloContainer p{
+	color:rgba(40,3, 22, 0.9);
+	font-size:1.3rem;
+	}
+	#helloContainer p a{
+	color:rgba(40,3, 252, 0.8);
+	font-weight:bold;
+	
+	}
 /*
 a:focus,a:active,button::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
