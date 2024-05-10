@@ -68,7 +68,7 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
 //OAuth2 client_secret
 //630EF11C0EBD4AA7F15CC929184FA6B91D0E1FD0513CF8E2EC6F12607B904A733E5DA1685B3EA9C483B221D20D43F9CD0F9E6E1C89F2BC8B6309A90E6105CD86	
- var conis4 ={
+ var conis4 ={iceTransportPolicy:"relay",
   "iceServers": [
     {
       "urls": "stun:stun.l.google.com:19302"
@@ -302,7 +302,7 @@ if(FUCKER){
 	let abba =  (abb ? {deviceId: abb} : true);
 	
 		//\n  "width": 320,\n  "height": 240,\n  "frameRate": 30\n}
-		let constraintsi = {
+		let constraintsi22 = {
 		audio: true/*{
       echoCancellation: true,
       autoGainControl: true,
@@ -329,6 +329,7 @@ if(FUCKER){
 	}catch(e){
 		console.error(e);
 	}*/
+	let constraintsi = { audio:true,video:true };
 	if(el.target.getAttribute("data-type") == "go"){
 	navigator.mediaDevices.getUserMedia(constraintsi).then(function(stream){
 	
@@ -341,7 +342,8 @@ if(FUCKER){
 	el.target.setAttribute("data-type", "stop");
 	
 	}).catch(function(err){
-		console.error(e);
+		console.error(err);
+		alert(err);
 		// NotReadableError: Could not start audio source
 		if(e.name =='NotReadableError' || e.name == 'TrackStartError'){
 			navigator.mediaDevices.getUserMedia(constraints2).then(function(stream){
@@ -691,7 +693,7 @@ function addStream({ track, streams }){
 function iceCandidateError(e) {
 	console.error("ice err: ", e.url, e.errorText );
 	debug("<b>ice err:</b> " + e.url + " " + e.errorText );
-	//note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
+	note({content: "ice err: " + e.url + " " + e.errorText, type: "error", time: 5});
 }
 function onNegotiation(e){
 	console.log("negotiation needed.");
@@ -863,7 +865,7 @@ localVideo.onloadedmetadata = function () {
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 5000);
+	}, 100);
 	btnStart.disabled = false;
 	btnStart.className = "start";
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
