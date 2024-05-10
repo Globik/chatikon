@@ -68,7 +68,7 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
 //OAuth2 client_secret
 //630EF11C0EBD4AA7F15CC929184FA6B91D0E1FD0513CF8E2EC6F12607B904A733E5DA1685B3EA9C483B221D20D43F9CD0F9E6E1C89F2BC8B6309A90E6105CD86	
- var conis4 ={iceTransportPolicy:"relay",
+ var conis4 ={/*iceTransportPolicy:"relay",*/
   "iceServers": [
     {
       "urls": "stun:stun.l.google.com:19302"
@@ -746,6 +746,7 @@ function onConnectionStateChange(e){
 	}
 	if(pc.connectionState == "failed" || pc.connectionState == "closed"){
 		//pc.restartIce();
+		note({ content: "Failed or disconnected!", type: "warn", time:5 });
 		CONNECTED = false;
 		handleLeave();
 }
@@ -773,6 +774,7 @@ function onSignalingState(e){
  
 			}else if(pc.iceConnectionState == "failed" || pc.iceConnectionState == "disconnected"){
 				//pc.restartIce();
+				note({ content: "Failed or disconnected!", type: "warn", time:5 });
 				handleLeave();
 				CONNECTED = false;
 			}else{}
