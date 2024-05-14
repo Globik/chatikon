@@ -146,7 +146,7 @@ var conis2 = {iceServers:[
     { urls: "turn:standard.relay.metered.ca:443", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
    { urls: "turns:standard.relay.metered.ca:443?transport=tcp", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", }, ], });
 		
-var config = conis6;
+var config = conis3;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
