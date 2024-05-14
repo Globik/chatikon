@@ -121,6 +121,9 @@ var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
       "credential": "YlI1/qfkEWya3Q4p"
     }*/
 ]};	
+
+
+
 var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
 	{urls:["turn:127.0.0.1:3478?transport=udp",
 		"turn:127.0.0.1:5349?transport=tcp"
@@ -136,9 +139,14 @@ var conis2 = {iceServers:[
 		]
 		,username:"alik",credential:"1234"}]};
 	
+		 var conis6 = new RTCPeerConnection({ iceServers: [
+   { urls: "stun:stun.relay.metered.ca:80", }, 
+  { urls: "turn:standard.relay.metered.ca:80", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
+   { urls: "turn:standard.relay.metered.ca:80?transport=tcp", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
+    { urls: "turn:standard.relay.metered.ca:443", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
+   { urls: "turns:standard.relay.metered.ca:443?transport=tcp", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", }, ], });
 		
-		
-var config = conis4;
+var config = conis6;
 console.log(config);
 if (window.location.protocol === "https:") {
   new_uri = "wss:";
