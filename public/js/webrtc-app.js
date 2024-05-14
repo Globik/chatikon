@@ -57,6 +57,9 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 */
 var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
 	{
+      "urls": "stun:stun.l.google.com:19302"
+    },
+	{
 		urls:["stun:45.89.66.167:80"]
 		},
 	{urls:[
