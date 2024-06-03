@@ -265,6 +265,7 @@ wss.on("connection", function ws_connect(ws, req) {
   let id = obid();
   ws.clientId = id;
   ws.target = undefined;
+  ws.nick = undefined;
   ws.busy = true;
   wsend(ws, { type: "welcome", clientId: id });
   broadcast_all({ type: "howmuch", value: wss.clients.size, online: onLine.size });
@@ -280,7 +281,10 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
       return;
     }
     console.log(data.type);
-    if (data.type == "fertig") {
+    if(data.type == 'hiserver'){
+		ws.nick = data.nick;
+		ws.myrealid = data.myid;
+	}else if (data.type == "fertig") {
 		onLine.set(ws.clientId, { })
 		broadcast_all({ type: "dynamic", online: onLine.size});
 		let k = getPairsCount();
@@ -296,7 +300,7 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
       console.log("b: ", b.busy);
       if(b.busy == false && ws.clientId !== b.clientId){
 		  ws.busy = true;
-		  make_busy(b.clientId, ws);
+		  make_busy(b.clientId, b.myrealid, ws);
 	  }else{
 		 // wsend(ws, {type: "info", info: "No match found. Waiting, please."});
 	  }
@@ -407,13 +411,13 @@ function send_to_one(ws, target, obj) {
 
 
 
-function make_busy(randomId, ws) {
+function make_busy(randomId, realid, ws) {
   for (let el of wss.clients) {
     if (el.clientId === randomId) {
       el.busy = true;
       someConnects ++;
-     wsend(ws, { type: "make_offer", target: randomId });
-     wsend(el, { type: "warte_offer", from: ws.clientId});
+     wsend(ws, { type: "make_offer", target: randomId, realid: realid });
+     wsend(el, { type: "warte_offer", from: ws.clientId, realid: ws.myrealid });
      let k = getPairsCount();
       if(isEven(k)){
 		 // broadcast_all({type: "dynamic", connects: k/2 });

@@ -76,6 +76,56 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
                </section>
                 ${icons_menu.icons_menu({current:'main', user:buser, ln: n.ln })}
                ${n.user?`<span class="username">${n.user.name}, welcome on board!</span>`:''}
+               <input type="hidden" id="mynick" value="${n.user?n.user.name:'anon'}" />
+               <input type="hidden" id="myrealid" value="${n.user?n.user.id:'no'}" /> 
+              <!--
+<article id="mediaBox">
+<section id="videoBoxes">
+		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div>
+		
+		<video id="localVideo" plysinline autoplay muted></video>
+		
+	<div id="privatcontainer" class="hidden">
+	<div id="znakChat">
+	<div id="znakPrint" class="typing hidden">
+    <div class="typing__dot"></div>
+    <div class="typing__dot"></div>
+    <div class="typing__dot"></div>
+    <span class="staben"><small id="printsi">prints</small></span>
+  </div>
+  <div id="chatimg" onclick="openChat(this);"><img src="/images/chat.svg"/></div>
+  
+<div id="privatchat"></div>
+<div id="underchatbox">
+<input type="text" id="privatinput" oninput="txtInput(this);" onchange="someChange(this);" placeholder="Your message">
+<button id="privatbtn" onclick="sendPrivat(this);"><img src="/images/send.svg"></button>
+</div>
+ </div> 
+</div>
+		<div id="remoteVideoBox" class="buddy"><div id="flagbox"><img id="flag" src=""></div><video id="remoteVideo" playsinline autoplay></video></div>
+</section>
+
+<footer id="controlPanel">
+
+		 <div id="giftWrapper" onclick="bearbeitGift(this);">
+		<div class="gifts">&#x1f496</div>
+		<div><span id="heartscount">44</span></div>
+		</div>
+		
+<div class="flex-items">
+<button id="btnStart" class="btn" data-type="go">${n.ln=='ru'?"Старт":"Start"}</button>
+<button id="nextBtn" class="btn" disabled>${n.ln=='ru'?"Далeе":"Next"}</button>
+</div>
+	</div>		
+</footer>	
+</article>
+
+
+-->
+
+
+
+
 <article id="mediaBox">
 <section id="videoBoxes">
 		<div id="localVideoBox" class="buddy"><div id="cloader" class="unspinner"><div class="loader"></div></div>
@@ -106,10 +156,17 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 <button id="nextBtn" class="btn" disabled>${n.ln=='ru'?"Далeе":"Next"}</button>
 </div>
 
-
-			</div> 
+	</div> 
 </footer>	
 </article>
+
+
+
+
+
+
+
+
 <!--
 	<hr>
 	<h2>Debug Info:</h2>

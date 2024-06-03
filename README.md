@@ -21,13 +21,14 @@ user=alik:1234
 realm=example.com
 айпи адрес для принятия запросов
 listening-ip=141.8.195.180 
-
+listening-ip=45.12.18.172
  айпи адрес для ретрансляции
 relay-ip=141.8.195.180
+relay-ip=45.12.18.172
  порт 80 принимает несекьюрные соединения
 listening-port=80
 Обозначаем секьюрный порт 443 для turn
-tls-listening-port=443
+tls-listening-port=8443
 fingerprint
 lt-cred-mech  
 cli-password=qwerty
@@ -51,6 +52,21 @@ sudo ss -lnpt | grep turnserver
  sudo systemctl start cotourn
  sudo systemctl enable cotourn
  systemctl status cotourn
+ 
+ listening-port=3478
+ tls-listening-port=5349
+ listening-ip=45.89.66.167
+ relay-ip=45.89.66.167
+ fingerprint
+ lt-cred-mech
+ user=alik:1234
+ realm=chatslider.online
+ cert=/etc/letsencrypt/live/chatslider.online/fullchain.pem
+ pkey=/etc/letsencrypt/live/chatslider.online/privkey.pem
+ no-stdout-log
+ cli-password=qwerty
+ 
+ 
 
 ```
 

@@ -7,6 +7,7 @@ var timer;
 var timerIt;
 var clientId;
 var targetId;
+var hisrealid;
 var FUCKER = false;
 var spanWhosOn = gid("spanWhosOn");
 var loc1 = location.hostname + ":" + location.port;
@@ -53,19 +54,24 @@ var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
 0.131	host	1866265727	tcp	192.168.0.106	9	90 | 32542 | 255		
 0.456	Authentication failed?
 0.455	relay	3426018743	udp	45.89.66.167	56327	2 | 32543 | 255	turn:45.89.66.167:80?transport=udp	udp
-
+//"stun:45.89.66.167:3478"
+		// stun:45.89.66.167:3479
 */
-var conis3 = {/*iceTransportPolicy:"relay",*/"iceServers":[
+var conis3 = {
+	"iceServers":[
 	{
       "urls": "stun:stun.l.google.com:19302"
     },
 	{
-		urls:["stun:45.89.66.167:80"]
+		"urls":["stun:chatslider.online:3478",
+	"stun:chatslider.online:3479",]
+		
 		},
 	{urls:[
-	"turn:45.89.66.167:5349",
-	//	"turn:45.89.66.167:433?transport=tcp",
-		//"turn:45.89.66.167:5349"
+	"turn:chatslider.online:3478?transport=udp",
+		"turn:chatslider.online:3478?transport=tcp", 
+		"turn:chatslider.online:3479?transport=udp",
+		"turn:chatslider.online:3479?transport=tcp" //no stun
 		]
 		,username:"alik",credential:"1234"}]};
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
@@ -162,6 +168,7 @@ function get_socket() {
 
   sock.onopen = function () {
     console.log("websocket opened");
+    wsend({ type: "hiserver", nick: mynick.value, myid: myrealid.value });
   };
   sock.onerror = function (e) {
     note({ content: "Websocket error: " + e, type: "error", time: 5 });
@@ -197,6 +204,7 @@ function on_msg(data) {
   }else if(data.type == "warte_offer"){
 	  console.warn("warte offer from: ", data.from, " du: ", clientId, " ", fasa);
 	   targetId = data.from;
+	   hisrealid = data.realid;
 	  if(fasa && fasa === 'make_offer'){
 		  console.warn("fasa", fasa);
 		   return;
@@ -216,6 +224,7 @@ function on_msg(data) {
 	  debug("making an offer to: " + data.target);
 	  debug("You are: " + clientId);
 	  targetId = data.target;
+	  hisrealid = data.realid;
 	  makeOffer(data.target);
   }else if(data.type == "offer"){
 	 console.warn(targetId, " == ", data.from);
@@ -1200,14 +1209,33 @@ function openSuechBox(){
 	suechBox.style.display = "block";
 	window.location.href = "#suechBox";
 }
+//bearbeitGift(this);
+function bearbeitGift(el){
+	//alert(1);
+	//wsend({ type: "gift", from:, target:,count: 1 , sub: "heart" });
+}
 
 
+	privatinput.addEventListener('keydown', sendEnter, false);
 
 
-
-
-
-
+function sendEnter(ev){
+	if(ev.key == "Enter"){
+		if(!ev.target.value) return;
+		sendPrivat2();
+	}
+}
+function sendPrivat2(el){
+		if(!dc) return;
+		
+		let a;
+		try{
+			a = JSON.stringify({type: "message", from: "anonym", msg: privatinput.value});
+		}catch(e){return;}
+		dc.send(a);
+		insertMsg({from: "You", msg: privatinput.value});
+		privatinput.value = "";
+	}
 
 
 
