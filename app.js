@@ -284,9 +284,11 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
     if(data.type == 'hiserver'){
 		ws.nick = data.nick;
 		ws.myrealid = data.myid;
+	}else if(data.type == "pfertig"){
+		oni("Jemand trying online ", wss.clients.size);
 	}else if (data.type == "fertig") {
 		onLine.set(ws.clientId, { })
-		oni("Jemand trying online ", wss.clients.size);
+		
 		broadcast_all({ type: "dynamic", online: onLine.size});
 		let k = getPairsCount();
       if(isEven(k)){

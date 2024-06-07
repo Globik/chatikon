@@ -872,7 +872,7 @@ function wsend(obj){
 }
 
 localVideo.onloadedmetadata = function () {
-	
+	wsend({ type: 'pfertig' });
 	debug("Local video enabled.");
 	localVideoBox.className = "";
 
