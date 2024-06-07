@@ -265,10 +265,10 @@ ${n.articles.length==0 ? `<div class="editbtn"><button data-ln="${n.ln}" onclick
         <div class="modal-body">
           <div class="error-message" id="errormsg"></div>
           <form name="formlogin" id="myform">
-            <label for="name" style="margin-top: 5px;">${n.lang=='ru'?'Имя':'Nickname'}</label>
+            <label class="lab" for="name" style="margin-top: 5px;">${n.lang=='ru'?'Имя':'Nickname'}</label>
             <input  name="username" type="text" placeholder="${n.lang=='ru'?'Введите Имя/Логин':'Enter nickname'}" id="name" required minlength="2" maxlength="20">
 
-            <label for="name">${n.lang=='ru'?'Пароль':'Password'}</label>
+            <label class="lab" for="password">${n.lang=='ru'?'Пароль':'Password'}</label>
             <input  name="userpassword" type="password" autocomplete="on" placeholder="Введите пароль" id="password" required minlength="2" maxlength="20">
 			 <button  class="login-button" id="btnlogin">${n.lang=='ru'?'Войти':'Log in'}</button>
             <button class="register-button" id="btnregister">${n.lang=='ru'?'Зарегистрироваться':'Sign up'}</button>

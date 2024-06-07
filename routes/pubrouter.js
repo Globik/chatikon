@@ -11,7 +11,7 @@ const passport = require('koa-passport');
 const { oni } = require('../libs/web_push.js');
 
 pub.get('/', async ctx=>{
-	console.log("STATE USER:", ctx.state.user);
+	//console.log("STATE USER:", ctx.state.user);
 	let  dbm = ctx.dbm;
 	let c;
 	let a;let b;
@@ -21,7 +21,7 @@ pub.get('/', async ctx=>{
 		c=await articles.find({lang:'en'}).toArray();
 	
 	//let r = await articles.find({}).toArray();
-	console.log("R: ", c);
+	//console.log("R: ", c);
 	}catch(e){console.log(e);}
 	ctx.body = await ctx.render('main_page', {ln: "en", articles:c, user:ctx.state.user});
 })
@@ -292,6 +292,20 @@ pub.get('/bitcoin', async ctx=>{
 pub.get('/purchase', async ctx=>{
 	ctx.body = await ctx.render('purchase', {});
 });
+
+pub.post('/api/deleteList', async ctx=>{
+	let { db } = ctx.db;
+	//console.log("here db ", db );
+	let a;
+	try{
+		const  numRemoved  = await db.removeAsync({}, { multi: true })
+		a = numRemoved;
+		console.log('numRemoved', numRemoved);
+	}catch(err){
+		ctx.throw(400, err)
+	}
+	ctx.body = { message: "Ok, all " + a + " is deleted!" }
+})
 
 module.exports = pub;
 

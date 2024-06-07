@@ -16,8 +16,12 @@ const guests = function (n) {
 		</head><body><nav class="back">${html_nav_menu.html_nav_menu(n)}</nav>
 		<main id="pagewrap">
 		<h1>Guests</h1>
+		<button onclick="removeAllList(this);">Remove All</button>
+		<hr>
+		<section id="listSec">
 		${n.guests ? getGuests(n.guests) : "No one else"}
-		</main><!-- <script src="/js/push.js"></script> --></body></html>`;
+		</section>
+		</main> <script src="/js/guests.js"></script> </body></html>`;
 	}
 	module.exports = { guests: guests }
 	

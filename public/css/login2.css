@@ -21,7 +21,7 @@
 .modal-body{
 	background:white;
 }
-label {
+label.lab {
   display: block;
   margin-top: 15px;
   font-size: 16px;
@@ -29,7 +29,7 @@ label {
   color:black;
 }
 
-input {
+input[type=text],input[type=password]{
   display: block;
   height: 50px;
   width: 100%;
@@ -124,7 +124,7 @@ a {
   color: inherit;
 }
 
-button {
+button.login-button,button.register-button {
   height: 100%;
   border: none;
   font-size: 1rem;

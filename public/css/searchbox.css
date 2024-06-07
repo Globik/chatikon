@@ -14,6 +14,18 @@
 	margin-top:10px;
 	margin-bottom:10px;
 }
+.age input[type=number]{
+	width:initial;
+}
+input[name=mygender]{
+	width:initial;
+}
+input[name=suechgender]{
+	width:initial;
+}
+#landContainer input[type=checkbox]{
+	
+}
 div.gender-wrapper{
 	display:grid;
 	grid-template-columns: 1fr 1fr;

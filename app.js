@@ -179,7 +179,7 @@ app.use(async (ctx, next) => {
   ctx.state.warnig = warnig;
   ctx.p = pool;
   ctx.db = db;
-  ctx.dbm=dbm;
+  ctx.dbm = dbm;
   console.log("Language: ", ctx.request.header["accept-language"]);
   console.log("IP: ", ctx.request.ip);
   var langstr = (ctx.request.header['accept-language'] ? ctx.request.header['accept-language'].includes('ru') : false);
@@ -313,6 +313,7 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
       if(isEven(k)){
 		  console.log("IS EVEN *** ", isEven(k));
 		   broadcast_all({type: "dynamic", connects: k/2 });
+		   oni("Someone is online on chatslider ", wss.clients.size);
 	  }
       
       
@@ -451,7 +452,7 @@ function setFlag(ws, ip){
 	if(process.env.DEVELOPMENT == "yes"){return;}
 let a = ip.match(re);
 let r = a[0];
-if(r === "78.81.155.17"){return;}
+//if(r === "78.81.155.17"){return;}
 setTimeout(function(){
 	axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${abstract_key}&ip_address=${r}&fields=country,city,flag`).then(async response=>{
 	console.log('data: ', response.data, 'status', response.status);
@@ -460,11 +461,15 @@ setTimeout(function(){
 		ws.flag = response.data.flag.svg;
 		try{
 		await db.db.insertAsync({city: response.data.city, country: response.data.country, date: new Date()});
-	}catch(er){console.log(er);}
+	}catch(er){
+		//console.log(er);
+		
+		}
 	}
 	
-}).catch(error=>{
-	console.log(error);
+}).catch(async error=>{
+	//console.log(error);
+	//await db.db.insertAsync({city: 'moscow', country: 'russia', date: new Date()});
 })
 }, 1000)
 }
