@@ -887,7 +887,7 @@ localVideo.onloadedmetadata = function () {
 			DATI.type = "fertig";
 			wsend(DATI);
 		}
-	}, 100);
+	}, 10000);
 	btnStart.disabled = false;
 	btnStart.className = "start";
 	btnStart.textContent = (nstr=="ru"?"Стоп":"Stop");
