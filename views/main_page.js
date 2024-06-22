@@ -246,7 +246,7 @@ n.ln=='zh'?'关闭并保存':''}</button>
 <section>
 
 
-<article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles):''}</article>
+<article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles,n.ln):''}</article>
 <div class="donate"><h2>Please donate bitcoins</h2>
 <b><a id="aid" href="bitcoin:bc1qy9cz8h230kqpp2mm7ynlzzwnm80xgdj2z5djz7">bc1qy9cz8h230kqpp2mm7ynlzzwnm80xgdj2z5djz7</a></b>
 <button onclick="copy();">copy</button>
@@ -288,11 +288,33 @@ ${n.user && n.user.role=='admin'?'<script src="/js/redact.js"></script>':''}
 }
 
 module.exports = { main_page };
-function getTxt(arr){
+function getTxt(arr, ln){
 let s='';
+if(ln=='en'){
 arr.forEach(function(el,i){
 	s+=el.txt;
 })
+}else if(ln=='de'){
+	arr.forEach(function(el,i){
+	s+=el.txt;
+})
+}else if(ln=='ru'){
+	arr.forEach(function(el,i){
+	s+=el.txt;
+})
+}else if(ln=='es'){
+	arr.forEach(function(el,i){
+	s+=el.txt;
+})
+}else if(ln=='zh'){
+	arr.forEach(function(el,i){
+	s+=el.txt;
+})
+}else if(ln=='fr'){
+	arr.forEach(function(el,i){
+	s+=el.txt;
+})
+}
 return s;
 }
 
