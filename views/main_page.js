@@ -247,6 +247,8 @@ n.ln=='zh'?'关闭并保存':''}</button>
 
 
 <article id = "art" data-id="${n.articles?n.articles._id:''}">${n.articles?getTxt(n.articles):''}</article>
+<div class="donate"><h2>Please donate bitcoins</h2>
+<b><a href="bitcoin:bc1qy9cz8h230kqpp2mm7ynlzzwnm80xgdj2z5djz7">bc1qy9cz8h230kqpp2mm7ynlzzwnm80xgdj2z5djz7</a></b></div>
 ${n.user && n.user.role=="admin"? `<div class="editbtn"><button onclick="editTxt(this);">edit</button></div>
 <section id="txtwrapper">
 <textarea id="txt" placeholder="your article"></textarea>
