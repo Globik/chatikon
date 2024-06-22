@@ -27,13 +27,19 @@ var ellang = document.querySelector("html");
 var nstr = ellang.getAttribute('lang');
 var znakPrint = gid("znakPrint");
 var privatcontainer = gid("privatcontainer");
-
+// bc1qy9cz8h230kqpp2mm7ynlzzwnm80xgdj2z5djz7
 btnStart.addEventListener('click', letStart, false);
 nextBtn.addEventListener('click', donext, false);
 //const codecPreferences = gid("codecPreferences");
 const supportsCodecPreferences = window.RTCRtpTransceiver && 'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
 const offerOpts = {offerToReceiveAudio: 1, offerToReceiveVideo: 1};
-
+function copy(){
+	navigator.clipboard.writeText(aid.textContent).then(function(){
+		note({ content: "OK, copied!", type: "info", time: 5 });
+	}, function(err){
+		alert(err);
+	});
+}
 var DATI = {};
 
 var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},

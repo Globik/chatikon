@@ -170,6 +170,7 @@ setDb();
 
 db.db = new Datastore({filename: "db.json", autoload: true})
 db.articles = new Datastore({filename: "articles.json", autoload: true})
+console.log('articles', db.articles)
 //const dbm=client.db('globi');
 	//await client.connect();
 app.use(async (ctx, next) => {
