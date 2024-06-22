@@ -275,7 +275,7 @@ ${n.articles.length==0 ? `<div class="editbtn"><button data-ln="${n.ln}" onclick
             <label class="lab" for="password">${n.lang=='ru'?'Пароль':'Password'}</label>
             <input  name="userpassword" type="password" autocomplete="on" placeholder="Введите пароль" id="password" required minlength="2" maxlength="20">
 			 <button  class="login-button" id="btnlogin">${n.lang=='ru'?'Войти':'Log in'}</button>
-            <button class="register-button" id="btnregister">${n.lang=='ru'?'Зарегистрироваться':'Sign up'}</button>
+            <button class="register-button" style="" id="btnregister">${n.lang=='ru'?'Зарегистрироваться':'Sign up'}</button>
            
           </form>
         </div>

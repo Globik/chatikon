@@ -60,11 +60,11 @@ span.model-header-label {
   cursor: pointer;
 }
 
-.register-button {
+button#btnregister.register-button{
   margin-top: 25px;
   width: 100%;
-  background: green;/*#4caf50;*/
-  color: #fff;
+  background:linear-gradient(#446ca2,#446ca2 25%,#184076);
+  color:#fff;
   padding: 12px 0;
   font-size: 18px;
   font-weight: 600;
@@ -123,16 +123,17 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-button.login-button,button.register-button {
+/*
+button.login-button,button.register-button{
   height: 100%;
   border: none;
   font-size: 1rem;
   outline: none;
   cursor: pointer;
   color: #767676;
-  background-color: #fff;
+  background: blue;
 }
+*/
 /*
   button:hover {
     color: #333;
