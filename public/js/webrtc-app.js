@@ -69,15 +69,19 @@ var conis3 = {
       "urls": "stun:stun.l.google.com:19302"
     },
 	{
-		"urls":["stun:chatslider.online:3478",
-	"stun:chatslider.online:3479",]
+		"urls":[
+	//"stun:chatslider.online:3478",
+	//"stun:chatslider.online:3479",
+	"stun:chatslider.online:80",
+	"stun:chatslider.online:5349"
+	]
 		
 		},
 	{urls:[
-	"turn:chatslider.online:3478?transport=udp",
-		"turn:chatslider.online:3478?transport=tcp", 
-		"turn:chatslider.online:3479?transport=udp",
-		"turn:chatslider.online:3479?transport=tcp" //no stun
+	"turn:chatslider.online:80?transport=udp",
+		"turn:chatslider.online:80?transport=tcp", 
+		"turn:chatslider.online:5349?transport=udp",
+		"turn:chatslider.online:5349?transport=tcp" //no stun
 		]
 		,username:"alik",credential:"1234"}]};
 //	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4

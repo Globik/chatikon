@@ -36,11 +36,11 @@ cli-password=qwerty
 cert=/root/fullchain.pem
 pkey=/root/privkey.pem
 
-sudo ufw allow 5348/tcp
-sudo ufw allow 5348/udp
+sudo ufw allow 5349/tcp
+sudo ufw allow 5349/udp
 
-sudo ufw allow 3479/udp
-sudo ufw allow 3479/tcp
+sudo ufw allow 3478/udp
+sudo ufw allow 3478/tcp
 
 Выходим из редактора и сохраняем файл
 Ctrl+C CTRL+c
