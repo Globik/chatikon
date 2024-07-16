@@ -232,7 +232,7 @@ const interval = setInterval(function ping() {
     ws.isAlive = false;
     ws.ping(noop);
   });
-}, 360000);
+}, 1000 * 600);
 
 function heartbeat() {
   this.isAlive = true;
