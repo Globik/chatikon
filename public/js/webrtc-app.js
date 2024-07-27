@@ -42,27 +42,6 @@ function copy(){
 }
 var DATI = {};
 
-var con = {iceServers: [{   urls: [ "stun:fr-turn1.xirsys.com" ]},
-	 {   username: "sy6E_DhPdsS-mVCJVDwQfiGZzLrZ_0ldAHMSraAIu7Upm8iP8VBInygTyGwPpvLdAAAAAGQ79hJHbG9iaQ==", 
-		   credential: "6eab5a34-dc59-11ed-9b35-0242ac120004", 
-		     urls: [       "turn:fr-turn1.xirsys.com:80?transport=udp",     
-		       "turn:fr-turn1.xirsys.com:3478?transport=udp",     
-		         "turn:fr-turn1.xirsys.com:80?transport=tcp",    
-		            "turn:fr-turn1.xirsys.com:3478?transport=tcp",   
-		                "turns:fr-turn1.xirsys.com:443?transport=tcp",  
-	     "turns:fr-turn1.xirsys.com:5349?transport=tcp"   ]}]
- };
-
-//45.89.66.167:5349 
-/*
-	
-0.060	srflx	284386497	udp	77.222.113.209	59584	100 | 32542 | 255	stun:45.89.66.167:80	
-0.131	host	1866265727	tcp	192.168.0.106	9	90 | 32542 | 255		
-0.456	Authentication failed?
-0.455	relay	3426018743	udp	45.89.66.167	56327	2 | 32543 | 255	turn:45.89.66.167:80?transport=udp	udp
-//"stun:45.89.66.167:3478"
-		// stun:45.89.66.167:3479
-*/
 var conis3 = {
 	"iceServers":[
 	{
@@ -84,63 +63,6 @@ var conis3 = {
 		"turn:chatslider.online:5349?transport=tcp" //no stun
 		]
 		,username:"alik",credential:"1234"}]};
-//	284F8AF315982DBA49BBB226F919D69A1816BCC733EA8697AD111C36EDFC2AB4
-//OAuth2 client_secret
-//630EF11C0EBD4AA7F15CC929184FA6B91D0E1FD0513CF8E2EC6F12607B904A733E5DA1685B3EA9C483B221D20D43F9CD0F9E6E1C89F2BC8B6309A90E6105CD86	
- var conis4 ={/*iceTransportPolicy:"relay",*/
-  "iceServers": [
-    {
-      "urls": "stun:stun.l.google.com:19302"
-    },
-    {
-      "urls": "turn:relay1.expressturn.com:3478",
-      "username": "efZIKNPZ0Y17GFG3WZ",
-      "credential": "HIYNupkIAHFXSgW8"
-    }]}
-	var conis = {
-  "iceServers": [
-    {
-      "urls": "stun:stun.l.google.com:19302"
-    },
-    {
-      "urls": "turn:relay1.expressturn.com:3478",
-      
-      "username": "efF80AKULRWCVI7JYZ",
-      "credential": "8I8md50Q5otRskFc"
-    },
-    {
-      "urls": "turn:relay1.expressturn.com:3478?transport=udp",
-      
-      "username": "efF80AKULRWCVI7JYZ",
-      "credential": "8I8md50Q5otRskFc"
-    },
-    /*
-     {
-      "urls": "stun:stun.relay.metered.ca:80"
-    },
-    
-    {
-      "urls": "turn:a.relay.metered.ca:80",
-      "username": "33c88ed716afa1a802b5116a",
-      "credential": "YlI1/qfkEWya3Q4p"
-    },
-    {
-      "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-      "username": "33c88ed716afa1a802b5116a",
-      "credential": "YlI1/qfkEWya3Q4p"
-    },
-    {
-      "urls": "turn:a.relay.metered.ca:443",
-      "username": "33c88ed716afa1a802b5116a",
-      "credential": "YlI1/qfkEWya3Q4p"
-    },
-    {
-      "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-      "username": "33c88ed716afa1a802b5116a",
-      "credential": "YlI1/qfkEWya3Q4p"
-    }*/
-]};	
-
 
 
 var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478"]},
@@ -148,22 +70,9 @@ var coni = {iceTransportPolicy:"relay","iceServers":[{urls:["stun:127.0.0.1:3478
 		"turn:127.0.0.1:5349?transport=tcp"
 		]
 		,username:"alik",credential:"1234"}]};
-//141.8.195.180
-var conis2 = {iceServers:[
-	{
-		urls:["stun:141.8.195.180:80"]
-		},
-	{urls:[
-		"turn:141.8.195.180:443?transport=tcp"
-		]
-		,username:"alik",credential:"1234"}]};
-	
-		 var conis6 = new RTCPeerConnection({ iceServers: [
-   { urls: "stun:stun.relay.metered.ca:80", }, 
-  { urls: "turn:standard.relay.metered.ca:80", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
-   { urls: "turn:standard.relay.metered.ca:80?transport=tcp", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
-    { urls: "turn:standard.relay.metered.ca:443", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", },
-   { urls: "turns:standard.relay.metered.ca:443?transport=tcp", username: "34351867ccbc6431d4ac0b65", credential: "y2DxVs2Q8bg5Q6db", }, ], });
+
+
+		
 		
 var config = conis3;
 console.log(config);
@@ -881,8 +790,30 @@ function wsend(obj){
 	}catch(e){}
 }
 
+
+function Screenshot() {
+	if(!localVideo.srcObject) return;
+    let cnv = document.createElement('canvas');
+    let w = 180;
+    let h = 150;
+   // cnv.width = w;
+    //cnv.height = h;
+    var c = cnv.getContext('2d');
+    var ww = localVideo.videoWidth;
+    var hh = localVideo.videoHeight;
+     cnv.width = ww;
+    cnv.height = hh;
+    c.drawImage(localVideo, 0, 0, ww, hh);
+    var imgdata = cnv.toDataURL('image/png', 1.0);
+    cnv.remove();
+    return imgdata;
+    
+}
+
 localVideo.onloadedmetadata = function () {
-	wsend({ type: 'pfertig' });
+	setTimeout(function(){
+	wsend({ type: 'pfertig', src: Screenshot() });
+}, 1000);
 	debug("Local video enabled.");
 	localVideoBox.className = "";
 

