@@ -183,7 +183,7 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 	<!-- ru, en, fr, de, es, zh -->
 	
 	<section id="reklama2">
-	<div id="fotopanel"><img class="telka" src="/images/girl.webp"/><img class="telka" src="/images/girl2.webp"/><img class="telka" src="/images/girl3.webp"/></div>
+	<div id="fotopanel"><img class="telka" src="/images/girl4.webp"/><img class="telka" src="/images/girl2.webp"/><img class="telka" src="/images/boy.webp"/></div>
 	<div><span id="reklama2span"><b>Advertise 18+</b></span></div>
 	<article>
 	<p>Looking for new acquaintances? Thousand of hot girls and boys are waiting for you to talk in chat roulette on <a href="https://rouletka.ru/about">https://rouletka.ru</a>!
