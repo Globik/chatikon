@@ -1825,4 +1825,113 @@ main{
     }
 }
 
-/*@media screen and (min-width:359px){}*/
+
+#reklama2span{
+	color:green;
+	padding:20px;
+	margin-top:10px;
+}
+:root {
+  --angle: 45deg;
+  --opacity: 0.5;
+}
+section#reklama2{
+	
+	margin-bottom: 10px;
+    
+     border-radius: 10px;
+  padding: 2rem;
+  magin: auto;
+
+  display: block;
+  place-content: center;
+  text-align: center;
+
+  font-size: 1.5em;
+
+  --border-size: 0.3rem;
+  border: var(--border-size) solid transparent;
+    border-image: conic-gradient(
+    from var(--angle),
+    #d53e33 0deg 90deg,
+    #fbb300 90deg 180deg,
+    #377af5 180deg 270deg,
+    #399953 270deg 360deg
+  ) 1 stretch; 
+ background:#d9a1a1;
+;
+  
+}
+
+
+
+
+
+
+
+section#reklama2 article{
+	padding:20px;
+	 background: rgb(255 255 255,0.9);
+}
+
+div#fotopanel{
+	text-align:center;
+}
+div.forbtndiv{
+	text-align:center;
+}
+article p{
+padding:10px;
+	text-align:center;
+}
+article p a{
+	color:blue;
+	text-decoration:underline;
+}
+@media screen and (max-width: 452px) and (orientation: portrait){
+	
+}
+@media screen and (max-width:491px){
+body{
+	bakground:red;
+}
+ection#reklama2{
+padding:0;
+margin:0;
+}
+#reklama2span{
+padding:2px;
+margin:0;
+}
+	section#reklama2 article{
+	padding:2px;
+}
+div#fotopanel img{
+	margin:0;
+	padding:0;
+	width:80px;
+	height:80px;
+}
+article p{
+padding:0px;
+text-align:none;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

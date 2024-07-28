@@ -181,6 +181,21 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 &nbsp;&nbsp;<div>&nbsp;&nbsp;Connections:&nbsp;<span id="Connects">0</span></div>
 </section><hr>
 	<!-- ru, en, fr, de, es, zh -->
+	
+	<section id="reklama2">
+	<div id="fotopanel"><img class="telka" src="/images/girl.webp"/><img class="telka" src="/images/girl2.webp"/><img class="telka" src="/images/girl3.webp"/></div>
+	<div><span id="reklama2span"><b>Advertise 18+</b></span></div>
+	<article>
+	<p>Looking for new acquaintances? Thousand of hot girls and boys are waiting for you to talk in chat roulette on <a href="https://rouletka.ru/about">https://rouletka.ru</a>!
+	</p>
+	<p>
+	寻找新朋友？ 数以千计的热辣女孩和男孩正在等待您在聊天轮盘赌中交谈: <a href="https://rouletka.ru/about">https://rouletka.ru</a>!
+	<div class="forbtndiv"><button onclick="window.location.href='https://rouletka.ru/about';">Come on join us! | 快来加入我们吧!</button></div>
+	</p>
+	</article>
+	</section>
+	
+	
 <button id="searchBtn" onclick="openSuechBox();">${n.ln=='ru'?'Поиск':n.ln=='en'?'Search':n.ln=='fr'?'Recherche':n.ln=='de'?'Suche':n.ln=='es'?'Buscar':n.ln=='zh'?'搜索':''}</button><hr>
 <section id="suechBox">
 <form name="suechform">
