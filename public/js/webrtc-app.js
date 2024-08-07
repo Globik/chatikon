@@ -882,7 +882,7 @@ var brows = adapter.browserDetails.browser;
 console.log(brows);
 var vers = adapter.browserDetails.version;
 console.log(vers);
-debug("<b>Your browser, version:</b> " + brows + " " + vers);
+console.log("<b>Your browser, version:</b> " + brows + " " + vers);
 
 
 function openChat(el){
