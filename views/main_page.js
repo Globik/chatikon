@@ -186,11 +186,11 @@ n.ln=='en'?'Pressing start i certify I am at least 18-years old and <br>have rea
 	<div id="fotopanel"><img class="telka" src="/images/girl4.webp"/><img class="telka" src="/images/girl2.webp"/><img class="telka" src="/images/boy.webp"/></div>
 	<div><span id="reklama2span"><b>Advertise 18+</b></span></div>
 	<article>
-	<p>Looking for new acquaintances? Thousand of hot girls and boys are waiting for you to talk in chat roulette on <a href="https://rouletka.ru/about/en">https://rouletka.ru</a>!
+	<p>Looking for new acquaintances? Thousand of hot girls and boys are waiting for you to talk in chat roulette on <a rel="nofollow" href="https://rouletka.ru/about/en">https://rouletka.ru</a>!
 	</p>
 	<p>
-	寻找新朋友？ 数以千计的热辣女孩和男孩正在等待您在聊天轮盘赌中交谈: <a href="https://rouletka.ru/about/en">https://rouletka.ru</a>!
-	<div class="forbtndiv"><button onclick="window.location.href='https://rouletka.ru/about/en';">Come on join us! | 快来加入我们吧!</button></div>
+	寻找新朋友？ 数以千计的热辣女孩和男孩正在等待您在聊天轮盘赌中交谈: <a href="https://rouletka.ru/about/zh" rel="nofollow">https://rouletka.ru/about/zh</a>!
+	<div class="forbtndiv"><button onclick="window.location.href='https://rouletka.ru/about/en'>Come on join us! | 快来加入我们吧!</button></div>
 	</p>
 	</article>
 	</section>
